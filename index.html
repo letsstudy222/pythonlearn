@@ -261,6 +261,24 @@ details .dbody pre{
 .qz-score.good{color:var(--green)}
 .qz-score.bad{color:var(--red)}
 .qz-item code{background:var(--code-bg);border:1px solid #DCE4EC;border-radius:5px;padding:1.5px 6px;font-size:.86em}
+/* ===== SQL result table ===== */
+.sql-table{border-collapse:collapse;margin:4px 0 2px;font-size:13px;font-family:'JetBrains Mono',monospace}
+.sql-table th,.sql-table td{border:1px solid var(--panel-line);padding:5px 12px;text-align:left}
+.sql-table th{background:var(--panel-2);color:var(--amber);font-weight:600}
+.sql-table td{color:#D7E3F4}
+.sql-rowcount{color:#63749A;font-size:11.5px;margin:2px 0 10px;font-style:italic}
+/* ===== Sidebar tracks (khối lớn thu gọn được) ===== */
+.navtrack{
+  display:flex;align-items:center;gap:8px;
+  margin:20px 4px 2px;padding:9px 10px;
+  background:var(--panel);color:#fff;border-radius:9px;
+  font-size:13.5px;font-weight:800;letter-spacing:.4px;
+  cursor:pointer;user-select:none;
+}
+.navtrack::after{content:"▾";margin-left:auto;font-size:12px;transition:transform .15s}
+.navtrack.closed::after{transform:rotate(-90deg)}
+.navtrack:hover{background:var(--blue-dark)}
+.nav-hide{display:none!important}
 </style>
 </head>
 <body>
@@ -273,6 +291,7 @@ details .dbody pre{
   <div class="logo"><span class="py">&gt;_</span> PyKhởiĐầu</div>
   <p class="logo-sub">Học Python ngay trên trình duyệt</p>
 
+  <div class="navtrack">🐍 PYTHON</div>
   <div class="navgroup">Bắt đầu</div>
   <button class="lesson-link" data-goto="l0"><span class="lnum">0</span> Đọc trước khi học <span class="tick">✓</span></button>
 
@@ -320,11 +339,28 @@ details .dbody pre{
   <div class="navgroup">Dự án lớn</div>
   <button class="lesson-link" data-goto="l22"><span class="lnum">22</span> Dự án: Sổ chi tiêu có menu <span class="tick">✓</span></button>
 
-  <div class="navgroup">Python cho Kinh tế 📊</div>
+  <div class="navtrack">📊 PYTHON CHO KINH TẾ</div>
+  <div class="navgroup">Từ thống kê đến kinh tế lượng</div>
   <button class="lesson-link" data-goto="e1"><span class="lnum">K1</span> Thống kê mô tả <span class="tick">✓</span></button>
   <button class="lesson-link" data-goto="e2"><span class="lnum">K2</span> Toán tài chính <span class="tick">✓</span></button>
   <button class="lesson-link" data-goto="e3"><span class="lnum">K3</span> Phân tích dữ liệu kinh doanh <span class="tick">✓</span></button>
   <button class="lesson-link" data-goto="e4"><span class="lnum">K4</span> Kinh tế lượng nhập môn <span class="tick">✓</span></button>
+
+  <div class="navtrack">🗄️ SQL</div>
+  <div class="navgroup">SQL cho Data Analyst</div>
+  <button class="lesson-link" data-goto="s1"><span class="lnum">S1</span> SQL là gì &amp; SELECT <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="s2"><span class="lnum">S2</span> WHERE — lọc dữ liệu <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="s3"><span class="lnum">S3</span> ORDER BY &amp; LIMIT <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="s4"><span class="lnum">S4</span> GROUP BY — tổng hợp <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="s5"><span class="lnum">S5</span> JOIN — nối bảng <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="s6"><span class="lnum">S6</span> Tổng kết SQL ↔ Python <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="s7"><span class="lnum">S7</span> CASE WHEN &amp; NULL <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="s8"><span class="lnum">S8</span> Subquery &amp; CTE <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="s9"><span class="lnum">S9</span> Window functions <span class="tick">✓</span></button>
+
+  <div class="navgroup">Luyện tập &amp; kiểm tra SQL</div>
+  <button class="lesson-link" data-goto="ps"><span class="lnum">✎</span> Luyện tập tổng hợp SQL <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="qs"><span class="lnum">?</span> Kiểm tra SQL <span class="tick">✓</span></button>
 </nav>
 
 <!-- ============ MAIN ============ -->
@@ -3483,6 +3519,808 @@ print(f"Học 12 giờ/tuần → dự báo {du_bao:.1f} điểm")</pre></div></
   <p>Với K4, bạn đã chạm vào cả 4 trụ định lượng của ngành: <b>thống kê (K1) → tài chính (K2) → phân tích kinh doanh (K3) → kinh tế lượng (K4)</b> — tất cả bằng Python bạn tự học từ con số 0. 🎓📊</p>
 </section>
 
+
+<!-- ========== SQL 1 ========== -->
+<section class="lesson" id="s1">
+  <div class="eyebrow">SQL S1 / SQL cho Data Analyst 🗄️</div>
+  <h2>SQL là gì &amp; câu lệnh SELECT</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Hiểu cơ sở dữ liệu là gì và viết được câu SQL đầu tiên để "hỏi" dữ liệu.</div>
+
+  <h3>1. SQL là gì và vì sao DA/BA bắt buộc phải biết?</h3>
+  <p>Dữ liệu của mọi công ty (đơn hàng, khách hàng, giao dịch...) nằm trong <b>cơ sở dữ liệu</b> (database) — tưởng tượng như một bộ nhiều bảng Excel khổng lồ liên kết với nhau, nhưng chứa được hàng triệu dòng. <b>SQL</b> (Structured Query Language) là ngôn ngữ chuẩn để "hỏi" dữ liệu từ đó. Excel mở 1 triệu dòng là đơ; SQL trả lời trong vài giây — vì vậy JD tuyển DA/BA nào cũng đòi SQL.</p>
+  <p>Tin tốt: SQL <b>dễ hơn Python</b> — nó gần như tiếng Anh thường, và bạn chỉ cần học một nhóm lệnh cốt lõi.</p>
+
+  <h3>2. Cơ sở dữ liệu mẫu của khóa này</h3>
+  <p>Trang này nhúng sẵn database <b>quán cà phê</b> gồm 3 bảng (dữ liệu tháng 7/2026). Mọi ô lệnh SQL từ đây đều chạy trên nó, và <b>mỗi lần bấm Chạy dữ liệu tự trở về bản gốc</b> — nghịch thoải mái không sợ hỏng:</p>
+  <table class="cmp">
+    <tr><th>Bảng</th><th>Nội dung</th><th>Các cột</th></tr>
+    <tr><td><code>khach_hang</code></td><td>8 khách hàng</td><td>ma_kh, ten, thanh_pho, tuoi</td></tr>
+    <tr><td><code>san_pham</code></td><td>8 món trong menu</td><td>ma_sp, ten, danh_muc, gia</td></tr>
+    <tr><td><code>don_hang</code></td><td>16 đơn hàng</td><td>ma_don, ma_kh, ma_sp, so_luong, ngay</td></tr>
+  </table>
+
+  <h3>3. SELECT — câu lệnh nền tảng</h3>
+  <p>Cấu trúc: <code class="inline">SELECT các_cột FROM tên_bảng;</code> — "chọn những cột này từ bảng kia". Dấu <code class="inline">*</code> nghĩa là "tất cả các cột". Chạy thử:</p>
+  <div class="runner sqlrun" data-lesson="s1">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">select_co_ban.sql</span></div>
+    <textarea class="code" rows="2" spellcheck="false">SELECT * FROM khach_hang;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Bạn vừa chạy câu SQL đầu tiên! Giờ hãy sửa <code class="inline">khach_hang</code> thành <code class="inline">san_pham</code> rồi <code class="inline">don_hang</code> để xem 2 bảng còn lại. Vài quy tắc:</p>
+  <ul>
+    <li>Câu lệnh kết thúc bằng dấu <code class="inline">;</code> — có thể viết nhiều câu, mỗi câu ra một bảng kết quả.</li>
+    <li>Từ khóa <code class="inline">SELECT</code>, <code class="inline">FROM</code> không phân biệt hoa thường, nhưng quy ước viết HOA cho dễ đọc.</li>
+    <li>SELECT chỉ <b>đọc</b> — không làm thay đổi dữ liệu, nên cứ chạy thử thoải mái.</li>
+  </ul>
+
+  <h3>4. Chọn cột cụ thể và cột tính toán</h3>
+  <p>Thực tế hiếm khi cần <code class="inline">*</code> — chọn đúng cột cần cho gọn. Còn <code class="inline">AS</code> đặt tên cho cột mới do ta tính ra:</p>
+  <div class="runner sqlrun" data-lesson="s1">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">chon_cot.sql</span></div>
+    <textarea class="code" rows="5" spellcheck="false">SELECT ten, thanh_pho FROM khach_hang;
+
+-- Cột tính toán: giá sau VAT 8% (dòng bắt đầu bằng -- là ghi chú, giống # của Python)
+SELECT ten, gia, gia * 1.08 AS gia_sau_vat FROM san_pham;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập S1</span>
+    <p>Viết 2 câu lệnh: (1) xem toàn bộ bảng <code class="inline">san_pham</code>, (2) chọn riêng cột <code class="inline">ten</code> và <code class="inline">gia</code>, kèm cột tính toán <code class="inline">gia_giam</code> = giá giảm 10%.</p>
+    <div class="runner sqlrun" data-lesson="s1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_s1.sql</span></div><textarea class="code" rows="4" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Giảm 10% = nhân 0.9. Đừng quên <code class="inline">AS gia_giam</code> và dấu ; sau mỗi câu.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT * FROM san_pham;
+
+SELECT ten, gia, gia * 0.9 AS gia_giam
+FROM san_pham;</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== SQL 2 ========== -->
+<section class="lesson" id="s2">
+  <div class="eyebrow">SQL S2 / SQL cho Data Analyst 🗄️</div>
+  <h2>WHERE — lọc dữ liệu</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Trả lời được các câu hỏi "cho tôi xem những dòng thỏa điều kiện..." — việc DA làm nhiều nhất mỗi ngày.</div>
+
+  <h3>1. Lọc theo điều kiện</h3>
+  <p><code class="inline">WHERE</code> đứng sau FROM, giữ lại các hàng thỏa điều kiện — giống <code class="inline">if</code> của Python. Chú ý: SQL so sánh bằng chỉ dùng <b>một dấu =</b>, khác Python!</p>
+  <div class="runner sqlrun" data-lesson="s2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">where_co_ban.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">-- Khách ở Hà Nội (chuỗi đặt trong nháy đơn)
+SELECT * FROM khach_hang WHERE thanh_pho = 'Hà Nội';
+
+-- Sản phẩm giá trên 35000 (khác: <> hoặc !=)
+SELECT ten, gia FROM san_pham WHERE gia > 35000;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. Ghép điều kiện: AND, OR, BETWEEN, IN</h3>
+  <div class="runner sqlrun" data-lesson="s2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">and_or_in.sql</span></div>
+    <textarea class="code" rows="9" spellcheck="false">-- Khách Hà Nội VÀ dưới 25 tuổi
+SELECT * FROM khach_hang WHERE thanh_pho = 'Hà Nội' AND tuoi < 25;
+
+-- Tuổi trong khoảng 25 đến 35 (tính cả 2 đầu)
+SELECT ten, tuoi FROM khach_hang WHERE tuoi BETWEEN 25 AND 35;
+
+-- Ở một trong các thành phố liệt kê (gọn hơn nhiều OR)
+SELECT ten, thanh_pho FROM khach_hang WHERE thanh_pho IN ('Đà Nẵng', 'Cần Thơ');</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. LIKE — tìm theo mẫu chuỗi</h3>
+  <p><code class="inline">%</code> đại diện cho "bất kỳ chuỗi nào" — công cụ tìm kiếm mờ của SQL:</p>
+  <div class="runner sqlrun" data-lesson="s2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">like.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">-- Sản phẩm có tên bắt đầu bằng "Trà"
+SELECT * FROM san_pham WHERE ten LIKE 'Trà%';
+
+-- Tên có chứa chữ "Bánh" ở bất kỳ đâu
+SELECT * FROM san_pham WHERE ten LIKE '%Bánh%';</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập S2</span>
+    <p>Viết 3 câu: (1) các món <b>đồ uống</b> giá từ 40000 trở xuống, (2) khách hàng KHÔNG ở Hà Nội (dùng <code class="inline">&lt;&gt;</code> hoặc <code class="inline">NOT</code>), (3) đơn hàng đặt từ ngày <code class="inline">'2026-07-05'</code> trở đi (so sánh &gt;= dùng được với cả chuỗi ngày dạng YYYY-MM-DD).</p>
+    <div class="runner sqlrun" data-lesson="s2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_s2.sql</span></div><textarea class="code" rows="5" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Câu 1 cần AND: <code class="inline">danh_muc = 'đồ uống' AND gia &lt;= 40000</code>. Ngày là chuỗi nên đặt trong nháy đơn.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT * FROM san_pham
+WHERE danh_muc = 'đồ uống' AND gia <= 40000;
+
+SELECT * FROM khach_hang WHERE thanh_pho <> 'Hà Nội';
+
+SELECT * FROM don_hang WHERE ngay >= '2026-07-05';</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== SQL 3 ========== -->
+<section class="lesson" id="s3">
+  <div class="eyebrow">SQL S3 / SQL cho Data Analyst 🗄️</div>
+  <h2>ORDER BY, LIMIT &amp; DISTINCT</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Trả lời dạng câu hỏi phổ biến nhất trong kinh doanh: "Top N cái gì đó là gì?"</div>
+
+  <h3>1. ORDER BY — sắp xếp kết quả</h3>
+  <div class="runner sqlrun" data-lesson="s3">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">order_by.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">-- Sản phẩm từ rẻ đến đắt (ASC là mặc định, có thể bỏ)
+SELECT ten, gia FROM san_pham ORDER BY gia ASC;
+
+-- Từ đắt đến rẻ: DESC (descending — giống reverse=True của Python)
+SELECT ten, gia FROM san_pham ORDER BY gia DESC;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. LIMIT — lấy Top N</h3>
+  <p>Ghép ORDER BY với LIMIT là có ngay câu trả lời "top mấy":</p>
+  <div class="runner sqlrun" data-lesson="s3">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">top_n.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">-- Top 3 sản phẩm đắt nhất
+SELECT ten, gia FROM san_pham ORDER BY gia DESC LIMIT 3;
+
+-- Khách hàng trẻ nhất
+SELECT ten, tuoi FROM khach_hang ORDER BY tuoi ASC LIMIT 1;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. DISTINCT — loại giá trị trùng</h3>
+  <p>Giống <code class="inline">set()</code> của Python — trả lời câu "có những ... nào?":</p>
+  <div class="runner sqlrun" data-lesson="s3">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">distinct.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">-- Khách của quán đến từ những thành phố nào?
+SELECT DISTINCT thanh_pho FROM khach_hang;
+
+-- Những khách nào ĐÃ TỪNG đặt hàng? (chỉ ra mã, bài S5 sẽ nối ra tên)
+SELECT DISTINCT ma_kh FROM don_hang ORDER BY ma_kh;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Để ý kết quả câu 2: chỉ có mã 1–7. Khách số 8 (Hùng) chưa từng mua gì — chi tiết này sẽ quay lại ở bài JOIN!</p>
+  <div class="note">💡 <b>Thứ tự viết bắt buộc của một câu SELECT:</b> <code class="inline">SELECT → FROM → WHERE → ORDER BY → LIMIT</code>. Viết sai thứ tự (ví dụ WHERE sau ORDER BY) là lỗi cú pháp — thử mà xem!</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập S3</span>
+    <p>Viết 2 câu: (1) Top 3 món <b>đồ uống</b> đắt nhất (phải kết hợp WHERE + ORDER BY + LIMIT — đúng thứ tự!), (2) 5 đơn hàng gần đây nhất (sắp theo <code class="inline">ngay</code> giảm dần).</p>
+    <div class="runner sqlrun" data-lesson="s3"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_s3.sql</span></div><textarea class="code" rows="5" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Câu 1: WHERE danh_muc = 'đồ uống' đặt TRƯỚC ORDER BY.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT ten, gia FROM san_pham
+WHERE danh_muc = 'đồ uống'
+ORDER BY gia DESC
+LIMIT 3;
+
+SELECT * FROM don_hang
+ORDER BY ngay DESC
+LIMIT 5;</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== SQL 4 ========== -->
+<section class="lesson" id="s4">
+  <div class="eyebrow">SQL S4 / SQL cho Data Analyst 🗄️</div>
+  <h2>GROUP BY — tổng hợp dữ liệu</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Biến hàng nghìn dòng chi tiết thành báo cáo tổng hợp — chính là Pivot Table của Excel, và là trái tim của nghề DA.</div>
+
+  <h3>1. Hàm tổng hợp: COUNT, SUM, AVG, MIN, MAX</h3>
+  <div class="runner sqlrun" data-lesson="s4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">ham_tong_hop.sql</span></div>
+    <textarea class="code" rows="8" spellcheck="false">-- Bao nhiêu đơn hàng tất cả?
+SELECT COUNT(*) AS so_don FROM don_hang;
+
+-- Giá trung bình, rẻ nhất, đắt nhất của menu
+SELECT AVG(gia) AS gia_tb, MIN(gia) AS re_nhat, MAX(gia) AS dat_nhat
+FROM san_pham;
+
+-- Tổng số ly/phần đã bán
+SELECT SUM(so_luong) AS tong_sl FROM don_hang;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. GROUP BY — tổng hợp THEO NHÓM</h3>
+  <p>Câu hỏi thật của kinh doanh không phải "tổng bao nhiêu" mà là "tổng bao nhiêu <b>theo từng...</b>". GROUP BY gom các hàng cùng giá trị thành nhóm rồi áp hàm tổng hợp cho từng nhóm — chính xác là mẫu dict cộng dồn <code class="inline">.get(k, 0) + tien</code> bạn viết ở bài 17, nhưng chỉ mất một dòng:</p>
+  <div class="runner sqlrun" data-lesson="s4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">group_by.sql</span></div>
+    <textarea class="code" rows="9" spellcheck="false">-- Mỗi thành phố có bao nhiêu khách?
+SELECT thanh_pho, COUNT(*) AS so_khach
+FROM khach_hang
+GROUP BY thanh_pho;
+
+-- Mỗi danh mục: số món và giá trung bình
+SELECT danh_muc, COUNT(*) AS so_mon, AVG(gia) AS gia_tb
+FROM san_pham
+GROUP BY danh_muc;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <div class="warn">⚠️ <b>Quy tắc vàng của GROUP BY:</b> cột trong SELECT phải hoặc nằm trong GROUP BY, hoặc nằm trong hàm tổng hợp. <code class="inline">SELECT ten, COUNT(*) ... GROUP BY thanh_pho</code> là vô nghĩa — mỗi nhóm có nhiều tên, SQL biết lấy tên nào?</div>
+
+  <h3>3. HAVING — lọc SAU khi tổng hợp</h3>
+  <p>WHERE lọc từng hàng <b>trước</b> khi gom nhóm; muốn lọc trên <b>kết quả tổng hợp</b> phải dùng HAVING:</p>
+  <div class="runner sqlrun" data-lesson="s4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">having.sql</span></div>
+    <textarea class="code" rows="7" spellcheck="false">-- Khách nào đặt từ 3 đơn trở lên? (khách VIP)
+SELECT ma_kh, COUNT(*) AS so_don, SUM(so_luong) AS tong_sl
+FROM don_hang
+GROUP BY ma_kh
+HAVING COUNT(*) >= 3
+ORDER BY so_don DESC;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Thứ tự đầy đủ của một câu SELECT giờ là: <code class="inline">SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY → LIMIT</code>. Học thuộc dòng này là nắm được 80% SQL phỏng vấn.</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập S4</span>
+    <p>Viết 2 câu: (1) mỗi <b>ngày</b> có bao nhiêu đơn hàng, sắp theo ngày tăng dần; (2) những sản phẩm (theo <code class="inline">ma_sp</code>) bán được <b>tổng số lượng từ 4 trở lên</b>, kèm tổng số lượng, sắp giảm dần.</p>
+    <div class="runner sqlrun" data-lesson="s4"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_s4.sql</span></div><textarea class="code" rows="6" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Câu 1: GROUP BY ngay. Câu 2: SUM(so_luong) + HAVING SUM(so_luong) &gt;= 4.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT ngay, COUNT(*) AS so_don
+FROM don_hang
+GROUP BY ngay
+ORDER BY ngay;
+
+SELECT ma_sp, SUM(so_luong) AS tong_sl
+FROM don_hang
+GROUP BY ma_sp
+HAVING SUM(so_luong) >= 4
+ORDER BY tong_sl DESC;</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== SQL 5 ========== -->
+<section class="lesson" id="s5">
+  <div class="eyebrow">SQL S5 / SQL cho Data Analyst 🗄️</div>
+  <h2>JOIN — nối bảng</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Nối nhiều bảng thành một để trả lời câu hỏi thật — kỹ năng phân biệt người "biết SQL" với người mới xem qua.</div>
+
+  <h3>1. Vì sao dữ liệu tách thành nhiều bảng?</h3>
+  <p>Bảng <code class="inline">don_hang</code> chỉ lưu <code class="inline">ma_kh = 1</code> thay vì lưu cả tên, thành phố, tuổi của Lan trong từng đơn — tránh lặp lại và sai lệch. Nhưng khi phân tích, ta cần ghép lại: <b>JOIN</b> nối 2 bảng qua cột chung (khóa), ở đây là <code class="inline">ma_kh</code>:</p>
+  <div class="runner sqlrun" data-lesson="s5">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">join_dau_tien.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">-- Đơn hàng kèm TÊN khách (thay vì chỉ mã)
+SELECT don_hang.ma_don, khach_hang.ten, don_hang.so_luong, don_hang.ngay
+FROM don_hang
+JOIN khach_hang ON don_hang.ma_kh = khach_hang.ma_kh;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Đọc câu lệnh như tiếng Anh: "từ don_hang, <b>nối</b> khach_hang <b>tại chỗ</b> ma_kh của hai bảng bằng nhau". Vì cột ma_kh có ở cả 2 bảng nên phải ghi rõ <code class="inline">bảng.cột</code>.</p>
+
+  <h3>2. Bí danh bảng + nối 3 bảng + cột tính toán</h3>
+  <p>Viết <code class="inline">don_hang.</code> mãi rất mỏi tay — đặt bí danh 1 chữ cái cho bảng. Và đây là câu truy vấn "ăn tiền": nối cả 3 bảng để tính <b>thành tiền</b> từng đơn:</p>
+  <div class="runner sqlrun" data-lesson="s5">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">join_3_bang.sql</span></div>
+    <textarea class="code" rows="7" spellcheck="false">SELECT d.ma_don, k.ten AS khach, s.ten AS mon,
+       d.so_luong, s.gia, d.so_luong * s.gia AS thanh_tien
+FROM don_hang d
+JOIN khach_hang k ON d.ma_kh = k.ma_kh
+JOIN san_pham s  ON d.ma_sp = s.ma_sp
+ORDER BY thanh_tien DESC;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. JOIN + GROUP BY = báo cáo thật</h3>
+  <p>Ghép 2 vũ khí mạnh nhất lại: <b>doanh thu theo từng khách hàng</b> — câu truy vấn kiểu này chiếm nửa thời gian làm việc của một DA:</p>
+  <div class="runner sqlrun" data-lesson="s5">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">doanh_thu_theo_khach.sql</span></div>
+    <textarea class="code" rows="8" spellcheck="false">SELECT k.ten, COUNT(*) AS so_don,
+       SUM(d.so_luong * s.gia) AS doanh_thu
+FROM don_hang d
+JOIN khach_hang k ON d.ma_kh = k.ma_kh
+JOIN san_pham s  ON d.ma_sp = s.ma_sp
+GROUP BY k.ten
+ORDER BY doanh_thu DESC;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>4. LEFT JOIN — giữ cả những hàng "không có cặp"</h3>
+  <p>JOIN thường chỉ giữ hàng khớp được ở cả 2 bảng → khách chưa mua gì bị "biến mất". <b>LEFT JOIN</b> giữ toàn bộ bảng bên trái, chỗ không khớp điền NULL — nhờ đó tìm được khách chưa từng mua:</p>
+  <div class="runner sqlrun" data-lesson="s5">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">left_join.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">-- Khách CHƯA TỪNG đặt đơn nào (để chăm sóc/khuyến mãi!)
+SELECT k.ten, k.thanh_pho
+FROM khach_hang k
+LEFT JOIN don_hang d ON k.ma_kh = d.ma_kh
+WHERE d.ma_don IS NULL;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Ra đúng anh Hùng ở Đà Nẵng — người bạn đã "đánh hơi" thấy từ bài S3! Chú ý: so sánh với NULL phải dùng <code class="inline">IS NULL</code>, không dùng <code class="inline">= NULL</code>.</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập S5</span>
+    <p>Viết câu truy vấn tính <b>doanh thu theo danh mục sản phẩm</b> (đồ uống vs đồ ăn): nối <code class="inline">don_hang</code> với <code class="inline">san_pham</code>, nhóm theo <code class="inline">danh_muc</code>, tính tổng thành tiền và tổng số lượng, sắp theo doanh thu giảm dần.</p>
+    <div class="runner sqlrun" data-lesson="s5"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_s5.sql</span></div><textarea class="code" rows="6" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Chỉ cần 2 bảng (không cần khach_hang). Khung: FROM don_hang d JOIN san_pham s ON d.ma_sp = s.ma_sp, rồi GROUP BY s.danh_muc.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT s.danh_muc,
+       SUM(d.so_luong) AS tong_sl,
+       SUM(d.so_luong * s.gia) AS doanh_thu
+FROM don_hang d
+JOIN san_pham s ON d.ma_sp = s.ma_sp
+GROUP BY s.danh_muc
+ORDER BY doanh_thu DESC;</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== SQL 6 ========== -->
+<section class="lesson" id="s6">
+  <div class="eyebrow">SQL S6 / SQL cho Data Analyst 🗄️</div>
+  <h2>Tổng kết: SQL ↔ Python &amp; bài thực hành cuối</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Nhìn SQL và Python như hai cách nói của cùng một tư duy, và tự tin ghi "SQL cơ bản" vào CV sau khi luyện thêm.</div>
+
+  <h3>1. Bảng "phiên dịch" SQL ↔ Python</h3>
+  <p>Bạn đã học cả hai — giờ ghép lại. Mọi khái niệm SQL đều là thứ bạn từng tự viết bằng Python:</p>
+  <table class="cmp">
+    <tr><th>Việc cần làm</th><th>SQL</th><th>Python bạn đã viết</th></tr>
+    <tr><td>Lọc hàng theo điều kiện</td><td><code>WHERE gia > 40000</code></td><td><code>if</code> trong vòng lặp / <code>[x for x in ds if ...]</code> (bài 13)</td></tr>
+    <tr><td>Tổng hợp theo nhóm</td><td><code>GROUP BY + SUM</code></td><td><code>d[k] = d.get(k, 0) + tien</code> (bài 17, 19)</td></tr>
+    <tr><td>Sắp xếp</td><td><code>ORDER BY ... DESC</code></td><td><code>sorted(..., key=lambda, reverse=True)</code> (bài 20)</td></tr>
+    <tr><td>Top N</td><td><code>LIMIT 3</code></td><td>slicing <code>[:3]</code> (bài 13)</td></tr>
+    <tr><td>Khử trùng lặp</td><td><code>DISTINCT</code></td><td><code>set()</code> (bài 18)</td></tr>
+    <tr><td>Ghép 2 nguồn dữ liệu</td><td><code>JOIN ... ON</code></td><td>tra cứu dict lồng nhau (bài 17)</td></tr>
+  </table>
+  <p>Phân công thực tế trong nghề: <b>SQL lấy và tổng hợp dữ liệu từ database</b> (nhanh, chạy ngay trên server) → <b>Python/pandas xử lý sâu hơn</b> (làm sạch phức tạp, thống kê, mô hình) → <b>Power BI trình bày</b>. Ba tầng của một quy trình.</p>
+
+  <h3>2. Bài thực hành cuối — bạn là DA của quán</h3>
+  <p>Chủ quán hỏi 4 câu. Hãy trả lời từng câu bằng SQL (mỗi câu một truy vấn, tự làm hết rồi mới xem lời giải):</p>
+  <ol>
+    <li>Món nào <b>bán chạy nhất</b> theo tổng số lượng? (tên món + số lượng)</li>
+    <li><b>Doanh thu theo từng ngày</b> diễn biến thế nào? (ngày + doanh thu, sắp theo ngày)</li>
+    <li>Khách hàng <b>Hà Nội</b> mang về tổng doanh thu bao nhiêu? (một con số)</li>
+    <li>Món nào <b>chưa bán được đơn nào</b>? (gợi ý: LEFT JOIN — giống tìm khách chưa mua)</li>
+  </ol>
+    <div class="runner sqlrun" data-lesson="s6"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bao_cao_cuoi.sql</span></div><textarea class="code" rows="8" spellcheck="false">-- Câu 1:
+
+-- Câu 2:
+
+-- Câu 3:
+
+-- Câu 4:
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Câu 1, 2: JOIN + GROUP BY + ORDER BY (+ LIMIT 1 cho câu 1). Câu 3: JOIN 3 bảng + WHERE thanh_pho = 'Hà Nội', không cần GROUP BY vì chỉ cần 1 tổng. Câu 4: LEFT JOIN từ san_pham sang don_hang, WHERE d.ma_don IS NULL.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>-- 1. Món bán chạy nhất
+SELECT s.ten, SUM(d.so_luong) AS tong_sl
+FROM don_hang d JOIN san_pham s ON d.ma_sp = s.ma_sp
+GROUP BY s.ten ORDER BY tong_sl DESC LIMIT 1;
+
+-- 2. Doanh thu theo ngày
+SELECT d.ngay, SUM(d.so_luong * s.gia) AS doanh_thu
+FROM don_hang d JOIN san_pham s ON d.ma_sp = s.ma_sp
+GROUP BY d.ngay ORDER BY d.ngay;
+
+-- 3. Doanh thu từ khách Hà Nội
+SELECT SUM(d.so_luong * s.gia) AS doanh_thu_hn
+FROM don_hang d
+JOIN khach_hang k ON d.ma_kh = k.ma_kh
+JOIN san_pham s ON d.ma_sp = s.ma_sp
+WHERE k.thanh_pho = 'Hà Nội';
+
+-- 4. Món chưa bán được
+SELECT s.ten FROM san_pham s
+LEFT JOIN don_hang d ON s.ma_sp = d.ma_sp
+WHERE d.ma_don IS NULL;</pre></div></details>
+
+  <h3>3. Học SQL tiếp thế nào?</h3>
+  <p>6 bài này cho bạn phần lõi (SELECT–WHERE–ORDER–GROUP–JOIN) — đủ nền để tự luyện tiếp:</p>
+  <ol>
+    <li><b>Luyện đề:</b> SQLZoo, sql-practice.com, rồi LeetCode mục Database (mức Easy) — mục tiêu 50 bài là phản xạ tốt.</li>
+    <li><b>Học thêm dần:</b> CASE WHEN (if/else trong SELECT), subquery (truy vấn lồng), window functions như <code class="inline">ROW_NUMBER</code>, <code class="inline">SUM() OVER</code> — chủ đề hay gặp khi phỏng vấn DA.</li>
+    <li><b>Cài công cụ thật:</b> DBeaver (miễn phí) + file SQLite mẫu, sau đó làm quen PostgreSQL hoặc MySQL — cú pháp giống hệt những gì bạn học ở đây đến ~95%.</li>
+    <li><b>Kết nối với Python:</b> module <code class="inline">sqlite3</code> có sẵn trong Python cho phép chạy SQL ngay trong code Python — chiếc cầu nối hoàn hảo giữa 2 kỹ năng của bạn.</li>
+  </ol>
+  <p>Đến đây bạn có trọn bộ khởi đầu của một DA: <b>Python + SQL + tư duy phân tích kinh tế</b>. Việc còn lại là luyện đều tay. Chúc mừng và chúc bạn học tốt! 🗄️🎉</p>
+</section>
+
+
+<!-- ========== SQL 7 ========== -->
+<section class="lesson" id="s7">
+  <div class="eyebrow">SQL S7 / SQL cho Data Analyst 🗄️</div>
+  <h2>CASE WHEN &amp; xử lý NULL</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Phân loại dữ liệu ngay trong truy vấn (if/elif của SQL) và không còn bị NULL "chơi xấu".</div>
+
+  <h3>1. CASE WHEN — if/elif/else của SQL</h3>
+  <div class="runner sqlrun" data-lesson="s7">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">case_when.sql</span></div>
+    <textarea class="code" rows="9" spellcheck="false">SELECT ten, gia,
+  CASE
+    WHEN gia < 30000 THEN 'rẻ'
+    WHEN gia < 45000 THEN 'vừa'
+    ELSE 'cao cấp'
+  END AS phan_khuc
+FROM san_pham
+ORDER BY gia;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Đọc y hệt if/elif/else của Python (bài 6): kiểm tra từ trên xuống, khớp điều kiện đầu tiên là dừng, <code class="inline">ELSE</code> hứng phần còn lại, kết thúc bằng <code class="inline">END</code>.</p>
+
+  <h3>2. Đếm theo điều kiện — kỹ thuật phỏng vấn hay hỏi</h3>
+  <p>Ghép CASE vào trong SUM/COUNT để đếm nhiều nhóm <b>trên cùng một dòng kết quả</b> — chính là "pivot" thu nhỏ:</p>
+  <div class="runner sqlrun" data-lesson="s7">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">dem_theo_dieu_kien.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">SELECT
+  COUNT(*) AS tong_khach,
+  SUM(CASE WHEN thanh_pho = 'Hà Nội' THEN 1 ELSE 0 END) AS khach_hn,
+  SUM(CASE WHEN tuoi < 28 THEN 1 ELSE 0 END) AS khach_tre
+FROM khach_hang;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Mẹo đọc: mỗi hàng khớp điều kiện đóng góp 1, không khớp đóng góp 0 — SUM lại chính là đếm.</p>
+
+  <h3>3. NULL — "khoảng trống" trong dữ liệu</h3>
+  <p>NULL nghĩa là "không có dữ liệu" (khác số 0 và khác chuỗi rỗng!). Bạn đã gặp nó ở LEFT JOIN bài S5. Hai quy tắc sống còn: so sánh phải dùng <code class="inline">IS NULL / IS NOT NULL</code>, và <code class="inline">COALESCE(x, gia_tri_thay_the)</code> để điền giá trị mặc định:</p>
+  <div class="runner sqlrun" data-lesson="s7">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">null_coalesce.sql</span></div>
+    <textarea class="code" rows="8" spellcheck="false">-- Tổng số lượng bán của TỪNG món, món chưa bán hiện 0 thay vì NULL
+SELECT s.ten,
+       COALESCE(SUM(d.so_luong), 0) AS tong_ban
+FROM san_pham s
+LEFT JOIN don_hang d ON s.ma_sp = d.ma_sp
+GROUP BY s.ten
+ORDER BY tong_ban DESC;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Thử xóa <code class="inline">COALESCE(..., 0)</code> đi (chỉ để <code class="inline">SUM(d.so_luong)</code>) — Nước suối sẽ hiện NULL. Báo cáo gửi sếp mà có chữ NULL là điểm trừ lớn đấy!</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập S7</span>
+    <p>Viết 2 câu: (1) phân nhóm khách hàng theo tuổi bằng CASE: dưới 25 → 'gen Z', 25–34 → 'trẻ', từ 35 → 'trung niên'; (2) đếm trên MỘT dòng: tổng số đơn, số đơn có <code class="inline">so_luong &gt;= 2</code>, và số đơn từ ngày '2026-07-05' trở đi.</p>
+    <div class="runner sqlrun" data-lesson="s7"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_s7.sql</span></div><textarea class="code" rows="6" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Câu 1: CASE WHEN tuoi &lt; 25 ... WHEN tuoi &lt; 35 ... ELSE. Câu 2: 3 cột, 2 cột sau dùng SUM(CASE WHEN ... THEN 1 ELSE 0 END).</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT ten, tuoi,
+  CASE
+    WHEN tuoi < 25 THEN 'gen Z'
+    WHEN tuoi < 35 THEN 'trẻ'
+    ELSE 'trung niên'
+  END AS nhom_tuoi
+FROM khach_hang;
+
+SELECT COUNT(*) AS tong_don,
+  SUM(CASE WHEN so_luong >= 2 THEN 1 ELSE 0 END) AS don_sl_lon,
+  SUM(CASE WHEN ngay >= '2026-07-05' THEN 1 ELSE 0 END) AS don_nua_sau
+FROM don_hang;</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== SQL 8 ========== -->
+<section class="lesson" id="s8">
+  <div class="eyebrow">SQL S8 / SQL cho Data Analyst 🗄️</div>
+  <h2>Subquery &amp; CTE — truy vấn lồng truy vấn</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Trả lời được câu hỏi 2 tầng kiểu "những X vượt mức trung bình" — dạng chắc chắn gặp khi phỏng vấn.</div>
+
+  <h3>1. Subquery vô hướng — dùng một con số tính ra</h3>
+  <p>Câu hỏi: <i>"món nào đắt hơn giá trung bình của menu?"</i> — cần 2 bước: tính TB, rồi so sánh. Subquery cho phép đặt cả câu SELECT trong ngoặc, dùng như một con số:</p>
+  <div class="runner sqlrun" data-lesson="s8">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">subquery_vo_huong.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">SELECT ten, gia
+FROM san_pham
+WHERE gia > (SELECT AVG(gia) FROM san_pham)
+ORDER BY gia DESC;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>SQL chạy phần trong ngoặc trước (ra một số, ví dụ ~33375), rồi thay vào điều kiện. Không thể viết <code class="inline">WHERE gia &gt; AVG(gia)</code> trực tiếp — hàm tổng hợp không đứng được trong WHERE, đây là lý do subquery tồn tại.</p>
+
+  <h3>2. Subquery với IN — lọc theo danh sách tính ra</h3>
+  <div class="runner sqlrun" data-lesson="s8">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">subquery_in.sql</span></div>
+    <textarea class="code" rows="8" spellcheck="false">-- Những khách nào đã từng mua Trà sữa (ma_sp = 6)?
+SELECT ten, thanh_pho
+FROM khach_hang
+WHERE ma_kh IN (
+  SELECT ma_kh FROM don_hang WHERE ma_sp = 6
+);</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Nhiều bài giải được bằng cả JOIN lẫn subquery — cả hai đều đúng; subquery thường đọc "xuôi" hơn khi câu hỏi có chữ "đã từng / thuộc nhóm".</p>
+
+  <h3>3. CTE (WITH) — subquery có tên, dễ đọc hơn hẳn</h3>
+  <p>Khi truy vấn dài, lồng ngoặc trong ngoặc rất khó đọc. <b>CTE</b> (Common Table Expression) cho phép đặt tên cho bảng trung gian bằng <code class="inline">WITH</code>, rồi dùng như bảng thật — đây là phong cách SQL hiện đại mà các team data ưa chuộng:</p>
+  <div class="runner sqlrun" data-lesson="s8">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">cte.sql</span></div>
+    <textarea class="code" rows="12" spellcheck="false">-- Bước 1 (đặt tên): tính doanh thu từng khách
+WITH doanh_thu_khach AS (
+  SELECT d.ma_kh, SUM(d.so_luong * s.gia) AS doanh_thu
+  FROM don_hang d
+  JOIN san_pham s ON d.ma_sp = s.ma_sp
+  GROUP BY d.ma_kh
+)
+-- Bước 2: chỉ lấy khách chi tiêu trên mức trung bình
+SELECT k.ten, dt.doanh_thu
+FROM doanh_thu_khach dt
+JOIN khach_hang k ON dt.ma_kh = k.ma_kh
+WHERE dt.doanh_thu > (SELECT AVG(doanh_thu) FROM doanh_thu_khach)
+ORDER BY dt.doanh_thu DESC;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Đọc như một quy trình 2 bước có chú thích — dễ hiểu hơn nhiều so với nhét tất cả vào một câu. Tư duy giống hệt việc tách hàm trong Python (bài 9): đặt tên cho từng bước.</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập S8</span>
+    <p>Dùng subquery (không dùng JOIN): tìm tên các khách hàng đã đặt đơn từ ngày <code class="inline">'2026-07-06'</code> trở đi. Sau đó thử thách: dùng CTE tính tổng số lượng bán theo <code class="inline">ma_sp</code>, rồi lấy các món bán vượt mức trung bình của chính bảng đó.</p>
+    <div class="runner sqlrun" data-lesson="s8"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_s8.sql</span></div><textarea class="code" rows="7" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Câu 1: WHERE ma_kh IN (SELECT ma_kh FROM don_hang WHERE ngay &gt;= ...). Câu 2: khung giống ví dụ CTE, thay doanh thu bằng SUM(so_luong).</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT ten FROM khach_hang
+WHERE ma_kh IN (
+  SELECT ma_kh FROM don_hang WHERE ngay >= '2026-07-06'
+);
+
+WITH ban_theo_mon AS (
+  SELECT ma_sp, SUM(so_luong) AS tong_sl
+  FROM don_hang GROUP BY ma_sp
+)
+SELECT s.ten, b.tong_sl
+FROM ban_theo_mon b
+JOIN san_pham s ON b.ma_sp = s.ma_sp
+WHERE b.tong_sl > (SELECT AVG(tong_sl) FROM ban_theo_mon)
+ORDER BY b.tong_sl DESC;</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== SQL 9 ========== -->
+<section class="lesson" id="s9">
+  <div class="eyebrow">SQL S9 / SQL cho Data Analyst 🗄️</div>
+  <h2>Window functions — vũ khí mạnh nhất của DA</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Xếp hạng, cộng dồn và so sánh trong nhóm mà KHÔNG làm mất chi tiết từng hàng — chủ đề phân loại ứng viên trong phỏng vấn SQL.</div>
+
+  <h3>1. Vấn đề GROUP BY không giải được</h3>
+  <p>GROUP BY "nén" nhiều hàng thành một — bạn được con số tổng nhưng <b>mất chi tiết</b>. Nhiều câu hỏi cần cả hai: <i>"từng đơn hàng, kèm xếp hạng của nó"</i>. Đó là việc của <b>window function</b>: hàm tính trên một "cửa sổ" các hàng, nhưng mỗi hàng gốc vẫn còn nguyên. Cú pháp nhận diện: <code class="inline">HÀM() OVER (...)</code>.</p>
+
+  <h3>2. ROW_NUMBER — đánh số xếp hạng</h3>
+  <div class="runner sqlrun" data-lesson="s9">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">row_number.sql</span></div>
+    <textarea class="code" rows="6" spellcheck="false">SELECT
+  ROW_NUMBER() OVER (ORDER BY gia DESC) AS hang,
+  ten, gia
+FROM san_pham;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. PARTITION BY — xếp hạng TRONG TỪNG NHÓM</h3>
+  <p>Đây mới là câu hỏi phỏng vấn kinh điển: <i>"món đắt nhất của MỖI danh mục"</i>. <code class="inline">PARTITION BY</code> chia cửa sổ theo nhóm — mỗi danh mục xếp hạng riêng, đếm lại từ 1:</p>
+  <div class="runner sqlrun" data-lesson="s9">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">partition_by.sql</span></div>
+    <textarea class="code" rows="12" spellcheck="false">SELECT danh_muc, ten, gia,
+  ROW_NUMBER() OVER (PARTITION BY danh_muc ORDER BY gia DESC) AS hang_trong_nhom
+FROM san_pham;
+
+-- Chỉ lấy "quán quân" mỗi danh mục: bọc bằng CTE (bài S8!)
+WITH xep_hang AS (
+  SELECT danh_muc, ten, gia,
+    ROW_NUMBER() OVER (PARTITION BY danh_muc ORDER BY gia DESC) AS hang
+  FROM san_pham
+)
+SELECT danh_muc, ten, gia FROM xep_hang WHERE hang = 1;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Mẫu "CTE đánh số + WHERE hang = 1" là câu trả lời chuẩn cho cả họ câu hỏi "top N mỗi nhóm" — thuộc lòng nó trước khi đi phỏng vấn!</p>
+
+  <h3>4. Cộng dồn (running total) — theo dõi lũy kế</h3>
+  <p><code class="inline">SUM(...) OVER (ORDER BY ...)</code> cộng dồn từ đầu đến hàng hiện tại — chính là "doanh thu lũy kế từ đầu tháng" trong mọi dashboard:</p>
+  <div class="runner sqlrun" data-lesson="s9">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">luy_ke.sql</span></div>
+    <textarea class="code" rows="11" spellcheck="false">WITH theo_ngay AS (
+  SELECT d.ngay, SUM(d.so_luong * s.gia) AS doanh_thu
+  FROM don_hang d
+  JOIN san_pham s ON d.ma_sp = s.ma_sp
+  GROUP BY d.ngay
+)
+SELECT ngay, doanh_thu,
+  SUM(doanh_thu) OVER (ORDER BY ngay) AS luy_ke
+FROM theo_ngay;</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Để ý cột lũy kế tăng dần và hàng cuối bằng đúng tổng cả kỳ. Trong Python, bạn từng làm việc này bằng biến cộng dồn trong vòng lặp (bài 7) — cùng một tư duy!</p>
+  <div class="note">💡 Họ hàng đáng biết thêm (tự tra khi cần): <code class="inline">RANK()</code> (đồng hạng thì cùng số), <code class="inline">LAG()</code> (lấy giá trị hàng trước — để tính tăng trưởng so với kỳ trước, giống bài luyện 4.6), <code class="inline">AVG() OVER</code> (trung bình động — giống bài K3).</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập S9</span>
+    <p>Dùng CTE tính doanh thu theo từng khách (như bài S8), rồi thêm cột <code class="inline">ROW_NUMBER() OVER (ORDER BY doanh_thu DESC)</code> để ra <b>bảng xếp hạng khách hàng chi tiêu</b>, hiển thị: hạng, tên, doanh thu.</p>
+    <div class="runner sqlrun" data-lesson="s9"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_s9.sql</span></div><textarea class="code" rows="7" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Ghép nguyên CTE doanh_thu_khach của bài S8, ở câu SELECT cuối thêm ROW_NUMBER() OVER (ORDER BY dt.doanh_thu DESC) AS hang.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>WITH doanh_thu_khach AS (
+  SELECT d.ma_kh, SUM(d.so_luong * s.gia) AS doanh_thu
+  FROM don_hang d
+  JOIN san_pham s ON d.ma_sp = s.ma_sp
+  GROUP BY d.ma_kh
+)
+SELECT
+  ROW_NUMBER() OVER (ORDER BY dt.doanh_thu DESC) AS hang,
+  k.ten, dt.doanh_thu
+FROM doanh_thu_khach dt
+JOIN khach_hang k ON dt.ma_kh = k.ma_kh;</pre></div></details>
+  </div>
+  <p>Với S7–S9, bạn đã phủ đủ các chủ đề SQL xuất hiện trong 90% buổi phỏng vấn DA mức fresher/junior. Phần còn thiếu duy nhất là <b>luyện phản xạ</b> — sang trang Luyện tập SQL ngay bên dưới!</p>
+</section>
+
+<!-- ========== LUYỆN TẬP SQL ========== -->
+<section class="lesson" id="ps">
+  <div class="eyebrow">Luyện tập ✎ / Toàn bộ SQL (S1–S9)</div>
+  <h2>Luyện tập tổng hợp SQL</h2>
+  <p>6 bài xếp theo độ khó tăng dần, trải đủ từ WHERE đến window function. Quy tắc: <b>viết xong hãy tự đoán kết quả trước khi Chạy</b> — dữ liệu chỉ có 8 khách, 8 món, 16 đơn nên hoàn toàn đoán được.</p>
+
+  <div class="exercise"><span class="ex-label">S.1 — Lọc kết hợp</span>
+    <p>Tìm các khách hàng từ 25 đến 35 tuổi VÀ ở TP.HCM hoặc Đà Nẵng, chỉ hiện tên, thành phố, tuổi, sắp theo tuổi tăng dần.</p>
+    <div class="runner sqlrun" data-lesson="ps"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">st_1.sql</span></div><textarea class="code" rows="4" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">BETWEEN cho tuổi, IN cho thành phố, nối bằng AND.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT ten, thanh_pho, tuoi
+FROM khach_hang
+WHERE tuoi BETWEEN 25 AND 35
+  AND thanh_pho IN ('TP.HCM', 'Đà Nẵng')
+ORDER BY tuoi;</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">S.2 — Ngày bận rộn</span>
+    <p>Những ngày nào có từ 2 đơn hàng trở lên? Hiện ngày + số đơn, sắp theo số đơn giảm dần.</p>
+    <div class="runner sqlrun" data-lesson="ps"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">st_2.sql</span></div><textarea class="code" rows="4" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">GROUP BY ngay + HAVING COUNT(*) &gt;= 2 (bài S4).</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT ngay, COUNT(*) AS so_don
+FROM don_hang
+GROUP BY ngay
+HAVING COUNT(*) >= 2
+ORDER BY so_don DESC;</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">S.3 — Giá trị đơn trung bình theo khách</span>
+    <p>Với mỗi khách <b>đã từng mua</b>: tên, số đơn, và giá trị trung bình mỗi đơn (AVG của thành tiền), làm tròn bằng <code class="inline">ROUND(..., 0)</code>, sắp giảm dần theo giá trị TB.</p>
+    <div class="runner sqlrun" data-lesson="ps"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">st_3.sql</span></div><textarea class="code" rows="5" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">JOIN 3 bảng như bài S5, nhưng dùng AVG(d.so_luong * s.gia) thay vì SUM.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT k.ten, COUNT(*) AS so_don,
+       ROUND(AVG(d.so_luong * s.gia), 0) AS gia_tri_tb
+FROM don_hang d
+JOIN khach_hang k ON d.ma_kh = k.ma_kh
+JOIN san_pham s ON d.ma_sp = s.ma_sp
+GROUP BY k.ten
+ORDER BY gia_tri_tb DESC;</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">S.4 — Pivot mini bằng CASE</span>
+    <p>Trên MỘT dòng kết quả, đếm menu theo phân khúc giá: số món dưới 30000, số món 30000–44999, số món từ 45000.</p>
+    <div class="runner sqlrun" data-lesson="ps"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">st_4.sql</span></div><textarea class="code" rows="5" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">3 cột SUM(CASE WHEN ... THEN 1 ELSE 0 END) — mẫu "đếm theo điều kiện" bài S7.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>SELECT
+  SUM(CASE WHEN gia < 30000 THEN 1 ELSE 0 END) AS mon_re,
+  SUM(CASE WHEN gia >= 30000 AND gia < 45000 THEN 1 ELSE 0 END) AS mon_vua,
+  SUM(CASE WHEN gia >= 45000 THEN 1 ELSE 0 END) AS mon_cao_cap
+FROM san_pham;</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">S.5 — Trên mức trung bình</span>
+    <p>Dùng subquery: tìm các <b>đơn hàng</b> có thành tiền (so_luong × gia) lớn hơn thành tiền trung bình của tất cả đơn. Hiện mã đơn, tên món, thành tiền. (Khó hơn vẻ ngoài: cả 2 vế đều cần JOIN — dùng CTE cho sạch!)</p>
+    <div class="runner sqlrun" data-lesson="ps"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">st_5.sql</span></div><textarea class="code" rows="7" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">CTE tính bảng (ma_don, ten, thanh_tien) một lần, rồi SELECT từ CTE với WHERE thanh_tien &gt; (SELECT AVG(thanh_tien) FROM cte).</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>WITH chi_tiet AS (
+  SELECT d.ma_don, s.ten, d.so_luong * s.gia AS thanh_tien
+  FROM don_hang d
+  JOIN san_pham s ON d.ma_sp = s.ma_sp
+)
+SELECT * FROM chi_tiet
+WHERE thanh_tien > (SELECT AVG(thanh_tien) FROM chi_tiet)
+ORDER BY thanh_tien DESC;</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">S.6 — Món bán chạy nhất MỖI danh mục</span>
+    <p>Câu hỏi phỏng vấn kinh điển "top 1 mỗi nhóm": với mỗi danh mục, món nào có tổng số lượng bán cao nhất? (Gồm 3 tầng: JOIN + GROUP BY → ROW_NUMBER PARTITION BY → lọc hang = 1.)</p>
+    <div class="runner sqlrun" data-lesson="ps"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">st_6.sql</span></div><textarea class="code" rows="8" spellcheck="false">-- Viết SQL của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">CTE 1: tổng số lượng theo (danh_muc, ten). CTE 2 (hoặc lồng): thêm ROW_NUMBER() OVER (PARTITION BY danh_muc ORDER BY tong_sl DESC). Cuối: WHERE hang = 1 — mẫu chuẩn của bài S9.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>WITH ban_hang AS (
+  SELECT s.danh_muc, s.ten, SUM(d.so_luong) AS tong_sl
+  FROM don_hang d
+  JOIN san_pham s ON d.ma_sp = s.ma_sp
+  GROUP BY s.danh_muc, s.ten
+),
+xep_hang AS (
+  SELECT *,
+    ROW_NUMBER() OVER (PARTITION BY danh_muc ORDER BY tong_sl DESC) AS hang
+  FROM ban_hang
+)
+SELECT danh_muc, ten, tong_sl
+FROM xep_hang
+WHERE hang = 1;</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== KIỂM TRA SQL ========== -->
+<section class="lesson" id="qs">
+  <div class="eyebrow">Kiểm tra ? / Toàn bộ SQL</div>
+  <h2>Kiểm tra SQL</h2>
+  <p>8 câu tổng hợp S1–S9. Đạt 6/8 trở lên + tự làm được bài S.6 ở trang luyện tập = bạn đủ tự tin ghi "SQL cơ bản" vào CV.</p>
+
+  <div class="quiz" data-lesson="qs">
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">1. Khác biệt giữa WHERE và HAVING?</p>
+      <label><input type="radio"> WHERE lọc từng hàng trước khi gom nhóm, HAVING lọc sau khi tổng hợp</label>
+      <label><input type="radio"> Giống hệt nhau, HAVING chỉ là cách viết cũ</label>
+      <label><input type="radio"> WHERE cho số, HAVING cho chuỗi</label>
+      <div class="qz-why">WHERE chạy trước GROUP BY; điều kiện trên COUNT/SUM phải dùng HAVING (bài S4).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">2. Thứ tự viết đúng của một câu SELECT đầy đủ?</p>
+      <label><input type="radio"> SELECT → WHERE → FROM → GROUP BY</label>
+      <label><input type="radio"> SELECT → FROM → ORDER BY → WHERE</label>
+      <label><input type="radio"> SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY → LIMIT</label>
+      <div class="qz-why">Câu thần chú của bài S4 — viết sai thứ tự là lỗi cú pháp ngay.</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">3. <code>LIKE 'Trà%'</code> khớp với chuỗi nào?</p>
+      <label><input type="radio"> Chuỗi có chữ Trà ở bất kỳ đâu</label>
+      <label><input type="radio"> Chuỗi bắt đầu bằng Trà</label>
+      <label><input type="radio"> Chuỗi kết thúc bằng Trà</label>
+      <div class="qz-why">% đứng sau = "Trà rồi bất kỳ gì". Chứa ở giữa phải là '%Trà%' (bài S2).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">4. LEFT JOIN khác JOIN thường ở điểm nào?</p>
+      <label><input type="radio"> Chạy nhanh hơn</label>
+      <label><input type="radio"> Giữ toàn bộ hàng của bảng bên trái, chỗ không khớp điền NULL</label>
+      <label><input type="radio"> Chỉ nối được đúng 2 bảng</label>
+      <div class="qz-why">Nhờ vậy mới tìm được "khách chưa mua", "món chưa bán" (bài S5).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">5. Cách kiểm tra một cột có giá trị NULL?</p>
+      <label><input type="radio"> WHERE cot = NULL</label>
+      <label><input type="radio"> WHERE cot == NULL</label>
+      <label><input type="radio"> WHERE cot IS NULL</label>
+      <div class="qz-why">NULL không so sánh được bằng = ; bắt buộc IS NULL / IS NOT NULL (bài S5, S7).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">6. <code>COALESCE(SUM(so_luong), 0)</code> dùng để làm gì?</p>
+      <label><input type="radio"> Nếu kết quả là NULL thì thay bằng 0</label>
+      <label><input type="radio"> Làm tròn kết quả về 0 chữ số thập phân</label>
+      <label><input type="radio"> Chỉ cộng các giá trị lớn hơn 0</label>
+      <div class="qz-why">COALESCE trả về giá trị đầu tiên khác NULL — cứu báo cáo khỏi chữ "NULL" (bài S7).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">7. Vì sao cần subquery trong <code>WHERE gia &gt; (SELECT AVG(gia) FROM san_pham)</code>?</p>
+      <label><input type="radio"> Cho đẹp code, viết AVG thẳng trong WHERE cũng được</label>
+      <label><input type="radio"> Vì hàm tổng hợp như AVG không được đứng trực tiếp trong WHERE</label>
+      <label><input type="radio"> Vì AVG chỉ chạy được một mình</label>
+      <div class="qz-why">WHERE lọc từng hàng, chưa có khái niệm "trung bình cả bảng" — phải tính trước bằng subquery (bài S8).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">8. <code>ROW_NUMBER() OVER (PARTITION BY danh_muc ORDER BY gia DESC)</code> làm gì?</p>
+      <label><input type="radio"> Đếm tổng số hàng của mỗi danh mục</label>
+      <label><input type="radio"> Gom mỗi danh mục thành một hàng như GROUP BY</label>
+      <label><input type="radio"> Đánh số 1, 2, 3... riêng trong từng danh mục, theo giá giảm dần, giữ nguyên mọi hàng</label>
+      <div class="qz-why">Window function không nén hàng — mỗi nhóm xếp hạng riêng từ 1. Ghép WHERE hang = 1 là ra "top 1 mỗi nhóm" (bài S9).</div>
+    </div>
+    <div class="qz-actions">
+      <button class="btn btn-run qz-grade">✔ Chấm điểm</button>
+      <button class="btn btn-reset qz-retry" style="color:var(--muted);border-color:var(--line)">↺ Làm lại</button>
+      <span class="qz-score"></span>
+    </div>
+  </div>
+</section>
+
 <div class="lesson-nav" id="lessonNav">
   <button class="btn-nav" id="btnPrev">← Bài trước</button>
   <button class="btn-nav primary" id="btnNext">Bài tiếp theo →</button>
@@ -3496,7 +4334,7 @@ print(f"Học 12 giờ/tuần → dự báo {du_bao:.1f} điểm")</pre></div></
 
 <script>
 /* ================= Điều hướng bài học ================= */
-const LESSONS = ["l0","l1","l2","l3","l4","l5","p1","q1","l6","l7","l8","l9","p2","q2","l10","l11","l12","l13","l14","l15","p3","q3","l16","l17","l18","l19","l20","l21","p4","q4","l22","e1","e2","e3","e4"];
+const LESSONS = ["l0","l1","l2","l3","l4","l5","p1","q1","l6","l7","l8","l9","p2","q2","l10","l11","l12","l13","l14","l15","p3","q3","l16","l17","l18","l19","l20","l21","p4","q4","l22","e1","e2","e3","e4","s1","s2","s3","s4","s5","s6","s7","s8","s9","ps","qs"];
 let current = "l0";
 
 const store = (() => {           // localStorage an toàn (fallback bộ nhớ tạm)
@@ -3516,10 +4354,29 @@ function showLesson(id, push=true){
   prev.disabled = i===0;
   next.disabled = i===LESSONS.length-1;
   next.textContent = i===LESSONS.length-1 ? "🎉 Bạn đã ở bài cuối" : "Bài tiếp theo →";
+  openTrackFor(id);
   if(push) history.replaceState(null,"","#"+id);
   window.scrollTo({top:0, behavior:"auto"});
   closeMenu();
 }
+/* Thu gọn / mở rộng 3 khối lớn của sidebar */
+const tracks = [...document.querySelectorAll(".navtrack")];
+function trackElems(t){
+  const els = []; let n = t.nextElementSibling;
+  while(n && !n.classList.contains("navtrack")){ els.push(n); n = n.nextElementSibling; }
+  return els;
+}
+function setTrack(t, open){
+  t.classList.toggle("closed", !open);
+  trackElems(t).forEach(e => e.classList.toggle("nav-hide", !open));
+}
+tracks.forEach(t => t.addEventListener("click", () => setTrack(t, t.classList.contains("closed"))));
+function openTrackFor(id){
+  tracks.forEach(t => {
+    if(trackElems(t).some(e => e.dataset && e.dataset.goto === id)) setTrack(t, true);
+  });
+}
+
 document.querySelectorAll(".lesson-link").forEach(b => b.addEventListener("click", ()=>showLesson(b.dataset.goto)));
 document.getElementById("btnPrev").addEventListener("click", ()=>showLesson(LESSONS[Math.max(0,LESSONS.indexOf(current)-1)]));
 document.getElementById("btnNext").addEventListener("click", ()=>showLesson(LESSONS[Math.min(LESSONS.length-1,LESSONS.indexOf(current)+1)]));
@@ -3607,12 +4464,115 @@ async function runCode(runner){
   }
 }
 
+/* ================= SQLite trong trình duyệt (sql.js) ================= */
+let SQLmod = null, sqlLoading = null;
+
+const SEED_SQL = `
+CREATE TABLE khach_hang (ma_kh INTEGER PRIMARY KEY, ten TEXT, thanh_pho TEXT, tuoi INTEGER);
+INSERT INTO khach_hang VALUES
+ (1,'Lan','Hà Nội',24),(2,'Minh','TP.HCM',31),(3,'Chi','Hà Nội',27),
+ (4,'Dũng','Đà Nẵng',35),(5,'Trang','Hà Nội',22),(6,'Quân','TP.HCM',29),
+ (7,'Vy','Cần Thơ',26),(8,'Hùng','Đà Nẵng',41);
+
+CREATE TABLE san_pham (ma_sp INTEGER PRIMARY KEY, ten TEXT, danh_muc TEXT, gia INTEGER);
+INSERT INTO san_pham VALUES
+ (1,'Cà phê sữa','đồ uống',35000),(2,'Trà đào','đồ uống',45000),
+ (3,'Bạc xỉu','đồ uống',39000),(4,'Bánh mì','đồ ăn',25000),
+ (5,'Bánh ngọt','đồ ăn',30000),(6,'Trà sữa','đồ uống',50000),
+ (7,'Xôi mặn','đồ ăn',28000),(8,'Nước suối','đồ uống',15000);
+
+CREATE TABLE don_hang (ma_don INTEGER PRIMARY KEY, ma_kh INTEGER, ma_sp INTEGER, so_luong INTEGER, ngay TEXT);
+INSERT INTO don_hang VALUES
+ (1,1,1,2,'2026-07-01'),(2,2,6,1,'2026-07-01'),(3,1,4,1,'2026-07-02'),
+ (4,3,2,3,'2026-07-02'),(5,4,1,1,'2026-07-03'),(6,5,6,2,'2026-07-03'),
+ (7,2,5,2,'2026-07-04'),(8,6,3,1,'2026-07-05'),(9,1,2,1,'2026-07-05'),
+ (10,3,1,2,'2026-07-06'),(11,7,6,1,'2026-07-06'),(12,5,4,3,'2026-07-07'),
+ (13,2,1,2,'2026-07-08'),(14,4,7,2,'2026-07-08'),(15,6,2,1,'2026-07-09'),
+ (16,1,6,1,'2026-07-10');
+`;
+
+function loadSqlOnce(){
+  if(SQLmod) return Promise.resolve(SQLmod);
+  if(sqlLoading) return sqlLoading;
+  statusEl.classList.remove("ready");
+  statusEl.classList.add("show");
+  statusText.textContent = "Đang tải SQLite (chỉ lần đầu)…";
+  sqlLoading = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js";
+    s.onload = async () => {
+      try{
+        SQLmod = await initSqlJs({locateFile: f => "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/" + f});
+        statusEl.classList.add("ready");
+        statusText.textContent = "SQLite đã sẵn sàng";
+        setTimeout(()=>statusEl.classList.remove("show"), 2500);
+        resolve(SQLmod);
+      }catch(err){ statusText.textContent = "Không tải được SQLite — kiểm tra mạng rồi tải lại trang."; reject(err); }
+    };
+    s.onerror = () => { statusText.textContent = "Không tải được SQLite — kiểm tra mạng rồi tải lại trang."; reject(new Error("cdn")); };
+    document.head.appendChild(s);
+  });
+  return sqlLoading;
+}
+
+function renderSqlTable(res){
+  const wrap = document.createElement("div");
+  const t = document.createElement("table");
+  t.className = "sql-table";
+  const thead = document.createElement("tr");
+  res.columns.forEach(c => { const th = document.createElement("th"); th.textContent = c; thead.appendChild(th); });
+  t.appendChild(thead);
+  const MAX = 100;
+  res.values.slice(0, MAX).forEach(row => {
+    const tr = document.createElement("tr");
+    row.forEach(v => { const td = document.createElement("td"); td.textContent = v === null ? "NULL" : v; tr.appendChild(td); });
+    t.appendChild(tr);
+  });
+  wrap.appendChild(t);
+  const info = document.createElement("div");
+  info.className = "sql-rowcount";
+  info.textContent = res.values.length + " hàng" + (res.values.length > MAX ? ` (hiển thị ${MAX} hàng đầu)` : "");
+  wrap.appendChild(info);
+  return wrap;
+}
+
+async function runSqlCode(runner){
+  const ta = runner.querySelector("textarea.code");
+  const out = runner.querySelector(".out");
+  const btn = runner.querySelector(".btn-run");
+  out.innerHTML = '<span class="sysmsg">Đang chạy…</span>';
+  btn.disabled = true;
+  try{
+    const SQL = await loadSqlOnce();
+    const db = new SQL.Database();
+    db.run(SEED_SQL);                       // mỗi lần chạy = bộ dữ liệu gốc mới tinh
+    const results = db.exec(ta.value);
+    out.textContent = "";
+    if(results.length === 0){
+      out.innerHTML = '<span class="sysmsg">✅ Lệnh chạy thành công (không có bảng kết quả — thường gặp với INSERT/UPDATE/DELETE). Thêm một câu SELECT phía sau dấu ; để xem dữ liệu.</span>';
+    }else{
+      results.forEach(r => out.appendChild(renderSqlTable(r)));
+    }
+    db.close();
+    markDone(runner.dataset.lesson);
+  }catch(err){
+    out.textContent = "";
+    const s = document.createElement("span");
+    s.className = "err";
+    s.textContent = "❌ Lỗi SQL: " + (err.message || err);
+    out.append(s);
+  }finally{
+    btn.disabled = false;
+  }
+}
+
 /* Gắn sự kiện cho mọi runner */
 document.querySelectorAll(".runner").forEach(runner => {
   const ta = runner.querySelector("textarea.code");
   ta.dataset.initial = ta.value;                      // lưu code gốc để "Làm lại"
   ta.rows = Math.max(ta.rows, ta.value.split("\n").length);
-  runner.querySelector(".btn-run").addEventListener("click", ()=>runCode(runner));
+  const go = runner.classList.contains("sqlrun") ? runSqlCode : runCode;
+  runner.querySelector(".btn-run").addEventListener("click", ()=>go(runner));
   runner.querySelector(".btn-reset").addEventListener("click", ()=>{
     ta.value = ta.dataset.initial;
     runner.querySelector(".out").textContent = "";
@@ -3624,7 +4584,7 @@ document.querySelectorAll(".runner").forEach(runner => {
       ta.value = ta.value.slice(0,s) + "    " + ta.value.slice(en);
       ta.selectionStart = ta.selectionEnd = s + 4;
     }
-    if((e.ctrlKey || e.metaKey) && e.key === "Enter"){ e.preventDefault(); runCode(runner); }
+    if((e.ctrlKey || e.metaKey) && e.key === "Enter"){ e.preventDefault(); go(runner); }
   });
 });
 
@@ -3666,6 +4626,8 @@ document.querySelectorAll(".quiz").forEach((quiz, qi) => {
 });
 
 /* Mở đúng bài theo #hash trên URL */
+/* Ban đầu: thu gọn mọi track, showLesson sẽ mở track chứa bài hiện tại */
+tracks.forEach(t => setTrack(t, false));
 showLesson(location.hash ? location.hash.slice(1) : "l0", false);
 </script>
 </body>
