@@ -245,8 +245,22 @@ details .dbody pre{
 #pystatus.ready::before{content:"✓";color:var(--green);font-weight:800}
 
 /* typing caret in hero demo */
-.caret{display:inline-block;width:9px;height:1.15em;background:var(--amber);vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
+/* ===== Quiz ===== */
+.qz-item{border:1.5px solid var(--line);border-radius:10px;background:#fff;padding:14px 17px;margin:14px 0}
+.qz-q{font-weight:600;margin:0 0 8px}
+.qz-item label{display:flex;align-items:baseline;gap:9px;padding:6px 9px;border-radius:7px;cursor:pointer;font-size:15px}
+.qz-item label:hover{background:#F4F1E7}
+.qz-item input[type=radio]{accent-color:var(--blue);flex-shrink:0}
+.qz-item.right{border-color:var(--green);background:#F1FAF5}
+.qz-item.wrong{border-color:var(--red);background:#FCF2F2}
+.qz-item label.correct-ans{background:#DFF3E8;font-weight:600}
+.qz-why{display:none;margin-top:8px;padding:9px 13px;background:#F6F4EC;border-radius:8px;font-size:14px;color:var(--muted)}
+.quiz.graded .qz-why{display:block}
+.qz-actions{display:flex;align-items:center;gap:14px;margin:18px 0}
+.qz-score{font-weight:800;font-size:18px}
+.qz-score.good{color:var(--green)}
+.qz-score.bad{color:var(--red)}
+.qz-item code{background:var(--code-bg);border:1px solid #DCE4EC;border-radius:5px;padding:1.5px 6px;font-size:.86em}
 </style>
 </head>
 <body>
@@ -268,15 +282,49 @@ details .dbody pre{
   <button class="lesson-link" data-goto="l3"><span class="lnum">3</span> Tính toán với số <span class="tick">✓</span></button>
   <button class="lesson-link" data-goto="l4"><span class="lnum">4</span> Chuỗi (string) <span class="tick">✓</span></button>
   <button class="lesson-link" data-goto="l5"><span class="lnum">5</span> input() — nhận dữ liệu <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="p1"><span class="lnum">✎</span> Luyện tập tổng hợp phần 1 <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="q1"><span class="lnum">?</span> Kiểm tra phần 1 <span class="tick">✓</span></button>
 
   <div class="navgroup">Tư duy lập trình</div>
   <button class="lesson-link" data-goto="l6"><span class="lnum">6</span> Câu điều kiện if / else <span class="tick">✓</span></button>
   <button class="lesson-link" data-goto="l7"><span class="lnum">7</span> Vòng lặp for &amp; while <span class="tick">✓</span></button>
   <button class="lesson-link" data-goto="l8"><span class="lnum">8</span> List — danh sách <span class="tick">✓</span></button>
   <button class="lesson-link" data-goto="l9"><span class="lnum">9</span> Hàm (function) <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="p2"><span class="lnum">✎</span> Luyện tập tổng hợp phần 2 <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="q2"><span class="lnum">?</span> Kiểm tra phần 2 <span class="tick">✓</span></button>
 
   <div class="navgroup">Tổng kết</div>
   <button class="lesson-link" data-goto="l10"><span class="lnum">10</span> Dự án nhỏ &amp; lộ trình tiếp <span class="tick">✓</span></button>
+
+  <div class="navgroup">Nâng cao</div>
+  <button class="lesson-link" data-goto="l11"><span class="lnum">11</span> Xử lý lỗi try / except <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l12"><span class="lnum">12</span> Đọc &amp; ghi file <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l13"><span class="lnum">13</span> List nâng cao <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l14"><span class="lnum">14</span> Module &amp; thư viện <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l15"><span class="lnum">15</span> Class — lập trình hướng đối tượng <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="p3"><span class="lnum">✎</span> Luyện tập tổng hợp phần 3 <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="q3"><span class="lnum">?</span> Kiểm tra phần 3 <span class="tick">✓</span></button>
+
+  <div class="navgroup">Dự án cuối khóa</div>
+  <button class="lesson-link" data-goto="l16"><span class="lnum">16</span> Dự án: Quiz trắc nghiệm <span class="tick">✓</span></button>
+
+  <div class="navgroup">Thực chiến</div>
+  <button class="lesson-link" data-goto="l17"><span class="lnum">17</span> Dictionary chuyên sâu <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l18"><span class="lnum">18</span> Tuple &amp; Set <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l19"><span class="lnum">19</span> Xử lý dữ liệu CSV <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l20"><span class="lnum">20</span> Hàm nâng cao <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l21"><span class="lnum">21</span> JSON — lưu dữ liệu có cấu trúc <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="p4"><span class="lnum">✎</span> Luyện tập tổng hợp phần 4 <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="q4"><span class="lnum">?</span> Kiểm tra phần 4 <span class="tick">✓</span></button>
+
+  <div class="navgroup">Dự án lớn</div>
+  <button class="lesson-link" data-goto="l22"><span class="lnum">22</span> Dự án: Sổ chi tiêu có menu <span class="tick">✓</span></button>
+
+  <div class="navgroup">Python cho Kinh tế 📊</div>
+  <button class="lesson-link" data-goto="e1"><span class="lnum">K1</span> Thống kê mô tả <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="e2"><span class="lnum">K2</span> Toán tài chính <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="e3"><span class="lnum">K3</span> Phân tích dữ liệu kinh doanh <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="e4"><span class="lnum">K4</span> Kinh tế lượng nhập môn <span class="tick">✓</span></button>
 </nav>
 
 <!-- ============ MAIN ============ -->
@@ -1110,7 +1158,2329 @@ else:
     <li><b>Học tiếp các chủ đề:</b> đọc/ghi file, xử lý lỗi (<code class="inline">try/except</code>), thư viện chuẩn, rồi rẽ nhánh theo mục tiêu: phân tích dữ liệu (pandas), web (Flask/Django), hay tự động hóa.</li>
     <li><b>Làm dự án cá nhân nhỏ</b> giải quyết vấn đề thật của chính bạn — cách học bền nhất.</li>
   </ol>
-  <p>Chúc mừng bạn đã hoàn thành khóa học! 🎉 Trang web này luôn ở đây khi bạn cần ôn lại.</p>
+  <p>Chúc mừng bạn đã hoàn thành phần cơ bản! 🎉 Khi đã sẵn sàng, hãy tiếp tục với phần <b>Nâng cao</b> (bài 11–16) ngay trên trang này: xử lý lỗi, đọc/ghi file, class và một dự án tổng kết lớn.</p>
+</section>
+
+
+<!-- ========== BÀI 11 ========== -->
+<section class="lesson" id="l11">
+  <div class="eyebrow">Bài 11 / Nâng cao</div>
+  <h2>Xử lý lỗi với try / except</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Viết chương trình không bị "sập" khi gặp dữ liệu xấu — kỹ năng bắt buộc của mọi chương trình thật.</div>
+
+  <h3>1. Vấn đề: chương trình "sập" vì dữ liệu xấu</h3>
+  <p>Chạy đoạn dưới và khi được hỏi, hãy cố tình gõ chữ <b>"abc"</b> thay vì số — chương trình sẽ sập với lỗi <code class="inline">ValueError</code>:</p>
+
+  <div class="runner" data-lesson="l11">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">chuong_trinh_sap.py</span></div>
+    <textarea class="code" rows="3" spellcheck="false">tuoi = int(input("Bạn bao nhiêu tuổi? "))
+print(f"Sang năm bạn {tuoi + 1} tuổi")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Người dùng thật <b>luôn</b> nhập sai lúc nào đó. Chương trình tốt phải lường trước điều này.</p>
+
+  <h3>2. try / except — "thử làm, nếu lỗi thì..."</h3>
+  <div class="runner" data-lesson="l11">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">try_except.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">try:
+    tuoi = int(input("Bạn bao nhiêu tuổi? "))
+    print(f"Sang năm bạn {tuoi + 1} tuổi")
+except ValueError:
+    print("⚠️ Bạn phải nhập một con số, ví dụ: 25")
+
+print("Chương trình vẫn chạy tiếp bình thường!")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Cách đọc: <b>try</b> — thử chạy khối này; nếu xảy ra lỗi loại <code class="inline">ValueError</code> thì <b>không sập</b> mà nhảy sang khối <b>except</b>. Chạy 2 lần: một lần nhập số, một lần nhập chữ, để thấy 2 nhánh.</p>
+
+  <h3>3. Bắt nhiều loại lỗi khác nhau</h3>
+  <div class="runner" data-lesson="l11">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">nhieu_loai_loi.py</span></div>
+    <textarea class="code" rows="10" spellcheck="false">try:
+    a = int(input("Nhập số bị chia: "))
+    b = int(input("Nhập số chia: "))
+    print(f"{a} / {b} = {a / b}")
+except ValueError:
+    print("⚠️ Phải nhập số!")
+except ZeroDivisionError:
+    print("⚠️ Không thể chia cho 0!")
+except Exception as e:
+    print("⚠️ Có lỗi khác xảy ra:", e)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <ul>
+    <li>Mỗi <code class="inline">except</code> bắt một loại lỗi cụ thể — Python chọn nhánh khớp đầu tiên.</li>
+    <li><code class="inline">except Exception as e</code> là "lưới an toàn" bắt mọi lỗi còn lại; biến <code class="inline">e</code> chứa nội dung lỗi.</li>
+  </ul>
+  <div class="note">💡 <b>Nguyên tắc:</b> bắt lỗi càng cụ thể càng tốt. Đừng lạm dụng <code class="inline">except Exception</code> cho mọi thứ — nó che giấu cả những lỗi bạn cần biết để sửa code.</div>
+
+  <h3>4. Mẫu kinh điển: hỏi lại đến khi nhập đúng</h3>
+  <p>Kết hợp <code class="inline">while True</code> + <code class="inline">try/except</code> + <code class="inline">break</code> — mẫu này bạn sẽ dùng cả đời:</p>
+
+  <div class="runner" data-lesson="l11">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">hoi_den_khi_dung.py</span></div>
+    <textarea class="code" rows="9" spellcheck="false">while True:
+    try:
+        so = int(input("Nhập một số nguyên: "))
+        break                # nhập đúng → thoát vòng lặp
+    except ValueError:
+        print("Chưa đúng, thử lại nhé!")
+
+print(f"Bạn đã nhập: {so}")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 11</span>
+    <p>Viết chương trình tính chia an toàn: hỏi 2 số (hỏi lại nếu nhập không phải số — dùng mẫu while + try), sau đó in kết quả chia. Nếu số chia là 0 thì in "Không chia được cho 0" thay vì để sập.</p>
+    <div class="runner" data-lesson="l11">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_11.py</span></div>
+      <textarea class="code" rows="8" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Viết hàm <code class="inline">nhap_so(cau_hoi)</code> chứa mẫu while+try rồi gọi 2 lần cho gọn. Phép chia đặt trong try với <code class="inline">except ZeroDivisionError</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>def nhap_so(cau_hoi):
+    while True:
+        try:
+            return float(input(cau_hoi))
+        except ValueError:
+            print("Phải nhập số, thử lại!")
+
+a = nhap_so("Số bị chia: ")
+b = nhap_so("Số chia: ")
+try:
+    print(f"Kết quả: {a / b}")
+except ZeroDivisionError:
+    print("Không chia được cho 0")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 12 ========== -->
+<section class="lesson" id="l12">
+  <div class="eyebrow">Bài 12 / Nâng cao</div>
+  <h2>Đọc &amp; ghi file</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Lưu dữ liệu ra file và đọc lại — để dữ liệu không biến mất khi chương trình kết thúc.</div>
+
+  <div class="note">💡 Trên trang web này, file được lưu vào <b>bộ nhớ tạm của trình duyệt</b> (mất khi tải lại trang). Khi cài Python thật trên máy, cùng đoạn code này sẽ tạo <b>file thật</b> trong thư mục của bạn — cách viết y hệt nhau.</div>
+
+  <h3>1. Ghi file với open(..., "w")</h3>
+  <div class="runner" data-lesson="l12">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">ghi_file.py</span></div>
+    <textarea class="code" rows="6" spellcheck="false">with open("nhat_ky.txt", "w", encoding="utf-8") as f:
+    f.write("Ngày 16/7: Hôm nay học Python về file\n")
+    f.write("Ngày 17/7: Ôn lại vòng lặp\n")
+
+print("Đã ghi xong file nhat_ky.txt!")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <ul>
+    <li><code class="inline">"w"</code> = write (ghi mới — <b>xóa sạch nội dung cũ</b> nếu file đã tồn tại).</li>
+    <li><code class="inline">with open(...) as f:</code> — cú pháp chuẩn, tự động đóng file khi xong. Luôn dùng <code class="inline">with</code>!</li>
+    <li><code class="inline">\n</code> là ký tự xuống dòng; <code class="inline">encoding="utf-8"</code> để tiếng Việt không bị lỗi font.</li>
+  </ul>
+
+  <h3>2. Đọc file với open(..., "r")</h3>
+  <p><b>Chạy ô phía trên trước</b> để tạo file, rồi chạy ô này để đọc lại:</p>
+  <div class="runner" data-lesson="l12">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">doc_file.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false"># Đọc toàn bộ
+with open("nhat_ky.txt", "r", encoding="utf-8") as f:
+    noi_dung = f.read()
+print(noi_dung)
+
+# Hoặc đọc từng dòng (hay dùng hơn)
+with open("nhat_ky.txt", "r", encoding="utf-8") as f:
+    for dong in f:
+        print("Dòng:", dong.strip())</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Nếu chạy mà gặp <code class="inline">FileNotFoundError</code> nghĩa là file chưa tồn tại — quay lại chạy ô ghi file trước nhé. Đây cũng chính là lỗi nên bắt bằng try/except trong chương trình thật.</p>
+
+  <h3>3. Ghi thêm với "a" (append)</h3>
+  <div class="runner" data-lesson="l12">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">ghi_them.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">with open("nhat_ky.txt", "a", encoding="utf-8") as f:
+    f.write("Ngày 18/7: Học cách ghi thêm vào file\n")
+
+with open("nhat_ky.txt", "r", encoding="utf-8") as f:
+    print(f.read())
+# Chạy ô này nhiều lần xem điều gì xảy ra 😄</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <table class="cmp">
+    <tr><th>Chế độ</th><th>Nghĩa</th><th>Nếu file đã có</th><th>Nếu file chưa có</th></tr>
+    <tr><td><code>"r"</code></td><td>đọc</td><td>đọc bình thường</td><td>báo lỗi FileNotFoundError</td></tr>
+    <tr><td><code>"w"</code></td><td>ghi mới</td><td><b>xóa sạch</b> rồi ghi</td><td>tạo file mới</td></tr>
+    <tr><td><code>"a"</code></td><td>ghi thêm</td><td>viết tiếp vào cuối</td><td>tạo file mới</td></tr>
+  </table>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 12</span>
+    <p>Viết chương trình "danh sách việc cần làm": (1) hỏi người dùng 3 việc bằng vòng for và ghi từng việc vào file <code class="inline">viec.txt</code>, (2) đọc lại file và in ra kèm số thứ tự dạng <code class="inline">1. đi chợ</code>.</p>
+    <div class="runner" data-lesson="l12">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_12.py</span></div>
+      <textarea class="code" rows="8" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Ghi: <code class="inline">f.write(viec + "\n")</code>. Đánh số khi đọc: tạo biến đếm <code class="inline">stt = 1</code> rồi tăng dần trong vòng lặp (hoặc tìm hiểu <code class="inline">enumerate</code>).</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>with open("viec.txt", "w", encoding="utf-8") as f:
+    for i in range(3):
+        viec = input(f"Việc thứ {i + 1}: ")
+        f.write(viec + "\n")
+
+print("--- DANH SÁCH VIỆC ---")
+with open("viec.txt", "r", encoding="utf-8") as f:
+    stt = 1
+    for dong in f:
+        print(f"{stt}. {dong.strip()}")
+        stt += 1</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 13 ========== -->
+<section class="lesson" id="l13">
+  <div class="eyebrow">Bài 13 / Nâng cao</div>
+  <h2>List nâng cao</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Sắp xếp, cắt lát, chuyển đổi chuỗi ↔ list, và viết list comprehension — cú pháp "đặc sản" của Python.</div>
+
+  <h3>1. Sắp xếp: sort() và sorted()</h3>
+  <div class="runner" data-lesson="l13">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">sap_xep.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false">diem = [7.5, 9.0, 6.0, 8.5, 5.5]
+
+print(sorted(diem))                  # trả về BẢN SAO đã sắp xếp
+print(sorted(diem, reverse=True))    # giảm dần
+print("Bản gốc vẫn nguyên:", diem)
+
+diem.sort()                          # sắp xếp TẠI CHỖ, đổi luôn bản gốc
+print("Sau khi .sort():", diem)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. Cắt lát (slicing)</h3>
+  <p>Cú pháp <code class="inline">list[bắt_đầu:kết_thúc]</code> — lấy từ vị trí bắt đầu đến <b>trước</b> vị trí kết thúc (giống chuỗi ở bài 4):</p>
+  <div class="runner" data-lesson="l13">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">slicing.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">top = ["An", "Bình", "Chi", "Dũng", "Em", "Phúc"]
+
+print(top[:3])      # 3 phần tử đầu (top 3!)
+print(top[3:])      # từ vị trí 3 đến hết
+print(top[-2:])     # 2 phần tử cuối
+print(top[::-1])    # đảo ngược cả list — mẹo hay gặp</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. Chuỗi ↔ List: split() và join()</h3>
+  <div class="runner" data-lesson="l13">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">split_join.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false">cau = "học python mỗi ngày một chút"
+tu = cau.split()               # tách chuỗi thành list các từ
+print(tu)
+print("Số từ:", len(tu))
+
+csv = "xoài,ổi,mít"
+print(csv.split(","))          # tách theo dấu phẩy
+
+print(" | ".join(tu))          # ghép list thành chuỗi</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Bộ đôi này cực quan trọng khi xử lý dữ liệu thật: file CSV, log, câu chữ... đều là chuỗi cần tách thành list để xử lý.</p>
+
+  <h3>4. List comprehension — tạo list trong một dòng</h3>
+  <p>Thay vì viết vòng for 3–4 dòng để tạo list mới, Python cho phép viết gọn trong một dòng. So sánh 2 cách:</p>
+  <div class="runner" data-lesson="l13">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">comprehension.py</span></div>
+    <textarea class="code" rows="12" spellcheck="false"># Cách thường: bình phương các số
+binh_phuong = []
+for x in range(1, 6):
+    binh_phuong.append(x ** 2)
+print(binh_phuong)
+
+# List comprehension — cùng kết quả, 1 dòng:
+binh_phuong = [x ** 2 for x in range(1, 6)]
+print(binh_phuong)
+
+# Kèm điều kiện lọc:
+diem = [7.5, 9.0, 6.0, 8.5, 5.5]
+diem_gioi = [d for d in diem if d >= 8]
+print("Điểm giỏi:", diem_gioi)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Cách đọc <code class="inline">[x ** 2 for x in range(1, 6)]</code>: "tạo list gồm <i>x bình phương</i>, với từng x trong dãy 1–5". Thêm <code class="inline">if</code> ở cuối để lọc. Không bắt buộc phải dùng, nhưng code Python bạn đọc trên mạng dùng nó khắp nơi.</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 13</span>
+    <p>Cho chuỗi tên các học sinh cách nhau bởi dấu phẩy: <code class="inline">"an,BÌNH,Chi ,dũng, EM"</code>. Hãy: (1) tách thành list, (2) dùng list comprehension để chuẩn hóa mỗi tên (cắt khoảng trắng + viết hoa chữ cái đầu bằng <code class="inline">.strip().capitalize()</code>), (3) sắp xếp theo alphabet rồi in từng tên.</p>
+    <div class="runner" data-lesson="l13">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_13.py</span></div>
+      <textarea class="code" rows="6" spellcheck="false">du_lieu = "an,BÌNH,Chi ,dũng, EM"
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Khung: <code class="inline">ten_sach = [t.strip().capitalize() for t in du_lieu.split(",")]</code> rồi <code class="inline">sorted(...)</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>du_lieu = "an,BÌNH,Chi ,dũng, EM"
+ten_sach = [t.strip().capitalize() for t in du_lieu.split(",")]
+for ten in sorted(ten_sach):
+    print(ten)</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 14 ========== -->
+<section class="lesson" id="l14">
+  <div class="eyebrow">Bài 14 / Nâng cao</div>
+  <h2>Module &amp; thư viện chuẩn</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Dùng "kho công cụ" khổng lồ có sẵn của Python thay vì tự viết mọi thứ.</div>
+
+  <h3>1. import là gì?</h3>
+  <p><b>Module</b> là một file Python chứa các hàm viết sẵn. Python đi kèm <b>thư viện chuẩn</b> (standard library) — hàng trăm module cho đủ mọi việc, chỉ cần <code class="inline">import</code> là dùng. Bạn đã gặp <code class="inline">random</code> ở bài 10; đây là những module đáng biết nhất:</p>
+
+  <h3>2. math — toán học</h3>
+  <div class="runner" data-lesson="l14">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">module_math.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">import math
+
+print(math.sqrt(144))       # căn bậc hai
+print(math.pi)              # số pi
+print(math.floor(7.9))      # làm tròn XUỐNG
+print(math.ceil(7.1))       # làm tròn LÊN</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. random — ngẫu nhiên</h3>
+  <div class="runner" data-lesson="l14">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">module_random.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false">import random
+
+print(random.randint(1, 6))         # tung xúc xắc 🎲
+mon_an = ["phở", "bún chả", "cơm tấm", "bánh mì"]
+print("Trưa nay ăn:", random.choice(mon_an))   # chọn ngẫu nhiên
+
+random.shuffle(mon_an)              # xáo trộn list
+print("Sau khi xáo:", mon_an)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Chạy lại vài lần — kết quả mỗi lần mỗi khác, đó chính là "ngẫu nhiên".</p>
+
+  <h3>4. datetime — ngày giờ</h3>
+  <div class="runner" data-lesson="l14">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">module_datetime.py</span></div>
+    <textarea class="code" rows="9" spellcheck="false">from datetime import date
+
+hom_nay = date.today()
+print("Hôm nay:", hom_nay)
+print("Năm:", hom_nay.year, "- Tháng:", hom_nay.month)
+
+tet_2027 = date(2027, 2, 17)
+con_lai = tet_2027 - hom_nay
+print(f"Còn {con_lai.days} ngày nữa đến Tết 2027 🧧")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Chú ý cú pháp mới: <code class="inline">from datetime import date</code> — chỉ lấy đúng thứ cần từ module, sau đó gọi thẳng <code class="inline">date.today()</code> không cần tiền tố.</p>
+
+  <div class="note">💡 <b>Ngoài thư viện chuẩn</b> còn có kho <b>PyPI</b> với hơn 500.000 thư viện của cộng đồng (cài bằng lệnh <code class="inline">pip install</code> khi dùng Python trên máy): pandas cho dữ liệu, requests cho web... Nguyên tắc: <i>trước khi tự viết thứ gì phức tạp, hãy tìm xem đã có thư viện làm sẵn chưa.</i></div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 14</span>
+    <p>Viết máy tạo mật khẩu: tạo mật khẩu ngẫu nhiên 8 ký tự từ chuỗi <code class="inline">"abcdefghjkmnpqrstuvwxyz23456789"</code> (dùng vòng for + <code class="inline">random.choice()</code> + nối chuỗi), rồi in ra.</p>
+    <div class="runner" data-lesson="l14">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_14.py</span></div>
+      <textarea class="code" rows="7" spellcheck="false">import random
+ky_tu = "abcdefghjkmnpqrstuvwxyz23456789"
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody"><code class="inline">random.choice(ky_tu)</code> lấy 1 ký tự ngẫu nhiên. Bắt đầu với <code class="inline">mat_khau = ""</code> rồi cộng dồn 8 lần.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>import random
+ky_tu = "abcdefghjkmnpqrstuvwxyz23456789"
+mat_khau = ""
+for i in range(8):
+    mat_khau += random.choice(ky_tu)
+print("Mật khẩu của bạn:", mat_khau)
+
+# Cách viết "pro" hơn bằng join + comprehension:
+# mat_khau = "".join(random.choice(ky_tu) for i in range(8))</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 15 ========== -->
+<section class="lesson" id="l15">
+  <div class="eyebrow">Bài 15 / Nâng cao</div>
+  <h2>Class — lập trình hướng đối tượng</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Tự tạo "kiểu dữ liệu" của riêng mình — cách các chương trình lớn được tổ chức.</div>
+
+  <h3>1. Ý tưởng: gom dữ liệu + hành vi vào một chỗ</h3>
+  <p>Ở bài 10, ta mô tả sản phẩm bằng dictionary. Nhưng sản phẩm không chỉ có <i>dữ liệu</i> (tên, giá) mà còn có <i>hành vi</i> (bán, nhập kho). <b>Class</b> là "bản thiết kế" gom cả hai vào một chỗ. Từ một class, ta tạo ra nhiều <b>object</b> (đối tượng) — giống một khuôn bánh đúc ra nhiều chiếc bánh:</p>
+
+  <div class="runner" data-lesson="l15">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">class_dau_tien.py</span></div>
+    <textarea class="code" rows="14" spellcheck="false">class ConMeo:
+    def __init__(self, ten, mau_long):
+        self.ten = ten              # thuộc tính (dữ liệu)
+        self.mau_long = mau_long
+
+    def keu(self):                  # method (hành vi)
+        print(f"{self.ten}: Meo meo! 🐱")
+
+    def gioi_thieu(self):
+        print(f"Tôi là {self.ten}, lông màu {self.mau_long}")
+
+# Tạo 2 object từ cùng 1 class:
+mun = ConMeo("Mun", "đen")
+vang = ConMeo("Vàng", "vàng cam")
+
+mun.gioi_thieu()
+vang.gioi_thieu()
+mun.keu()</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <ul>
+    <li><code class="inline">class ConMeo:</code> — định nghĩa bản thiết kế. Tên class viết Hoa Chữ Đầu theo quy ước.</li>
+    <li><code class="inline">__init__</code> — hàm "khởi tạo", tự động chạy khi tạo object mới: <code class="inline">ConMeo("Mun", "đen")</code>.</li>
+    <li><code class="inline">self</code> — nghĩa là "chính con mèo này". <code class="inline">self.ten</code> là tên của <i>riêng</i> nó, nên Mun và Vàng có tên khác nhau dù chung bản thiết kế. Mọi method đều có <code class="inline">self</code> là tham số đầu tiên.</li>
+  </ul>
+
+  <h3>2. Ví dụ thực tế: tài khoản ngân hàng</h3>
+  <div class="runner" data-lesson="l15">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tai_khoan.py</span></div>
+    <textarea class="code" rows="18" spellcheck="false">class TaiKhoan:
+    def __init__(self, chu_tk, so_du=0):
+        self.chu_tk = chu_tk
+        self.so_du = so_du
+
+    def nap_tien(self, so_tien):
+        self.so_du += so_tien
+        print(f"+ Nạp {so_tien:,.0f} đ. Số dư: {self.so_du:,.0f} đ")
+
+    def rut_tien(self, so_tien):
+        if so_tien > self.so_du:
+            print("⚠️ Số dư không đủ!")
+        else:
+            self.so_du -= so_tien
+            print(f"- Rút {so_tien:,.0f} đ. Số dư: {self.so_du:,.0f} đ")
+
+tk = TaiKhoan("Nguyễn Văn An", 100000)
+tk.nap_tien(500000)
+tk.rut_tien(200000)
+tk.rut_tien(9999999)   # thử rút quá số dư</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Thấy điểm hay chứ? Dữ liệu (<code class="inline">so_du</code>) và các quy tắc thao tác với nó (không cho rút quá số dư) nằm <b>cùng một chỗ</b>. Code bên ngoài chỉ cần gọi <code class="inline">tk.rut_tien(...)</code>, không cần biết bên trong kiểm tra thế nào.</p>
+
+  <div class="note">💡 Thực ra bạn đã dùng object từ bài 4: chuỗi là object của class <code class="inline">str</code>, và <code class="inline">.upper()</code>, <code class="inline">.strip()</code> chính là các method của nó. List, dict cũng vậy. Giờ bạn hiểu cú pháp <code class="inline">bien.method()</code> từ đâu ra rồi đấy!</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 15</span>
+    <p>Tạo class <code class="inline">HocSinh</code> có: thuộc tính <code class="inline">ten</code> và <code class="inline">diem</code> (list điểm, khởi tạo rỗng); method <code class="inline">them_diem(d)</code> để append điểm; method <code class="inline">diem_tb()</code> trả về điểm trung bình (trả về 0 nếu chưa có điểm nào). Tạo một học sinh, thêm 3 điểm, in điểm trung bình.</p>
+    <div class="runner" data-lesson="l15">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_15.py</span></div>
+      <textarea class="code" rows="12" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Trong <code class="inline">__init__</code>: <code class="inline">self.diem = []</code>. Điểm TB: <code class="inline">sum(self.diem) / len(self.diem)</code>, nhớ kiểm tra list rỗng trước.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>class HocSinh:
+    def __init__(self, ten):
+        self.ten = ten
+        self.diem = []
+
+    def them_diem(self, d):
+        self.diem.append(d)
+
+    def diem_tb(self):
+        if len(self.diem) == 0:
+            return 0
+        return sum(self.diem) / len(self.diem)
+
+hs = HocSinh("Lan")
+hs.them_diem(8.5)
+hs.them_diem(7.0)
+hs.them_diem(9.5)
+print(f"{hs.ten} có điểm TB: {hs.diem_tb():.1f}")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 16 ========== -->
+<section class="lesson" id="l16">
+  <div class="eyebrow">Bài 16 / Dự án cuối khóa</div>
+  <h2>Dự án: Quiz trắc nghiệm 🏆</h2>
+  <div class="goal"><b>🎯 Mục tiêu</b> Tự xây một chương trình hoàn chỉnh dùng gần như <b>mọi thứ</b> đã học: list, dict, hàm, vòng lặp, if, try/except, f-string, random.</div>
+
+  <h3>1. Chạy thử bản mẫu trước</h3>
+  <p>Đọc kỹ từng dòng — mọi thứ trong này bạn đều đã học. Chạy và chơi thử:</p>
+
+  <div class="runner" data-lesson="l16">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">quiz.py</span></div>
+    <textarea class="code" rows="24" spellcheck="false">import random
+
+cau_hoi = [
+    {"hoi": "Python đếm vị trí bắt đầu từ số mấy?",
+     "dap_an": ["0", "1", "2"], "dung": 1},
+    {"hoi": "Lệnh nào in ra màn hình?",
+     "dap_an": ["input()", "print()", "len()"], "dung": 2},
+    {"hoi": "Kiểu dữ liệu của 3.14 là gì?",
+     "dap_an": ["int", "str", "float"], "dung": 3},
+    {"hoi": "Từ khóa nào thoát khỏi vòng lặp?",
+     "dap_an": ["break", "stop", "exit"], "dung": 1},
+]
+
+random.shuffle(cau_hoi)      # xáo trộn thứ tự câu hỏi
+diem = 0
+
+for i, ch in enumerate(cau_hoi):
+    print(f"\nCâu {i + 1}: {ch['hoi']}")
+    for j, da in enumerate(ch["dap_an"]):
+        print(f"  {j + 1}. {da}")
+    try:
+        chon = int(input("Chọn đáp án (1/2/3): "))
+    except ValueError:
+        chon = 0
+    if chon == ch["dung"]:
+        print("✅ Chính xác!")
+        diem += 1
+    else:
+        print(f"❌ Sai rồi. Đáp án đúng: {ch['dap_an'][ch['dung'] - 1]}")
+
+print(f"\n🏁 Kết quả: {diem}/{len(cau_hoi)} câu đúng")
+if diem == len(cau_hoi):
+    print("🏆 Xuất sắc! Bạn nắm chắc kiến thức rồi!")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Điểm mới duy nhất: <code class="inline">enumerate(cau_hoi)</code> — khi duyệt list, nó cho bạn <b>cả số thứ tự lẫn phần tử</b> cùng lúc (<code class="inline">i</code> và <code class="inline">ch</code>). Rất tiện, dùng thay cho biến đếm thủ công.</p>
+
+  <h3>2. Nhiệm vụ của bạn — nâng cấp chương trình</h3>
+  <p>Sửa trực tiếp code ở trên theo các mức, từ dễ đến khó:</p>
+  <ol>
+    <li><b>Mức 1:</b> Thêm ít nhất 3 câu hỏi của riêng bạn (về bất cứ chủ đề gì).</li>
+    <li><b>Mức 2:</b> Nếu người chơi nhập số ngoài 1–3, hỏi lại đến khi hợp lệ (mẫu while + try của bài 11).</li>
+    <li><b>Mức 3:</b> Sau khi chơi xong, ghi kết quả vào file <code class="inline">ket_qua.txt</code> dạng ghi thêm ("a"), rồi đọc và in lịch sử các lần chơi (bài 12).</li>
+    <li><b>Mức 4 (thử thách):</b> Bọc trò chơi trong hàm <code class="inline">choi_quiz()</code> trả về điểm; hỏi "Chơi lại không (c/k)?" và lặp đến khi người chơi gõ "k".</li>
+  </ol>
+  <details><summary>Lời giải tham khảo mức 2</summary><div class="dbody"><pre>def chon_dap_an():
+    while True:
+        try:
+            chon = int(input("Chọn đáp án (1/2/3): "))
+            if 1 <= chon <= 3:
+                return chon
+            print("Chỉ được chọn 1, 2 hoặc 3!")
+        except ValueError:
+            print("Phải nhập số!")
+
+# Trong vòng lặp chính, thay khối try cũ bằng:
+# chon = chon_dap_an()</pre></div></details>
+  <details><summary>Lời giải tham khảo mức 3</summary><div class="dbody"><pre># Sau khi tính xong điểm:
+with open("ket_qua.txt", "a", encoding="utf-8") as f:
+    f.write(f"Đúng {diem}/{len(cau_hoi)} câu\n")
+
+print("\n--- LỊCH SỬ CHƠI ---")
+with open("ket_qua.txt", "r", encoding="utf-8") as f:
+    for i, dong in enumerate(f):
+        print(f"Lần {i + 1}: {dong.strip()}")</pre></div></details>
+
+  <h3>3. Lời kết 🎓</h3>
+  <p>Nếu bạn tự làm được đến mức 3–4, bạn đã vượt qua giai đoạn khó nhất của việc học lập trình: <b>từ đọc hiểu code sang tự viết chương trình</b>. Kiến thức 17 bài này (biến, kiểu dữ liệu, điều kiện, vòng lặp, list, dict, hàm, xử lý lỗi, file, module, class) chính là nền tảng chung của mọi lập trình viên Python.</p>
+  <p>Bước tiếp theo: phần <b>Thực chiến</b> (bài 17–22) ngay trên trang này — bạn sẽ xử lý dữ liệu thật dạng CSV, học JSON, và xây một phần mềm quản lý chi tiêu hoàn chỉnh có menu. 🎉</p>
+</section>
+
+
+<!-- ========== BÀI 17 ========== -->
+<section class="lesson" id="l17">
+  <div class="eyebrow">Bài 17 / Thực chiến</div>
+  <h2>Dictionary chuyên sâu</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Duyệt dict, lấy dữ liệu an toàn bằng .get(), đếm tần suất, và làm việc với dict lồng nhau — kỹ thuật xuất hiện trong 90% chương trình xử lý dữ liệu.</div>
+
+  <h3>1. Duyệt dictionary: keys, values, items</h3>
+  <div class="runner" data-lesson="l17">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">duyet_dict.py</span></div>
+    <textarea class="code" rows="10" spellcheck="false">gia_menu = {"phở": 45000, "bún chả": 50000, "cơm tấm": 40000}
+
+for mon in gia_menu:                 # duyệt qua các key
+    print(mon)
+
+print("---")
+for mon, gia in gia_menu.items():    # duyệt cả key lẫn value
+    print(f"{mon}: {gia:,.0f} đ")
+
+print("Tổng nếu ăn hết menu:", sum(gia_menu.values()))</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <ul>
+    <li><code class="inline">.keys()</code> — các nhãn, <code class="inline">.values()</code> — các giá trị, <code class="inline">.items()</code> — từng cặp (nhãn, giá trị).</li>
+    <li><code class="inline">for mon, gia in ...items()</code> — nhận 2 biến cùng lúc mỗi vòng lặp.</li>
+  </ul>
+
+  <h3>2. Lấy dữ liệu an toàn với .get()</h3>
+  <p>Truy cập key không tồn tại bằng <code class="inline">[ ]</code> sẽ gây lỗi <code class="inline">KeyError</code>. Dùng <code class="inline">.get()</code> để an toàn:</p>
+  <div class="runner" data-lesson="l17">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">get_an_toan.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">gia_menu = {"phở": 45000, "bún chả": 50000}
+
+print(gia_menu.get("phở"))            # có → trả về giá
+print(gia_menu.get("bánh mì"))        # không có → None, không sập
+print(gia_menu.get("bánh mì", 0))     # không có → trả về 0 (mặc định tự chọn)
+
+# print(gia_menu["bánh mì"])   # bỏ dấu # ở đầu dòng này để xem lỗi KeyError</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. Kỹ thuật kinh điển: đếm tần suất</h3>
+  <p>"Thứ gì xuất hiện bao nhiêu lần?" — câu hỏi này có ở khắp nơi (từ khóa nào được tìm nhiều nhất, sản phẩm nào bán chạy nhất...). Dict + <code class="inline">.get()</code> giải quyết gọn gàng:</p>
+  <div class="runner" data-lesson="l17">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">dem_tan_suat.py</span></div>
+    <textarea class="code" rows="10" spellcheck="false">don_hang = ["áo", "quần", "áo", "mũ", "áo", "quần", "áo"]
+
+dem = {}
+for mon in don_hang:
+    dem[mon] = dem.get(mon, 0) + 1   # chưa có thì tính là 0, rồi +1
+
+print(dem)
+for mon, so_lan in dem.items():
+    print(f"{mon}: bán được {so_lan} cái")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Dòng <code class="inline">dem[mon] = dem.get(mon, 0) + 1</code> đáng học thuộc: lấy số đếm hiện tại (mặc định 0 nếu lần đầu gặp), cộng 1, ghi lại.</p>
+
+  <h3>4. Dict lồng nhau — dữ liệu thật trông thế này</h3>
+  <div class="runner" data-lesson="l17">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">dict_long_nhau.py</span></div>
+    <textarea class="code" rows="12" spellcheck="false">hoc_sinh = {
+    "hs01": {"ten": "Lan", "diem": [8.5, 9.0]},
+    "hs02": {"ten": "Minh", "diem": [7.0, 8.0]},
+}
+
+# Đi sâu từng lớp: dict → dict → list
+print(hoc_sinh["hs01"]["ten"])
+print(hoc_sinh["hs01"]["diem"][0])
+
+for ma, ho_so in hoc_sinh.items():
+    tb = sum(ho_so["diem"]) / len(ho_so["diem"])
+    print(f"{ma} - {ho_so['ten']}: điểm TB {tb:.1f}")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 17</span>
+    <p>Cho câu: <code class="inline">"python dễ mà python vui python mạnh mà vui"</code>. Hãy tách thành các từ, đếm tần suất từng từ, rồi in ra chỉ những từ xuất hiện <b>từ 2 lần trở lên</b>.</p>
+    <div class="runner" data-lesson="l17">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_17.py</span></div>
+      <textarea class="code" rows="7" spellcheck="false">cau = "python dễ mà python vui python mạnh mà vui"
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Tách từ: <code class="inline">cau.split()</code> (bài 13). Đếm: mẫu <code class="inline">.get(tu, 0) + 1</code>. Lọc: duyệt <code class="inline">.items()</code> với if.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>cau = "python dễ mà python vui python mạnh mà vui"
+dem = {}
+for tu in cau.split():
+    dem[tu] = dem.get(tu, 0) + 1
+
+for tu, so_lan in dem.items():
+    if so_lan >= 2:
+        print(f"'{tu}' xuất hiện {so_lan} lần")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 18 ========== -->
+<section class="lesson" id="l18">
+  <div class="eyebrow">Bài 18 / Thực chiến</div>
+  <h2>Tuple &amp; Set</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Biết đủ 4 cấu trúc dữ liệu của Python và chọn đúng loại cho từng việc.</div>
+
+  <h3>1. Tuple — list "khóa cứng"</h3>
+  <p>Tuple giống list nhưng dùng ngoặc tròn <code class="inline">( )</code> và <b>không thể thay đổi</b> sau khi tạo. Dùng cho dữ liệu cố định: tọa độ, ngày tháng, cấu hình...</p>
+  <div class="runner" data-lesson="l18">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tuple.py</span></div>
+    <textarea class="code" rows="9" spellcheck="false">toa_do = (21.03, 105.85)     # vĩ độ, kinh độ của Hà Nội
+print(toa_do[0])              # đọc bằng vị trí, giống list
+
+# "Mở gói" (unpacking) — gán từng phần tử vào từng biến:
+vi_do, kinh_do = toa_do
+print(f"Vĩ độ {vi_do}, kinh độ {kinh_do}")
+
+# toa_do[0] = 99   # bỏ dấu # để thấy lỗi: tuple không sửa được!</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Unpacking còn cho phép mẹo đổi giá trị 2 biến nổi tiếng của Python: <code class="inline">a, b = b, a</code>. Và một hàm có thể <b>trả về nhiều giá trị</b> — thực chất là trả về tuple:</p>
+  <div class="runner" data-lesson="l18">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tra_ve_nhieu.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">def thong_ke(ds):
+    return min(ds), max(ds), sum(ds) / len(ds)
+
+nho_nhat, lon_nhat, trung_binh = thong_ke([4, 8, 15, 16, 23, 42])
+print(f"Min: {nho_nhat}, Max: {lon_nhat}, TB: {trung_binh:.1f}")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. Set — tập hợp không trùng lặp</h3>
+  <p>Set dùng ngoặc nhọn <code class="inline">{ }</code>, <b>tự động loại bỏ phần tử trùng</b> và không có thứ tự. Siêu tiện cho 2 việc: khử trùng lặp và so sánh 2 nhóm:</p>
+  <div class="runner" data-lesson="l18">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">set.py</span></div>
+    <textarea class="code" rows="12" spellcheck="false"># Khử trùng lặp trong 1 dòng:
+email_dang_ky = ["a@gmail.com", "b@gmail.com", "a@gmail.com", "c@gmail.com", "b@gmail.com"]
+email_duy_nhat = set(email_dang_ky)
+print(f"{len(email_dang_ky)} lượt đăng ký, {len(email_duy_nhat)} người thật")
+
+# So sánh 2 nhóm:
+lop_toan = {"An", "Bình", "Chi", "Dũng"}
+lop_van  = {"Bình", "Dũng", "Em", "Phúc"}
+print("Học cả 2 lớp:", lop_toan & lop_van)    # giao
+print("Học ít nhất 1 lớp:", lop_toan | lop_van)  # hợp
+print("Chỉ học toán:", lop_toan - lop_van)    # hiệu</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. Chọn cấu trúc nào? Bảng tổng kết 4 loại</h3>
+  <table class="cmp">
+    <tr><th>Loại</th><th>Ký hiệu</th><th>Đặc điểm</th><th>Dùng khi</th></tr>
+    <tr><td>List</td><td><code>[1, 2, 3]</code></td><td>có thứ tự, sửa được</td><td>Danh sách chung — mặc định nên dùng</td></tr>
+    <tr><td>Tuple</td><td><code>(1, 2, 3)</code></td><td>có thứ tự, KHÔNG sửa được</td><td>Dữ liệu cố định, trả về nhiều giá trị</td></tr>
+    <tr><td>Dict</td><td><code>{"a": 1}</code></td><td>tra cứu theo nhãn</td><td>Dữ liệu có tên trường, đếm tần suất</td></tr>
+    <tr><td>Set</td><td><code>{1, 2, 3}</code></td><td>không trùng, không thứ tự</td><td>Khử trùng lặp, so sánh nhóm</td></tr>
+  </table>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 18</span>
+    <p>Cho 2 list khách hàng: mua tháng 6 và mua tháng 7 (có trùng nhau). Hãy in: (1) số khách duy nhất từng mua hàng, (2) khách trung thành (mua cả 2 tháng), (3) khách mới của tháng 7 (tháng 7 có mà tháng 6 không).</p>
+    <div class="runner" data-lesson="l18">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_18.py</span></div>
+      <textarea class="code" rows="7" spellcheck="false">thang_6 = ["Lan", "Minh", "Hùng", "Lan", "Trang"]
+thang_7 = ["Minh", "Trang", "Quân", "Vy", "Minh"]
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Đổi cả 2 sang set trước: <code class="inline">t6 = set(thang_6)</code>. Rồi dùng <code class="inline">|</code> (hợp), <code class="inline">&amp;</code> (giao), <code class="inline">-</code> (hiệu).</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>thang_6 = ["Lan", "Minh", "Hùng", "Lan", "Trang"]
+thang_7 = ["Minh", "Trang", "Quân", "Vy", "Minh"]
+t6, t7 = set(thang_6), set(thang_7)
+print("Tổng khách duy nhất:", len(t6 | t7))
+print("Khách trung thành:", t6 & t7)
+print("Khách mới tháng 7:", t7 - t6)</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 19 ========== -->
+<section class="lesson" id="l19">
+  <div class="eyebrow">Bài 19 / Thực chiến</div>
+  <h2>Xử lý dữ liệu dạng CSV</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Biến dữ liệu thô nhiều dòng thành con số có ý nghĩa — phiên bản mini của công việc "phân tích dữ liệu".</div>
+
+  <h3>1. CSV là gì?</h3>
+  <p>CSV (Comma-Separated Values) là định dạng dữ liệu bảng phổ biến nhất thế giới: mỗi dòng một bản ghi, các cột cách nhau bằng dấu phẩy. File Excel xuất ra được CSV, mọi hệ thống đều đọc được nó. Ví dụ dữ liệu bán hàng:</p>
+  <div class="runner" data-lesson="l19">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tach_dong.py</span></div>
+    <textarea class="code" rows="12" spellcheck="false">du_lieu = """ao,2,150000
+quan,1,320000
+ao,3,150000
+mu,5,80000
+quan,2,320000"""
+
+# splitlines() tách chuỗi nhiều dòng thành list các dòng
+for dong in du_lieu.splitlines():
+    ten, so_luong, don_gia = dong.split(",")   # tách cột + unpacking!
+    print(f"Sản phẩm: {ten:6} | SL: {so_luong} | Đơn giá: {don_gia}")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <ul>
+    <li>Chuỗi <code class="inline">"""..."""</code> (3 dấu nháy) viết được nhiều dòng.</li>
+    <li>Kết hợp <code class="inline">split(",")</code> với unpacking của bài 18 — mỗi cột vào một biến.</li>
+    <li><code class="inline">{ten:6}</code> trong f-string: căn cột rộng 6 ký tự cho bảng thẳng hàng.</li>
+  </ul>
+  <div class="warn">⚠️ Dữ liệu tách từ chuỗi luôn là <b>chuỗi</b> — muốn tính toán phải đổi <code class="inline">int()</code>/<code class="inline">float()</code>, giống bẫy input() ở bài 5.</div>
+
+  <h3>2. Tính toán: tổng doanh thu và doanh thu theo sản phẩm</h3>
+  <p>Giờ kết hợp với kỹ thuật cộng dồn theo nhóm bằng dict (bài 17):</p>
+  <div class="runner" data-lesson="l19">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">thong_ke_ban_hang.py</span></div>
+    <textarea class="code" rows="16" spellcheck="false">du_lieu = """ao,2,150000
+quan,1,320000
+ao,3,150000
+mu,5,80000
+quan,2,320000"""
+
+tong = 0
+theo_sp = {}
+for dong in du_lieu.splitlines():
+    ten, so_luong, don_gia = dong.split(",")
+    tien = int(so_luong) * int(don_gia)
+    tong += tien
+    theo_sp[ten] = theo_sp.get(ten, 0) + tien
+
+print(f"TỔNG DOANH THU: {tong:,.0f} đ")
+print("-" * 30)
+for ten, tien in theo_sp.items():
+    print(f"{ten:6}: {tien:>12,.0f} đ")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Đây chính là bộ khung của việc phân tích dữ liệu: <b>đọc từng dòng → tách cột → đổi kiểu → cộng dồn theo nhóm → in báo cáo</b>. Thư viện pandas sau này làm việc này trong 2 dòng, nhưng hiểu được bản chất như trên mới là nền tảng.</p>
+
+  <h3>3. Kết hợp với file — trọn quy trình</h3>
+  <div class="runner" data-lesson="l19">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">csv_voi_file.py</span></div>
+    <textarea class="code" rows="14" spellcheck="false"># Bước 1: ghi dữ liệu ra file (giả lập file xuất từ Excel)
+with open("ban_hang.csv", "w", encoding="utf-8") as f:
+    f.write("ao,2,150000\n")
+    f.write("mu,5,80000\n")
+    f.write("ao,1,150000\n")
+
+# Bước 2: đọc file và thống kê
+tong = 0
+with open("ban_hang.csv", "r", encoding="utf-8") as f:
+    for dong in f:
+        ten, sl, gia = dong.strip().split(",")
+        tong += int(sl) * int(gia)
+
+print(f"Doanh thu từ file: {tong:,.0f} đ")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Chú ý <code class="inline">dong.strip()</code> trước khi split — để bỏ ký tự xuống dòng <code class="inline">\n</code> ở cuối mỗi dòng đọc từ file. Quên bước này là lỗi kinh điển!</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 19</span>
+    <p>Cho bảng điểm CSV dạng <code class="inline">tên,điểm_toán,điểm_văn</code>. Hãy in ra: điểm trung bình 2 môn của từng bạn, và tên bạn có điểm TB cao nhất.</p>
+    <div class="runner" data-lesson="l19">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_19.py</span></div>
+      <textarea class="code" rows="9" spellcheck="false">bang_diem = """Lan,8.5,7.0
+Minh,6.0,9.0
+Chi,9.5,8.5
+Hung,7.0,7.5"""
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Điểm là số lẻ → <code class="inline">float()</code>. Tìm cao nhất: tạo 2 biến <code class="inline">tb_max = 0</code> và <code class="inline">ten_max = ""</code>, trong vòng lặp nếu <code class="inline">tb &gt; tb_max</code> thì cập nhật cả hai.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>bang_diem = """Lan,8.5,7.0
+Minh,6.0,9.0
+Chi,9.5,8.5
+Hung,7.0,7.5"""
+
+tb_max = 0
+ten_max = ""
+for dong in bang_diem.splitlines():
+    ten, toan, van = dong.split(",")
+    tb = (float(toan) + float(van)) / 2
+    print(f"{ten}: TB = {tb:.2f}")
+    if tb > tb_max:
+        tb_max = tb
+        ten_max = ten
+
+print(f"Cao nhất: {ten_max} ({tb_max:.2f})")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 20 ========== -->
+<section class="lesson" id="l20">
+  <div class="eyebrow">Bài 20 / Thực chiến</div>
+  <h2>Hàm nâng cao</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Hiểu phạm vi biến, dùng lambda và <code class="inline">sorted(key=...)</code> — chìa khóa để đọc hiểu code Python "ngoài đời".</div>
+
+  <h3>1. Phạm vi biến (scope) — biến trong hàm là "chuyện nội bộ"</h3>
+  <div class="runner" data-lesson="l20">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">scope.py</span></div>
+    <textarea class="code" rows="10" spellcheck="false">def tinh_thue(gia):
+    thue = gia * 0.1        # biến "thue" chỉ sống BÊN TRONG hàm
+    return thue
+
+print(tinh_thue(100000))
+
+# print(thue)   # bỏ dấu # → lỗi NameError: bên ngoài không thấy "thue"
+
+x = 5                       # biến bên ngoài (toàn cục)
+def doc_x():
+    print("Trong hàm vẫn đọc được x =", x)   # đọc thì được
+doc_x()</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Quy tắc thực dụng: hàm nên nhận dữ liệu qua <b>tham số</b> và trả kết quả qua <b>return</b>, hạn chế đụng vào biến bên ngoài. Hàm như vậy dễ kiểm tra, dễ tái sử dụng.</p>
+
+  <h3>2. sorted với key — sắp xếp theo tiêu chí tùy chọn</h3>
+  <p>Bài 13 bạn đã sort số và chữ. Nhưng sắp xếp <b>dữ liệu phức tạp</b> (list các dict) theo tiêu chí nào là do bạn quyết định, qua tham số <code class="inline">key</code>:</p>
+  <div class="runner" data-lesson="l20">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">sorted_key.py</span></div>
+    <textarea class="code" rows="14" spellcheck="false">san_pham = [
+    {"ten": "áo", "gia": 150000, "ban": 42},
+    {"ten": "quần", "gia": 320000, "ban": 15},
+    {"ten": "mũ", "gia": 80000, "ban": 77},
+]
+
+def lay_gia(sp):
+    return sp["gia"]
+
+theo_gia = sorted(san_pham, key=lay_gia)   # sắp theo giá tăng dần
+for sp in theo_gia:
+    print(f"{sp['ten']:5} - {sp['gia']:,.0f} đ")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Điều mới mẻ ở đây: ta truyền <b>chính hàm <code class="inline">lay_gia</code></b> (không có ngoặc!) vào <code class="inline">sorted</code>. sorted sẽ tự gọi hàm đó với từng phần tử để biết "so sánh dựa trên gì". Trong Python, hàm cũng là một giá trị có thể truyền đi như số hay chuỗi.</p>
+
+  <h3>3. lambda — hàm mini không tên</h3>
+  <p>Viết hẳn một hàm 2 dòng chỉ để lấy <code class="inline">sp["gia"]</code> hơi cồng kềnh. <code class="inline">lambda</code> cho phép viết hàm một biểu-thức ngay tại chỗ:</p>
+  <div class="runner" data-lesson="l20">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">lambda.py</span></div>
+    <textarea class="code" rows="13" spellcheck="false">san_pham = [
+    {"ten": "áo", "gia": 150000, "ban": 42},
+    {"ten": "quần", "gia": 320000, "ban": 15},
+    {"ten": "mũ", "gia": 80000, "ban": 77},
+]
+
+# Top bán chạy: sắp theo số lượng bán, giảm dần
+ban_chay = sorted(san_pham, key=lambda sp: sp["ban"], reverse=True)
+print("BẢNG XẾP HẠNG BÁN CHẠY:")
+for i, sp in enumerate(ban_chay):
+    print(f"  {i + 1}. {sp['ten']} — {sp['ban']} cái")
+
+print("Sản phẩm đắt nhất:", max(san_pham, key=lambda sp: sp["gia"])["ten"])</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Đọc <code class="inline">lambda sp: sp["ban"]</code> là: "hàm nhận sp, trả về sp['ban']". <code class="inline">max</code>/<code class="inline">min</code> cũng nhận <code class="inline">key</code> — nên tìm "sản phẩm đắt nhất" chỉ mất 1 dòng.</p>
+  <div class="note">💡 lambda chỉ nên dùng cho logic 1 dòng đơn giản. Logic dài hơn → viết hàm <code class="inline">def</code> có tên cho dễ đọc.</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 20</span>
+    <p>Với list <code class="inline">san_pham</code> ở trên, tính <b>doanh thu</b> mỗi sản phẩm (giá × số bán) rồi in bảng xếp hạng sản phẩm theo doanh thu giảm dần, kèm số tiền.</p>
+    <div class="runner" data-lesson="l20">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_20.py</span></div>
+      <textarea class="code" rows="9" spellcheck="false">san_pham = [
+    {"ten": "áo", "gia": 150000, "ban": 42},
+    {"ten": "quần", "gia": 320000, "ban": 15},
+    {"ten": "mũ", "gia": 80000, "ban": 77},
+]
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Doanh thu ngay trong lambda: <code class="inline">key=lambda sp: sp["gia"] * sp["ban"]</code>, thêm <code class="inline">reverse=True</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>xep_hang = sorted(san_pham, key=lambda sp: sp["gia"] * sp["ban"], reverse=True)
+for i, sp in enumerate(xep_hang):
+    doanh_thu = sp["gia"] * sp["ban"]
+    print(f"{i + 1}. {sp['ten']:5} — {doanh_thu:,.0f} đ")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 21 ========== -->
+<section class="lesson" id="l21">
+  <div class="eyebrow">Bài 21 / Thực chiến</div>
+  <h2>JSON — lưu dữ liệu có cấu trúc</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Lưu nguyên cả dict/list ra file và đọc lại y nguyên — cách mọi ứng dụng hiện đại lưu trữ và trao đổi dữ liệu.</div>
+
+  <h3>1. Vấn đề: file text thường "quên" cấu trúc</h3>
+  <p>Ở bài 12, ta ghi file dạng chuỗi thô — đọc lại thì phải tự tách, tự đổi kiểu, dễ lỗi. <b>JSON</b> (JavaScript Object Notation) giải quyết việc này: nó là định dạng văn bản trông <i>gần giống hệt</i> dict/list của Python, và Python có sẵn module <code class="inline">json</code> để chuyển đổi 2 chiều:</p>
+
+  <div class="runner" data-lesson="l21">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">json_co_ban.py</span></div>
+    <textarea class="code" rows="13" spellcheck="false">import json
+
+nguoi_dung = {"ten": "Lan", "tuoi": 21, "so_thich": ["đọc sách", "code"]}
+
+# dict → chuỗi JSON (để lưu / gửi đi)
+chuoi = json.dumps(nguoi_dung, ensure_ascii=False)
+print("Dạng JSON:", chuoi)
+print("Kiểu:", type(chuoi))
+
+# chuỗi JSON → dict (đọc về, dùng lại như thường)
+phuc_hoi = json.loads(chuoi)
+print("Tên:", phuc_hoi["ten"], "- Sở thích đầu:", phuc_hoi["so_thich"][0])</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <ul>
+    <li><code class="inline">json.dumps()</code> — <b>dump s</b>tring: đổi dữ liệu Python thành chuỗi JSON.</li>
+    <li><code class="inline">json.loads()</code> — <b>load s</b>tring: đổi ngược lại, giữ nguyên cấu trúc và kiểu dữ liệu.</li>
+    <li><code class="inline">ensure_ascii=False</code> — để tiếng Việt hiển thị đúng.</li>
+  </ul>
+
+  <h3>2. Lưu ra file và đọc lại: dump / load</h3>
+  <div class="runner" data-lesson="l21">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">json_file.py</span></div>
+    <textarea class="code" rows="16" spellcheck="false">import json
+
+danh_ba = [
+    {"ten": "Lan", "sdt": "0901234567"},
+    {"ten": "Minh", "sdt": "0912345678"},
+]
+
+# Lưu cả list dict ra file — 1 lệnh!
+with open("danh_ba.json", "w", encoding="utf-8") as f:
+    json.dump(danh_ba, f, ensure_ascii=False, indent=2)
+
+# Đọc lại — nhận về đúng list dict như cũ
+with open("danh_ba.json", "r", encoding="utf-8") as f:
+    du_lieu = json.load(f)
+
+print(f"Đọc được {len(du_lieu)} liên hệ:")
+for lh in du_lieu:
+    print(f"  {lh['ten']}: {lh['sdt']}")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p><code class="inline">dump/load</code> (không có "s") làm việc thẳng với file. <code class="inline">indent=2</code> để file dễ đọc bằng mắt. So với bài 12: không cần tự tách chuỗi, không lo đổi kiểu — cấu trúc được giữ nguyên vẹn.</p>
+
+  <h3>3. Mẫu quan trọng: đọc dữ liệu cũ nếu có</h3>
+  <p>Ứng dụng thật khi khởi động phải nạp dữ liệu lần trước; nếu chưa có file (lần chạy đầu) thì bắt đầu rỗng. Kết hợp với try/except bài 11:</p>
+  <div class="runner" data-lesson="l21">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">nap_du_lieu.py</span></div>
+    <textarea class="code" rows="12" spellcheck="false">import json
+
+def nap_danh_ba():
+    try:
+        with open("danh_ba.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []            # lần đầu chạy: danh bạ rỗng
+
+danh_ba = nap_danh_ba()
+print(f"Đã nạp {len(danh_ba)} liên hệ")
+# (Nếu bạn đã chạy ô phía trên thì sẽ thấy 2, chưa thì 0)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <div class="note">💡 JSON còn là "ngôn ngữ chung" của Internet: khi Python nói chuyện với web (API), dữ liệu gửi qua lại chính là JSON. Học xong bài này, bạn đã sẵn sàng cho chủ đề gọi API sau này.</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 21</span>
+    <p>Viết chương trình "hồ sơ cá nhân": hỏi người dùng tên và tuổi, tạo dict, lưu ra file <code class="inline">ho_so.json</code>. Sau đó đọc lại file và in lời chào từ dữ liệu vừa đọc.</p>
+    <div class="runner" data-lesson="l21">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_21.py</span></div>
+      <textarea class="code" rows="8" spellcheck="false">import json
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Tạo <code class="inline">ho_so = {"ten": ..., "tuoi": ...}</code> từ input (tuổi nhớ <code class="inline">int()</code>), rồi <code class="inline">json.dump</code>, rồi <code class="inline">json.load</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>import json
+
+ho_so = {
+    "ten": input("Tên bạn: "),
+    "tuoi": int(input("Tuổi: ")),
+}
+with open("ho_so.json", "w", encoding="utf-8") as f:
+    json.dump(ho_so, f, ensure_ascii=False)
+
+with open("ho_so.json", "r", encoding="utf-8") as f:
+    du_lieu = json.load(f)
+print(f"Chào {du_lieu['ten']}, {du_lieu['tuoi']} tuổi!")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 22 ========== -->
+<section class="lesson" id="l22">
+  <div class="eyebrow">Bài 22 / Dự án lớn</div>
+  <h2>Dự án: Sổ quản lý chi tiêu có menu 💰</h2>
+  <div class="goal"><b>🎯 Mục tiêu</b> Xây một phần mềm mini hoàn chỉnh: chạy liên tục bằng menu, dữ liệu có cấu trúc, lưu/nạp bằng JSON, thống kê bằng dict. Đây là bài kiểm tra tổng hợp của toàn khóa.</div>
+
+  <h3>1. Cấu trúc một phần mềm có menu</h3>
+  <p>Mọi ứng dụng dòng lệnh đều có chung bộ khung: <b>nạp dữ liệu → vòng lặp menu → xử lý lựa chọn → lưu dữ liệu</b>. Chạy thử bản hoàn chỉnh dưới đây (đọc kỹ từng hàm — không có gì bạn chưa học):</p>
+
+  <div class="runner" data-lesson="l22">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">so_chi_tieu.py</span></div>
+    <textarea class="code" rows="30" spellcheck="false">import json
+
+def nap():
+    try:
+        with open("chi_tieu.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+
+def luu(ds):
+    with open("chi_tieu.json", "w", encoding="utf-8") as f:
+        json.dump(ds, f, ensure_ascii=False, indent=2)
+
+def them(ds):
+    mo_ta = input("Chi cho việc gì? ")
+    tien = float(input("Số tiền (đ): "))
+    nhom = input("Nhóm (ăn uống / đi lại / khác): ")
+    ds.append({"mo_ta": mo_ta, "tien": tien, "nhom": nhom})
+    luu(ds)
+    print("✅ Đã ghi và lưu!")
+
+def xem(ds):
+    if not ds:
+        print("(Chưa có khoản chi nào)")
+        return
+    for i, khoan in enumerate(ds):
+        print(f"{i + 1}. {khoan['mo_ta']} — {khoan['tien']:,.0f} đ ({khoan['nhom']})")
+
+def thong_ke(ds):
+    if not ds:
+        print("(Chưa có dữ liệu để thống kê)")
+        return
+    print(f"Tổng chi: {sum(k['tien'] for k in ds):,.0f} đ")
+    theo_nhom = {}
+    for k in ds:
+        theo_nhom[k["nhom"]] = theo_nhom.get(k["nhom"], 0) + k["tien"]
+    for nhom, tien in sorted(theo_nhom.items(), key=lambda x: x[1], reverse=True):
+        print(f"  {nhom}: {tien:,.0f} đ")
+
+ds = nap()
+print(f"📒 SỔ CHI TIÊU — đã nạp {len(ds)} khoản chi")
+while True:
+    print("\n1. Thêm khoản chi  2. Xem tất cả  3. Thống kê  4. Thoát")
+    chon = input("Chọn: ")
+    if chon == "1":
+        them(ds)
+    elif chon == "2":
+        xem(ds)
+    elif chon == "3":
+        thong_ke(ds)
+    elif chon == "4":
+        print("Tạm biệt! Dữ liệu đã được lưu.")
+        break
+    else:
+        print("Chỉ chọn 1–4 thôi nhé!")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Vài điểm đáng chú ý trong code:</p>
+  <ul>
+    <li>Mỗi chức năng là <b>một hàm riêng</b> — menu chỉ điều phối. Đây là cách tổ chức code chuẩn.</li>
+    <li><code class="inline">sum(k['tien'] for k in ds)</code> — comprehension ngay trong sum, không cần tạo list trung gian.</li>
+    <li>Thống kê theo nhóm dùng đúng mẫu <code class="inline">.get(nhom, 0) + tien</code> của bài 17, sắp xếp bằng <code class="inline">lambda</code> của bài 20.</li>
+    <li>Dữ liệu lưu JSON — <b>tắt mở lại chương trình dữ liệu vẫn còn</b> (trên trang này: còn đến khi tải lại trang; trên máy thật: còn mãi).</li>
+  </ul>
+
+  <h3>2. Nhiệm vụ nâng cấp — phần của bạn</h3>
+  <ol>
+    <li><b>Mức 1:</b> Nhập tiền sai (gõ chữ) đang làm sập chương trình — dùng mẫu while + try (bài 11) để hỏi lại.</li>
+    <li><b>Mức 2:</b> Thêm menu <b>5. Xóa khoản chi</b>: hiện danh sách kèm số thứ tự, hỏi số cần xóa, dùng <code class="inline">ds.pop(so - 1)</code>, nhớ lưu lại.</li>
+    <li><b>Mức 3:</b> Thêm menu <b>6. Tìm kiếm</b>: nhập từ khóa, in các khoản chi có mô tả chứa từ khóa (gợi ý: toán tử <code class="inline">in</code> + <code class="inline">.lower()</code> để tìm không phân biệt hoa thường).</li>
+    <li><b>Mức 4 (thử thách):</b> Viết lại toàn bộ bằng class <code class="inline">SoChiTieu</code> (bài 15): dữ liệu là <code class="inline">self.ds</code>, mỗi chức năng là một method.</li>
+  </ol>
+  <details><summary>Lời giải tham khảo mức 2</summary><div class="dbody"><pre>def xoa(ds):
+    xem(ds)
+    if not ds:
+        return
+    try:
+        so = int(input("Xóa khoản số mấy? "))
+        khoan = ds.pop(so - 1)
+        luu(ds)
+        print(f"🗑️ Đã xóa: {khoan['mo_ta']}")
+    except (ValueError, IndexError):
+        print("Số không hợp lệ!")
+
+# Trong menu thêm:
+#     elif chon == "5":
+#         xoa(ds)</pre></div></details>
+  <details><summary>Lời giải tham khảo mức 3</summary><div class="dbody"><pre>def tim_kiem(ds):
+    tu_khoa = input("Từ khóa: ").lower()
+    thay = [k for k in ds if tu_khoa in k["mo_ta"].lower()]
+    if not thay:
+        print("Không tìm thấy khoản nào.")
+    for k in thay:
+        print(f"- {k['mo_ta']} — {k['tien']:,.0f} đ")</pre></div></details>
+
+  <h3>3. Bạn đã là người biết lập trình 🎓</h3>
+  <p>Nhìn lại: chương trình cuối cùng này dùng hàm, dict, list, vòng lặp, điều kiện, try/except, file, JSON, lambda, comprehension — <b>toàn bộ 23 bài</b> gói trong một sản phẩm chạy thật. Nếu bạn tự làm được các mức nâng cấp, bạn đã có nền tảng vững chắc hơn phần lớn người mới học.</p>
+  <p>Hướng đi tiếp theo, chọn theo mục tiêu của bạn:</p>
+  <table class="cmp">
+    <tr><th>Mục tiêu</th><th>Học tiếp</th><th>Python giúp bạn làm được</th></tr>
+    <tr><td>Phân tích dữ liệu</td><td>pandas, matplotlib</td><td>Xử lý file Excel hàng trăm nghìn dòng, vẽ biểu đồ, báo cáo tự động</td></tr>
+    <tr><td>Tự động hóa</td><td>os, pathlib, openpyxl, requests</td><td>Đổi tên hàng loạt file, gộp báo cáo, lấy dữ liệu web định kỳ</td></tr>
+    <tr><td>Làm web</td><td>Flask hoặc Django</td><td>Xây website, API cho ứng dụng</td></tr>
+    <tr><td>AI / Machine Learning</td><td>numpy → scikit-learn → PyTorch</td><td>Dự đoán, phân loại, chatbot (cần thêm nền toán)</td></tr>
+  </table>
+  <p>Chúc mừng bạn hoàn thành toàn bộ khóa học! Trang web này luôn ở đây khi bạn cần ôn lại. 🎉</p>
+</section>
+
+
+<!-- ========== LUYỆN TẬP PHẦN 1 ========== -->
+<section class="lesson" id="p1">
+  <div class="eyebrow">Luyện tập ✎ / Sau phần Nền tảng (bài 1–5)</div>
+  <h2>Luyện tập tổng hợp phần 1</h2>
+  <p>7 bài tự luyện dùng kiến thức bài 1–5: print, biến, phép toán, chuỗi, input. Đề bài thiên về tình huống kinh tế — kinh doanh để bạn quen dần với "chất liệu" của ngành. Tự làm trước, bí mới mở gợi ý!</p>
+
+  <div class="exercise"><span class="ex-label">1.1 — In hóa đơn</span>
+    <p>Dùng biến và print, in một hóa đơn nhỏ: dòng kẻ <code class="inline">=</code> (dùng nhân chuỗi), tên cửa hàng, 2 món hàng kèm giá, dòng kẻ, tổng tiền (tự cộng bằng biến).</p>
+    <div class="runner" data-lesson="p1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">hoa_don.py</span></div><textarea class="code" rows="5" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Dòng kẻ: <code class="inline">print("=" * 25)</code>. Tổng: <code class="inline">tong = gia1 + gia2</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>gia_ca_phe = 35000
+gia_banh = 25000
+tong = gia_ca_phe + gia_banh
+print("=" * 25)
+print("   QUÁN NHÀ MÌNH")
+print("=" * 25)
+print("Cà phê sữa:", gia_ca_phe)
+print("Bánh mì:   ", gia_banh)
+print("-" * 25)
+print("TỔNG:      ", tong)</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">1.2 — Đổi nhiệt độ</span>
+    <p>Hỏi người dùng nhiệt độ °C (có thể lẻ), đổi sang °F theo công thức <code class="inline">F = C × 9/5 + 32</code>, in kết quả làm tròn 1 chữ số thập phân bằng f-string <code class="inline">{f:.1f}</code>.</p>
+    <div class="runner" data-lesson="p1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">nhiet_do.py</span></div><textarea class="code" rows="4" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Nhập số lẻ → <code class="inline">float(input(...))</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>c = float(input("Nhiệt độ °C: "))
+f = c * 9 / 5 + 32
+print(f"{c}°C = {f:.1f}°F")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">1.3 — Đổi giây thành giờ-phút-giây</span>
+    <p>Cho <code class="inline">tong_giay = 5000</code>. Dùng <code class="inline">//</code> và <code class="inline">%</code> để đổi thành giờ, phút, giây và in dạng <code class="inline">1 giờ 23 phút 20 giây</code>.</p>
+    <div class="runner" data-lesson="p1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">doi_gio.py</span></div><textarea class="code" rows="5" spellcheck="false">tong_giay = 5000
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Giờ = <code class="inline">tong_giay // 3600</code>. Phần còn lại = <code class="inline">tong_giay % 3600</code>, rồi lại chia tiếp cho 60.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>tong_giay = 5000
+gio = tong_giay // 3600
+con_lai = tong_giay % 3600
+phut = con_lai // 60
+giay = con_lai % 60
+print(f"{gio} giờ {phut} phút {giay} giây")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">1.4 — Tăng trưởng doanh thu (%)</span>
+    <p>Hỏi doanh thu năm trước và năm nay, tính % tăng trưởng theo công thức <code class="inline">(nay − trước) / trước × 100</code>, in làm tròn 1 chữ số. Đây là phép tính bạn sẽ dùng cả đời làm kinh tế!</p>
+    <div class="runner" data-lesson="p1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tang_truong.py</span></div><textarea class="code" rows="4" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Nhập 2 số bằng <code class="inline">float(input(...))</code>, áp công thức, in <code class="inline">{tt:.1f}%</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>truoc = float(input("Doanh thu năm trước: "))
+nay = float(input("Doanh thu năm nay: "))
+tang_truong = (nay - truoc) / truoc * 100
+print(f"Tăng trưởng: {tang_truong:.1f}%")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">1.5 — Chuẩn hóa tên khách hàng</span>
+    <p>Cho <code class="inline">ten = "   nGUYỄN thị LAN   "</code>. Chuẩn hóa thành <code class="inline">Nguyễn Thị Lan</code> (cắt khoảng trắng + method <code class="inline">.title()</code> viết hoa chữ đầu mỗi từ), in tên đã chuẩn và số ký tự của nó.</p>
+    <div class="runner" data-lesson="p1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">chuan_hoa_ten.py</span></div><textarea class="code" rows="4" spellcheck="false">ten = "   nGUYỄN thị LAN   "
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Nối method: <code class="inline">ten.strip().title()</code>. Dữ liệu khách hàng ngoài đời luôn "bẩn" thế này — chuẩn hóa là việc đầu tiên của mọi BA.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>ten = "   nGUYỄN thị LAN   "
+ten_chuan = ten.strip().title()
+print(f"Tên chuẩn: {ten_chuan}")
+print(f"Độ dài: {len(ten_chuan)} ký tự")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">1.6 — Đọc mã sản phẩm</span>
+    <p>Mã hàng có cấu trúc cố định: <code class="inline">"SP-2026-HN-0042"</code> (loại-năm-chi nhánh-số thứ tự). Dùng slicing hoặc index để tách và in riêng: năm, mã chi nhánh, số thứ tự.</p>
+    <div class="runner" data-lesson="p1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">ma_san_pham.py</span></div><textarea class="code" rows="4" spellcheck="false">ma = "SP-2026-HN-0042"
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Đếm vị trí: năm là <code class="inline">ma[3:7]</code>. Số thứ tự ở cuối: <code class="inline">ma[-4:]</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>ma = "SP-2026-HN-0042"
+print("Năm:", ma[3:7])
+print("Chi nhánh:", ma[8:10])
+print("Số thứ tự:", ma[-4:])</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">1.7 — Chia tiền nhóm</span>
+    <p>Hỏi tổng hóa đơn ăn nhóm và số người. In: mỗi người trả bao nhiêu (chia lấy nguyên <code class="inline">//</code>), và còn dư bao nhiêu đồng lẻ (<code class="inline">%</code>) để "ai đó bao".</p>
+    <div class="runner" data-lesson="p1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">chia_tien.py</span></div><textarea class="code" rows="4" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Cả 2 số đều nguyên → <code class="inline">int(input(...))</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>hoa_don = int(input("Tổng hóa đơn: "))
+so_nguoi = int(input("Số người: "))
+print(f"Mỗi người trả: {hoa_don // so_nguoi:,.0f} đ")
+print(f"Còn dư: {hoa_don % so_nguoi} đ")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== LUYỆN TẬP PHẦN 2 ========== -->
+<section class="lesson" id="p2">
+  <div class="eyebrow">Luyện tập ✎ / Sau phần Tư duy lập trình (bài 6–9)</div>
+  <h2>Luyện tập tổng hợp phần 2</h2>
+  <p>7 bài dùng if/else, vòng lặp, list, hàm. Từ bài này trở đi, mỗi bài giải quyết một bài toán "thật" hơn — hãy thử nghĩ cách giải trên giấy trước khi gõ code.</p>
+
+  <div class="exercise"><span class="ex-label">2.1 — Chẵn lẻ &amp; chia hết</span>
+    <p>In các số từ 1 đến 20. Với mỗi số: nếu chia hết cho cả 3 và 5 in kèm "⭐", nếu chỉ chia hết cho 3 in kèm "ba", chỉ chia hết cho 5 in kèm "năm".</p>
+    <div class="runner" data-lesson="p2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">chia_het.py</span></div><textarea class="code" rows="5" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Kiểm tra "cả 3 và 5" TRƯỚC (dùng <code class="inline">and</code>), nếu không sẽ không bao giờ tới nhánh đó. Chia hết: <code class="inline">i % 3 == 0</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>for i in range(1, 21):
+    if i % 3 == 0 and i % 5 == 0:
+        print(i, "⭐")
+    elif i % 3 == 0:
+        print(i, "ba")
+    elif i % 5 == 0:
+        print(i, "năm")
+    else:
+        print(i)</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">2.2 — Thuế thu nhập theo bậc</span>
+    <p>Viết hàm <code class="inline">tinh_thue(thu_nhap)</code> theo biểu thuế đơn giản hóa: đến 5 triệu → 5%; trên 5 đến 10 triệu → 10%; trên 10 triệu → 15% (tính trên toàn bộ thu nhập cho đơn giản). Gọi hàm với 3 mức thu nhập khác nhau và in kết quả.</p>
+    <div class="runner" data-lesson="p2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">thue_tncn.py</span></div><textarea class="code" rows="8" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Trong hàm dùng if/elif/else, mỗi nhánh <code class="inline">return thu_nhap * ti_le</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>def tinh_thue(thu_nhap):
+    if thu_nhap <= 5_000_000:
+        return thu_nhap * 0.05
+    elif thu_nhap <= 10_000_000:
+        return thu_nhap * 0.10
+    else:
+        return thu_nhap * 0.15
+
+for tn in [4_000_000, 8_000_000, 20_000_000]:
+    print(f"Thu nhập {tn:,.0f} → thuế {tinh_thue(tn):,.0f} đ")
+# Mẹo: Python cho phép viết 5_000_000 cho dễ đọc số lớn!</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">2.3 — Phân tích giỏ hàng</span>
+    <p>Cho list giá các món trong giỏ. In: tổng tiền, giá trung bình một món, và <b>số món</b> đắt hơn mức trung bình đó.</p>
+    <div class="runner" data-lesson="p2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">gio_hang.py</span></div><textarea class="code" rows="5" spellcheck="false">gio_hang = [120000, 45000, 350000, 80000, 210000, 95000]
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">TB = <code class="inline">sum(...) / len(...)</code>. Đếm: vòng for + if + biến đếm (mẫu bài 8).</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>gio_hang = [120000, 45000, 350000, 80000, 210000, 95000]
+tb = sum(gio_hang) / len(gio_hang)
+dem = 0
+for gia in gio_hang:
+    if gia > tb:
+        dem += 1
+print(f"Tổng: {sum(gio_hang):,.0f} đ")
+print(f"Trung bình: {tb:,.0f} đ")
+print(f"Số món đắt hơn TB: {dem}")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">2.4 — Tháng tốt nhất và tệ nhất</span>
+    <p>Cho doanh thu 6 tháng. Không dùng max/min có sẵn, hãy <b>tự viết vòng lặp</b> tìm tháng có doanh thu cao nhất và thấp nhất (in ra tháng thứ mấy + số tiền). Tự viết một lần để hiểu máy tính "tìm max" thế nào.</p>
+    <div class="runner" data-lesson="p2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">max_min_tu_viet.py</span></div><textarea class="code" rows="6" spellcheck="false">doanh_thu = [82, 95, 71, 120, 88, 103]   # triệu đồng, tháng 1→6
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Giả sử phần tử đầu là lớn nhất, rồi duyệt bằng <code class="inline">for i in range(len(doanh_thu))</code>: nếu gặp giá trị lớn hơn thì cập nhật cả giá trị lẫn vị trí i.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>doanh_thu = [82, 95, 71, 120, 88, 103]
+vi_tri_max = 0
+vi_tri_min = 0
+for i in range(len(doanh_thu)):
+    if doanh_thu[i] > doanh_thu[vi_tri_max]:
+        vi_tri_max = i
+    if doanh_thu[i] < doanh_thu[vi_tri_min]:
+        vi_tri_min = i
+print(f"Tốt nhất: tháng {vi_tri_max + 1} ({doanh_thu[vi_tri_max]} triệu)")
+print(f"Tệ nhất: tháng {vi_tri_min + 1} ({doanh_thu[vi_tri_min]} triệu)")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">2.5 — Vẽ biểu đồ cột bằng ký tự</span>
+    <p>Với list doanh thu ở trên, vẽ "biểu đồ" bằng cách in mỗi tháng một dòng gồm chữ "T1:", rồi ký tự <code class="inline">█</code> lặp lại bằng đúng số doanh thu chia 10 (nhân chuỗi!). Bạn sẽ bất ngờ vì nó trực quan thế nào.</p>
+    <div class="runner" data-lesson="p2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bieu_do_cot.py</span></div><textarea class="code" rows="5" spellcheck="false">doanh_thu = [82, 95, 71, 120, 88, 103]
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Duyệt kèm số thứ tự bằng <code class="inline">enumerate</code> (bài 16), số cột: <code class="inline">"█" * (dt // 10)</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>doanh_thu = [82, 95, 71, 120, 88, 103]
+for i, dt in enumerate(doanh_thu):
+    print(f"T{i + 1}: " + "█" * (dt // 10) + f" {dt}")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">2.6 — Giá sau VAT cho cả bảng giá</span>
+    <p>Viết hàm <code class="inline">gia_sau_vat(gia, vat=8)</code> trả về giá đã cộng VAT (mặc định 8%). Dùng vòng lặp áp hàm cho cả list giá và in bảng: giá gốc → giá sau VAT.</p>
+    <div class="runner" data-lesson="p2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">vat.py</span></div><textarea class="code" rows="7" spellcheck="false">bang_gia = [100000, 250000, 990000]
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Cộng VAT: <code class="inline">gia * (1 + vat / 100)</code>. Tham số mặc định học ở bài 9.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>def gia_sau_vat(gia, vat=8):
+    return gia * (1 + vat / 100)
+
+bang_gia = [100000, 250000, 990000]
+for gia in bang_gia:
+    print(f"{gia:,.0f} đ → {gia_sau_vat(gia):,.0f} đ")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">2.7 — Bao lâu thì đủ tiền?</span>
+    <p>Bạn muốn mua laptop 25 triệu, hiện có 4 triệu, mỗi tháng để dành được 2,5 triệu. Dùng vòng <code class="inline">while</code> đếm xem sau bao nhiêu tháng thì đủ, in số dư từng tháng trong quá trình.</p>
+    <div class="runner" data-lesson="p2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tiet_kiem.py</span></div><textarea class="code" rows="7" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Lặp <code class="inline">while so_du &lt; muc_tieu:</code>, trong đó cộng tiền và tăng biến đếm tháng.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>muc_tieu = 25_000_000
+so_du = 4_000_000
+thang = 0
+while so_du < muc_tieu:
+    so_du += 2_500_000
+    thang += 1
+    print(f"Tháng {thang}: {so_du:,.0f} đ")
+print(f"→ Đủ tiền sau {thang} tháng!")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== LUYỆN TẬP PHẦN 3 ========== -->
+<section class="lesson" id="p3">
+  <div class="eyebrow">Luyện tập ✎ / Sau phần Nâng cao (bài 11–15)</div>
+  <h2>Luyện tập tổng hợp phần 3</h2>
+  <p>6 bài dùng try/except, file, list nâng cao, module, class. Độ khó tăng dần — mỗi bài đều mô phỏng một tình huống thật.</p>
+
+  <div class="exercise"><span class="ex-label">3.1 — Nhập điểm hợp lệ</span>
+    <p>Hỏi điểm số cho đến khi hợp lệ: phải là số VÀ nằm trong khoảng 0–10. Sai kiểu số → báo "Phải nhập số"; ngoài khoảng → báo "Điểm từ 0 đến 10". In điểm khi nhập đúng.</p>
+    <div class="runner" data-lesson="p3"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">nhap_diem.py</span></div><textarea class="code" rows="8" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Mẫu while+try của bài 11, thêm if kiểm tra khoảng bên trong try, chỉ <code class="inline">break</code> khi cả 2 điều kiện đạt.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>while True:
+    try:
+        diem = float(input("Nhập điểm (0-10): "))
+        if 0 <= diem <= 10:
+            break
+        print("Điểm từ 0 đến 10!")
+    except ValueError:
+        print("Phải nhập số!")
+print(f"Đã ghi nhận điểm: {diem}")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">3.2 — Nhật ký giao dịch</span>
+    <p>Dùng vòng for hỏi 3 giao dịch (mỗi lần: mô tả + số tiền), ghi từng dòng dạng <code class="inline">mô tả|số tiền</code> vào file <code class="inline">giao_dich.txt</code> ở chế độ "a". Sau đó đọc file, tách bằng <code class="inline">split("|")</code> và in tổng số tiền.</p>
+    <div class="runner" data-lesson="p3"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">nhat_ky_gd.py</span></div><textarea class="code" rows="9" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Ghi: <code class="inline">f.write(f"{mo_ta}|{tien}\n")</code>. Đọc: nhớ <code class="inline">.strip()</code> trước khi split. Chạy nhiều lần → tổng tăng dần vì chế độ "a" ghi thêm.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>with open("giao_dich.txt", "a", encoding="utf-8") as f:
+    for i in range(3):
+        mo_ta = input(f"Giao dịch {i + 1}: ")
+        tien = float(input("Số tiền: "))
+        f.write(f"{mo_ta}|{tien}\n")
+
+tong = 0
+with open("giao_dich.txt", "r", encoding="utf-8") as f:
+    for dong in f:
+        mo_ta, tien = dong.strip().split("|")
+        tong += float(tien)
+print(f"Tổng các giao dịch trong file: {tong:,.0f} đ")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">3.3 — Sale toàn bộ bảng giá</span>
+    <p>Dùng <b>list comprehension</b> (mỗi câu 1 dòng): (1) tạo list giá mới giảm 20% từ bảng giá gốc, (2) tạo list chỉ gồm các giá gốc trên 200k, (3) in cả hai.</p>
+    <div class="runner" data-lesson="p3"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">sale_20.py</span></div><textarea class="code" rows="5" spellcheck="false">bang_gia = [150000, 320000, 89000, 450000, 210000]
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Giảm giá: <code class="inline">[g * 0.8 for g in bang_gia]</code>. Lọc: thêm <code class="inline">if</code> cuối.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>bang_gia = [150000, 320000, 89000, 450000, 210000]
+gia_sale = [g * 0.8 for g in bang_gia]
+gia_cao = [g for g in bang_gia if g > 200000]
+print("Giá sau sale:", gia_sale)
+print("Các món trên 200k:", gia_cao)</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">3.4 — Mô phỏng tung đồng xu</span>
+    <p>Dùng <code class="inline">random.choice(["sấp", "ngửa"])</code> tung đồng xu 1000 lần, đếm số lần mỗi mặt và in tỉ lệ %. Chạy vài lần — tỉ lệ luôn quanh 50/50. Đây chính là ý tưởng của <b>mô phỏng Monte Carlo</b> trong kinh tế — tài chính!</p>
+    <div class="runner" data-lesson="p3"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tung_xu.py</span></div><textarea class="code" rows="8" spellcheck="false">import random
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Vòng for 1000 lần, if kết quả == "sấp" thì tăng biến đếm. Tỉ lệ = đếm / 1000 * 100.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>import random
+sap = 0
+for i in range(1000):
+    if random.choice(["sấp", "ngửa"]) == "sấp":
+        sap += 1
+print(f"Sấp: {sap} lần ({sap / 10:.1f}%)")
+print(f"Ngửa: {1000 - sap} lần ({(1000 - sap) / 10:.1f}%)")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">3.5 — Đếm ngày đến hạn nộp bài</span>
+    <p>Dùng module <code class="inline">datetime</code>: tạo ngày deadline 15/8/2026, tính và in còn bao nhiêu ngày kể từ hôm nay. Nếu dưới 7 ngày, in thêm cảnh báo "⚠️ Gấp rồi!".</p>
+    <div class="runner" data-lesson="p3"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">deadline.py</span></div><textarea class="code" rows="7" spellcheck="false">from datetime import date
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Hiệu 2 ngày: <code class="inline">(deadline - date.today()).days</code> — xem lại ví dụ đếm ngày đến Tết ở bài 14.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>from datetime import date
+deadline = date(2026, 8, 15)
+con_lai = (deadline - date.today()).days
+print(f"Còn {con_lai} ngày đến deadline")
+if con_lai < 7:
+    print("⚠️ Gấp rồi!")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">3.6 — Class Sản phẩm</span>
+    <p>Tạo class <code class="inline">SanPham</code> với thuộc tính <code class="inline">ten</code>, <code class="inline">gia</code>; method <code class="inline">giam_gia(phan_tram)</code> giảm giá trực tiếp trên <code class="inline">self.gia</code>; method <code class="inline">mo_ta()</code> in tên + giá hiện tại. Tạo 2 sản phẩm, giảm giá 1 cái rồi in mô tả cả hai.</p>
+    <div class="runner" data-lesson="p3"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">class_san_pham.py</span></div><textarea class="code" rows="12" spellcheck="false"># Viết code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Trong method: <code class="inline">self.gia = self.gia * (1 - phan_tram / 100)</code>. Xem lại class TaiKhoan bài 15.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>class SanPham:
+    def __init__(self, ten, gia):
+        self.ten = ten
+        self.gia = gia
+
+    def giam_gia(self, phan_tram):
+        self.gia = self.gia * (1 - phan_tram / 100)
+
+    def mo_ta(self):
+        print(f"{self.ten}: {self.gia:,.0f} đ")
+
+ao = SanPham("Áo thun", 250000)
+giay = SanPham("Giày thể thao", 800000)
+giay.giam_gia(30)
+ao.mo_ta()
+giay.mo_ta()</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== LUYỆN TẬP PHẦN 4 ========== -->
+<section class="lesson" id="p4">
+  <div class="eyebrow">Luyện tập ✎ / Sau phần Thực chiến (bài 17–21)</div>
+  <h2>Luyện tập tổng hợp phần 4</h2>
+  <p>6 bài mức "tiền BA": dict, set, CSV, lambda, JSON — chính là những thao tác một Business Analyst làm hàng ngày, chỉ khác là dữ liệu thật to hơn.</p>
+
+  <div class="exercise"><span class="ex-label">4.1 — Sản phẩm bán chạy nhất</span>
+    <p>Từ list giao dịch bên dưới, đếm số lần bán của từng sản phẩm (dict + .get), rồi in tên sản phẩm bán chạy nhất kèm số lần (dùng <code class="inline">max</code> với <code class="inline">key</code>).</p>
+    <div class="runner" data-lesson="p4"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">ban_chay.py</span></div><textarea class="code" rows="6" spellcheck="false">giao_dich = ["trà sữa", "cà phê", "trà sữa", "nước cam", "trà sữa", "cà phê", "trà sữa"]
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Sau khi có dict đếm: <code class="inline">max(dem, key=dem.get)</code> trả về key có value lớn nhất — mẹo rất hay dùng!</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>giao_dich = ["trà sữa", "cà phê", "trà sữa", "nước cam", "trà sữa", "cà phê", "trà sữa"]
+dem = {}
+for mon in giao_dich:
+    dem[mon] = dem.get(mon, 0) + 1
+top = max(dem, key=dem.get)
+print(f"Bán chạy nhất: {top} ({dem[top]} lần)")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">4.2 — Khách hàng rời bỏ (churn)</span>
+    <p>Cho danh sách khách mua quý 1 và quý 2. Dùng set in ra: khách <b>rời bỏ</b> (Q1 có, Q2 không), khách <b>mới</b> (Q2 có, Q1 không), và <b>tỉ lệ giữ chân</b> = số khách mua cả 2 quý / số khách Q1 × 100.</p>
+    <div class="runner" data-lesson="p4"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">churn.py</span></div><textarea class="code" rows="6" spellcheck="false">q1 = {"Lan", "Minh", "Hùng", "Trang", "Quân"}
+q2 = {"Minh", "Trang", "Vy", "Đạt"}
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Rời bỏ: <code class="inline">q1 - q2</code>. Giữ chân: <code class="inline">len(q1 &amp; q2) / len(q1) * 100</code>. "Churn rate" là chỉ số kinh doanh có thật đấy!</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>q1 = {"Lan", "Minh", "Hùng", "Trang", "Quân"}
+q2 = {"Minh", "Trang", "Vy", "Đạt"}
+print("Khách rời bỏ:", q1 - q2)
+print("Khách mới:", q2 - q1)
+print(f"Tỉ lệ giữ chân: {len(q1 & q2) / len(q1) * 100:.0f}%")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">4.3 — Quỹ lương theo phòng ban</span>
+    <p>Cho dữ liệu CSV <code class="inline">tên,phòng ban,lương</code>. Tính: tổng quỹ lương công ty, và tổng lương theo từng phòng ban (dict cộng dồn theo nhóm — mẫu bài 19).</p>
+    <div class="runner" data-lesson="p4"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">quy_luong.py</span></div><textarea class="code" rows="9" spellcheck="false">nhan_su = """Lan,Kinh doanh,15000000
+Minh,Kỹ thuật,22000000
+Chi,Kinh doanh,18000000
+Hung,Kế toán,14000000
+Vy,Kỹ thuật,25000000"""
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Tách 3 cột bằng unpacking, lương nhớ <code class="inline">int()</code>, cộng dồn: <code class="inline">theo_pb[pb] = theo_pb.get(pb, 0) + luong</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>nhan_su = """Lan,Kinh doanh,15000000
+Minh,Kỹ thuật,22000000
+Chi,Kinh doanh,18000000
+Hung,Kế toán,14000000
+Vy,Kỹ thuật,25000000"""
+
+tong = 0
+theo_pb = {}
+for dong in nhan_su.splitlines():
+    ten, pb, luong = dong.split(",")
+    luong = int(luong)
+    tong += luong
+    theo_pb[pb] = theo_pb.get(pb, 0) + luong
+
+print(f"Tổng quỹ lương: {tong:,.0f} đ")
+for pb, tien in theo_pb.items():
+    print(f"  {pb}: {tien:,.0f} đ")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">4.4 — Xếp hạng chi nhánh</span>
+    <p>Cho list dict các chi nhánh với doanh thu và chi phí. Dùng <code class="inline">sorted + lambda</code> xếp hạng theo <b>lợi nhuận</b> (doanh thu − chi phí) giảm dần, in bảng xếp hạng kèm lợi nhuận.</p>
+    <div class="runner" data-lesson="p4"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">xep_hang_cn.py</span></div><textarea class="code" rows="8" spellcheck="false">chi_nhanh = [
+    {"ten": "Hà Nội", "doanh_thu": 500, "chi_phi": 320},
+    {"ten": "Đà Nẵng", "doanh_thu": 280, "chi_phi": 150},
+    {"ten": "TP.HCM", "doanh_thu": 700, "chi_phi": 560},
+]   # đơn vị: triệu đồng
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody"><code class="inline">key=lambda cn: cn["doanh_thu"] - cn["chi_phi"]</code>, thêm <code class="inline">reverse=True</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>xep_hang = sorted(chi_nhanh, key=lambda cn: cn["doanh_thu"] - cn["chi_phi"], reverse=True)
+for i, cn in enumerate(xep_hang):
+    loi_nhuan = cn["doanh_thu"] - cn["chi_phi"]
+    print(f"{i + 1}. {cn['ten']}: lợi nhuận {loi_nhuan} triệu")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">4.5 — Lưu cấu hình cửa hàng bằng JSON</span>
+    <p>Tạo dict cấu hình cửa hàng (tên, giờ mở cửa, VAT %, list phương thức thanh toán). Lưu ra file <code class="inline">cau_hinh.json</code> có indent, đọc lại và in từng mục dạng dễ đọc.</p>
+    <div class="runner" data-lesson="p4"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">cau_hinh.py</span></div><textarea class="code" rows="9" spellcheck="false">import json
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Lưu: <code class="inline">json.dump(ch, f, ensure_ascii=False, indent=2)</code>. In từng mục: duyệt <code class="inline">.items()</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>import json
+cau_hinh = {
+    "ten": "Cửa hàng Bốn Mùa",
+    "gio_mo_cua": "8:00 - 22:00",
+    "vat": 8,
+    "thanh_toan": ["tiền mặt", "chuyển khoản", "thẻ"],
+}
+with open("cau_hinh.json", "w", encoding="utf-8") as f:
+    json.dump(cau_hinh, f, ensure_ascii=False, indent=2)
+
+with open("cau_hinh.json", "r", encoding="utf-8") as f:
+    ch = json.load(f)
+for muc, gia_tri in ch.items():
+    print(f"{muc}: {gia_tri}")</pre></div></details>
+  </div>
+
+  <div class="exercise"><span class="ex-label">4.6 — Tăng trưởng theo tháng (MoM)</span>
+    <p>Cho CSV <code class="inline">tháng,doanh thu</code>. Tính % tăng trưởng của mỗi tháng so với <b>tháng liền trước</b> (Month-over-Month) và in kèm mũi tên 📈/📉. Bài này khó nhất phần luyện tập — cần lưu giá trị tháng trước trong biến khi duyệt.</p>
+    <div class="runner" data-lesson="p4"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">mom.py</span></div><textarea class="code" rows="9" spellcheck="false">du_lieu = """T1,100
+T2,120
+T3,90
+T4,135"""
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Tạo <code class="inline">truoc = None</code> trước vòng lặp. Trong vòng lặp: nếu <code class="inline">truoc is not None</code> thì tính %, cuối vòng gán <code class="inline">truoc = dt</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>du_lieu = """T1,100
+T2,120
+T3,90
+T4,135"""
+
+truoc = None
+for dong in du_lieu.splitlines():
+    thang, dt = dong.split(",")
+    dt = float(dt)
+    if truoc is None:
+        print(f"{thang}: {dt:.0f} (tháng gốc)")
+    else:
+        tt = (dt - truoc) / truoc * 100
+        mui_ten = "📈" if tt >= 0 else "📉"
+        print(f"{thang}: {dt:.0f} ({tt:+.1f}% {mui_ten})")
+    truoc = dt</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== KINH TẾ 1 ========== -->
+<section class="lesson" id="e1">
+  <div class="eyebrow">Kinh tế K1 / Python cho Kinh tế 📊</div>
+  <h2>Thống kê mô tả — nền của mọi phân tích</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Tính và <b>hiểu ý nghĩa</b> của trung bình, trung vị, độ lệch chuẩn bằng Python — thay cho máy tính bỏ túi và một phần Excel/SPSS.</div>
+
+  <h3>0. Python giúp gì cho sinh viên kinh tế?</h3>
+  <p>Gần như mọi môn "định lượng" trong ngành kinh tế đều quy về một việc: <b>lấy dữ liệu → tính toán → rút ra kết luận</b>. Python làm cả 3 bước nhanh và lặp lại được:</p>
+  <table class="cmp">
+    <tr><th>Môn học / công việc</th><th>Python thay thế / hỗ trợ</th></tr>
+    <tr><td>Thống kê, Nguyên lý thống kê</td><td>Tính mô tả, kiểm định — thay máy tính tay và một phần SPSS</td></tr>
+    <tr><td>Kinh tế lượng (Econometrics)</td><td>Hồi quy OLS với statsmodels — thay Eviews/Stata (miễn phí!)</td></tr>
+    <tr><td>Tài chính doanh nghiệp</td><td>NPV, IRR, lãi kép, mô phỏng — bài K2</td></tr>
+    <tr><td>Business Analyst (BA/DA)</td><td>Làm sạch + phân tích dữ liệu bán hàng bằng pandas, trực quan hóa — bài K3 là bản mini</td></tr>
+    <tr><td>Báo cáo hàng tuần bằng Excel</td><td>Tự động hóa: Python đọc 20 file Excel, gộp, tính, xuất báo cáo trong vài giây</td></tr>
+  </table>
+  <p>Ba bài K1–K3 này dùng <b>đúng kiến thức 23 bài bạn đã học</b>, chỉ đổi "đề bài" sang ngôn ngữ của dân kinh tế.</p>
+
+  <h3>1. Trung bình (mean) và cái bẫy của nó</h3>
+  <p>Xét lương của 8 nhân viên một phòng (triệu đồng/tháng) — trong đó có 1 sếp:</p>
+  <div class="runner" data-lesson="e1">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">luong_trung_binh.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">luong = [9, 10, 11, 12, 12, 13, 14, 95]   # người cuối là sếp!
+
+trung_binh = sum(luong) / len(luong)
+print(f"Lương trung bình: {trung_binh:.1f} triệu")
+# 22 triệu?! Nhưng 7/8 người lương dưới 15 triệu...
+# → Trung bình bị "kéo" bởi giá trị ngoại lai (outlier)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. Trung vị (median) — con số "thật" hơn</h3>
+  <p>Trung vị là giá trị <b>đứng giữa</b> khi xếp dữ liệu theo thứ tự — không bị outlier kéo lệch. Vì vậy báo chí kinh tế nói về "thu nhập trung vị" chứ ít khi dùng trung bình. Tự viết để hiểu, rồi so với hàm có sẵn:</p>
+  <div class="runner" data-lesson="e1">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">trung_vi.py</span></div>
+    <textarea class="code" rows="14" spellcheck="false">luong = [9, 10, 11, 12, 12, 13, 14, 95]
+
+def trung_vi(ds):
+    ds = sorted(ds)
+    n = len(ds)
+    giua = n // 2
+    if n % 2 == 1:               # lẻ phần tử → lấy phần tử giữa
+        return ds[giua]
+    return (ds[giua - 1] + ds[giua]) / 2   # chẵn → TB 2 phần tử giữa
+
+print(f"Trung vị tự viết: {trung_vi(luong)} triệu")
+
+import statistics                # Python có sẵn module thống kê!
+print(f"Kiểm tra bằng statistics.median: {statistics.median(luong)} triệu")
+print(f"Trung bình: {statistics.mean(luong):.1f} vs Trung vị: {statistics.median(luong)}")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>22.0 vs 12.5 — hai bức tranh hoàn toàn khác về cùng một phòng ban! Bài học phân tích số 1: <b>luôn nhìn cả trung bình lẫn trung vị</b>; nếu chúng lệch xa nhau, dữ liệu có outlier hoặc phân phối lệch.</p>
+
+  <h3>3. Độ lệch chuẩn — đo mức độ "dao động"</h3>
+  <p>Hai cửa hàng cùng doanh thu trung bình 100 triệu/tháng, nhưng một bên đều đặn, một bên trồi sụt. Con số nào phân biệt được? <b>Độ lệch chuẩn</b> (standard deviation) — trung bình khoảng cách của dữ liệu quanh giá trị trung bình. Trong tài chính, nó chính là thước đo <b>rủi ro</b>:</p>
+  <div class="runner" data-lesson="e1">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">do_lech_chuan.py</span></div>
+    <textarea class="code" rows="13" spellcheck="false">import statistics
+
+cua_hang_a = [98, 102, 99, 101, 100, 100]    # đều đặn
+cua_hang_b = [60, 140, 80, 120, 50, 150]     # trồi sụt
+
+for ten, dt in [("A", cua_hang_a), ("B", cua_hang_b)]:
+    tb = statistics.mean(dt)
+    dlc = statistics.stdev(dt)
+    print(f"Cửa hàng {ten}: TB = {tb:.0f} triệu, độ lệch chuẩn = {dlc:.1f}")
+
+print()
+print("→ Cùng trung bình, nhưng B rủi ro hơn hẳn.")
+print("  Nếu B là cổ phiếu, đây là cổ phiếu 'biến động mạnh'.")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <div class="note">💡 Module <code class="inline">statistics</code> có sẵn: <code class="inline">mean</code>, <code class="inline">median</code>, <code class="inline">mode</code> (giá trị xuất hiện nhiều nhất), <code class="inline">stdev</code> (độ lệch chuẩn), <code class="inline">variance</code> (phương sai). Khi học lên pandas, các hàm này thành <code class="inline">.mean()</code>, <code class="inline">.median()</code>, <code class="inline">.std()</code> — cùng ý tưởng.</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập K1</span>
+    <p>Cho điểm khảo sát mức độ hài lòng khách hàng (thang 1–10) của 2 chi nhánh. Với mỗi chi nhánh, in: trung bình, trung vị, độ lệch chuẩn. Sau đó tự trả lời (in ra bằng print): chi nhánh nào chất lượng dịch vụ <b>ổn định</b> hơn?</p>
+    <div class="runner" data-lesson="e1"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_k1.py</span></div><textarea class="code" rows="7" spellcheck="false">import statistics
+cn_1 = [8, 7, 8, 9, 8, 7, 8, 8]
+cn_2 = [10, 4, 9, 5, 10, 6, 10, 8]
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Dùng vòng for duyệt 2 chi nhánh như ví dụ cửa hàng A/B. Ổn định hơn = độ lệch chuẩn nhỏ hơn.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>import statistics
+cn_1 = [8, 7, 8, 9, 8, 7, 8, 8]
+cn_2 = [10, 4, 9, 5, 10, 6, 10, 8]
+
+for ten, diem in [("CN1", cn_1), ("CN2", cn_2)]:
+    print(f"{ten}: TB={statistics.mean(diem):.2f}, "
+          f"trung vị={statistics.median(diem)}, "
+          f"độ lệch chuẩn={statistics.stdev(diem):.2f}")
+
+print("→ CN1 ổn định hơn (độ lệch chuẩn nhỏ hơn nhiều),")
+print("  dù trung bình 2 bên gần bằng nhau.")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== KINH TẾ 2 ========== -->
+<section class="lesson" id="e2">
+  <div class="eyebrow">Kinh tế K2 / Python cho Kinh tế 📊</div>
+  <h2>Toán tài chính: lãi kép, NPV, hòa vốn</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Code được 3 công cụ nền tảng của tài chính: giá trị tiền theo thời gian, thẩm định dự án bằng NPV, và điểm hòa vốn.</div>
+
+  <h3>1. Lãi kép — "kỳ quan thứ 8"</h3>
+  <p>Gửi tiết kiệm với lãi suất r%/năm, tiền lãi mỗi năm được <b>nhập gốc</b> để sinh lãi tiếp. Công thức: <code class="inline">FV = PV × (1 + r)ⁿ</code>. Vòng lặp cho ta thấy tiền lớn lên từng năm:</p>
+  <div class="runner" data-lesson="e2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">lai_kep.py</span></div>
+    <textarea class="code" rows="12" spellcheck="false">von = 100_000_000        # 100 triệu
+lai_suat = 0.06          # 6%/năm
+so_nam = 10
+
+so_du = von
+for nam in range(1, so_nam + 1):
+    so_du = so_du * (1 + lai_suat)
+    print(f"Năm {nam:2}: {so_du:,.0f} đ")
+
+print(f"\nSau {so_nam} năm, 100 triệu thành {so_du:,.0f} đ")
+print(f"Kiểm tra bằng công thức: {von * (1 + lai_suat) ** so_nam:,.0f} đ")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Thử đổi <code class="inline">lai_suat</code> thành 0.10 hoặc <code class="inline">so_nam</code> thành 30 — bạn sẽ thấy vì sao người ta nói "thời gian là bạn của lãi kép". Đây cũng chính là cách mô phỏng lạm phát hay tăng trưởng GDP.</p>
+
+  <h3>2. Giá trị hiện tại & NPV — thẩm định dự án</h3>
+  <p>Câu hỏi trung tâm của tài chính: <b>100 triệu nhận năm sau đáng giá bao nhiêu hôm nay?</b> Trả lời: chia cho (1 + r)ⁿ — gọi là <b>chiết khấu</b>. Từ đó có <b>NPV</b> (Net Present Value): cộng mọi dòng tiền tương lai đã chiết khấu, trừ vốn đầu tư ban đầu. <b>NPV &gt; 0 → dự án đáng làm.</b></p>
+  <div class="runner" data-lesson="e2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">npv.py</span></div>
+    <textarea class="code" rows="17" spellcheck="false">def tinh_npv(von_dau_tu, dong_tien, r):
+    """dong_tien: list tiền thu về năm 1, 2, 3... | r: tỉ lệ chiết khấu"""
+    npv = -von_dau_tu
+    for nam, tien in enumerate(dong_tien, start=1):
+        hien_gia = tien / (1 + r) ** nam
+        print(f"  Năm {nam}: thu {tien:,.0f} → hiện giá {hien_gia:,.0f}")
+        npv += hien_gia
+    return npv
+
+# Dự án: đầu tư 500 triệu mở quán, dự kiến thu về mỗi năm:
+dong_tien = [150_000_000, 200_000_000, 250_000_000, 200_000_000]
+
+npv = tinh_npv(500_000_000, dong_tien, r=0.10)
+print(f"\nNPV = {npv:,.0f} đ")
+if npv > 0:
+    print("✅ NPV dương → dự án đáng đầu tư (theo tiêu chí NPV)")
+else:
+    print("❌ NPV âm → tiền để việc khác sinh lời hơn")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Chú ý 2 điểm Python mới: chuỗi <code class="inline">"""..."""</code> ngay dưới def là <b>docstring</b> — mô tả hàm; và <code class="inline">enumerate(..., start=1)</code> để đếm từ 1 thay vì 0 (năm 1, năm 2...). Hãy thử tăng <code class="inline">r</code> lên 0.20 — NPV giảm mạnh: lãi suất càng cao, tiền tương lai càng "mất giá".</p>
+
+  <h3>3. Điểm hòa vốn (break-even)</h3>
+  <p>Bán một ly cà phê giá P, chi phí biến đổi V/ly, chi phí cố định F/tháng (mặt bằng, lương). Cần bán bao nhiêu ly để hòa vốn? Công thức: <code class="inline">Q = F / (P − V)</code>. Kèm bảng lợi nhuận theo sản lượng để "nhìn thấy" điểm hòa vốn:</p>
+  <div class="runner" data-lesson="e2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">hoa_von.py</span></div>
+    <textarea class="code" rows="15" spellcheck="false">gia_ban = 45000          # P
+chi_phi_bien_doi = 18000 # V (nguyên liệu, ly, ống hút...)
+chi_phi_co_dinh = 40_500_000   # F mỗi tháng
+
+q_hoa_von = chi_phi_co_dinh / (gia_ban - chi_phi_bien_doi)
+print(f"Điểm hòa vốn: {q_hoa_von:.0f} ly/tháng (~{q_hoa_von / 30:.0f} ly/ngày)\n")
+
+print("Sản lượng | Lợi nhuận")
+for q in range(0, 3001, 500):
+    loi_nhuan = q * (gia_ban - chi_phi_bien_doi) - chi_phi_co_dinh
+    dau_hieu = "✅" if loi_nhuan >= 0 else "  "
+    print(f"{q:>6} ly | {loi_nhuan:>13,.0f} đ {dau_hieu}")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Sức mạnh của việc code thay vì bấm máy: giờ bạn có thể hỏi "what-if" thoải mái — <i>nếu tăng giá lên 50k? nếu thuê mặt bằng rẻ hơn 5 triệu?</i> — chỉ cần đổi 1 con số và chạy lại.</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập K2</span>
+    <p>So sánh 2 dự án cùng cần vốn 300 triệu, chiết khấu 10%: dự án A thu về <code class="inline">[100, 150, 200]</code> triệu; dự án B thu <code class="inline">[200, 150, 80]</code> triệu (năm 1→3). Dùng hàm <code class="inline">tinh_npv</code> (viết lại hoặc rút gọn không cần print từng năm) để tính NPV cả hai và in dự án nào đáng chọn hơn.</p>
+    <div class="runner" data-lesson="e2"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_k2.py</span></div><textarea class="code" rows="10" spellcheck="false"># Viết code của bạn ở đây (đơn vị: triệu đồng)
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">B thu tiền sớm hơn — tiền sớm ít bị chiết khấu hơn. Đoán trước kết quả rồi chạy kiểm chứng! So sánh: if npv_a &gt; npv_b...</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>def tinh_npv(von, dong_tien, r):
+    npv = -von
+    for nam, tien in enumerate(dong_tien, start=1):
+        npv += tien / (1 + r) ** nam
+    return npv
+
+npv_a = tinh_npv(300, [100, 150, 200], 0.10)
+npv_b = tinh_npv(300, [200, 150, 80], 0.10)
+print(f"NPV dự án A: {npv_a:.1f} triệu")
+print(f"NPV dự án B: {npv_b:.1f} triệu")
+if npv_a > npv_b:
+    print("→ Chọn A")
+else:
+    print("→ Chọn B (thu tiền sớm ít bị chiết khấu hơn)")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== KINH TẾ 3 ========== -->
+<section class="lesson" id="e3">
+  <div class="eyebrow">Kinh tế K3 / Python cho Kinh tế 📊</div>
+  <h2>Phân tích dữ liệu kinh doanh — bản mini của nghề BA</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Làm trọn một bài phân tích như BA thật: từ dữ liệu thô → chỉ số → biểu đồ → kết luận. Và biết chính xác cần học gì tiếp để theo nghề.</div>
+
+  <h3>1. Đề bài như thật</h3>
+  <p>Sếp đưa bạn dữ liệu doanh thu 12 tháng (triệu đồng) và hỏi: <i>"Năm nay kinh doanh thế nào? Xu hướng ra sao?"</i>. Một BA sẽ trả lời bằng 3 thứ: <b>chỉ số tổng quan → xu hướng → trực quan hóa</b>. Làm từng bước:</p>
+  <div class="runner" data-lesson="e3">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">buoc_1_tong_quan.py</span></div>
+    <textarea class="code" rows="12" spellcheck="false">import statistics
+doanh_thu = [82, 88, 79, 95, 102, 98, 110, 108, 121, 115, 128, 140]
+
+print("=== TỔNG QUAN NĂM ===")
+print(f"Tổng doanh thu:  {sum(doanh_thu):,} triệu")
+print(f"TB mỗi tháng:    {statistics.mean(doanh_thu):.1f} triệu")
+print(f"Tháng cao nhất:  T{doanh_thu.index(max(doanh_thu)) + 1} ({max(doanh_thu)} triệu)")
+print(f"Tháng thấp nhất: T{doanh_thu.index(min(doanh_thu)) + 1} ({min(doanh_thu)} triệu)")
+tang_ca_nam = (doanh_thu[-1] - doanh_thu[0]) / doanh_thu[0] * 100
+print(f"T12 so với T1:   {tang_ca_nam:+.1f}%")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Method mới: <code class="inline">.index(gia_tri)</code> — cho biết giá trị nằm ở vị trí nào trong list (để suy ra tháng mấy).</p>
+
+  <h3>2. Xu hướng: trung bình động (moving average)</h3>
+  <p>Doanh thu tháng đơn lẻ nhiễu loạn (khuyến mãi, lễ tết...). Để thấy <b>xu hướng thật</b>, dân phân tích dùng <b>trung bình động 3 tháng</b>: mỗi tháng lấy trung bình của chính nó + 2 tháng trước. Đường này "mượt" hơn và lộ rõ xu hướng:</p>
+  <div class="runner" data-lesson="e3">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">buoc_2_xu_huong.py</span></div>
+    <textarea class="code" rows="10" spellcheck="false">doanh_thu = [82, 88, 79, 95, 102, 98, 110, 108, 121, 115, 128, 140]
+
+print("Tháng | Thực tế | TB động 3 tháng")
+for i in range(len(doanh_thu)):
+    if i < 2:
+        print(f"  T{i + 1:<3} | {doanh_thu[i]:>7} | (chưa đủ 3 tháng)")
+    else:
+        tb_dong = sum(doanh_thu[i - 2:i + 1]) / 3   # slicing 3 tháng gần nhất!
+        print(f"  T{i + 1:<3} | {doanh_thu[i]:>7} | {tb_dong:.1f}")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Cột trung bình động tăng gần như liên tục → xu hướng năm là <b>tăng trưởng thật</b>, không phải may mắn vài tháng. Chú ý kỹ thuật: <code class="inline">doanh_thu[i - 2:i + 1]</code> — slicing lấy đúng "cửa sổ" 3 tháng, đây là cách mọi chỉ báo tài chính (MA của chứng khoán!) hoạt động.</p>
+
+  <h3>3. Trực quan hóa + phân tích Pareto (quy tắc 80/20)</h3>
+  <p>Ghép biểu đồ ASCII (bài luyện 2.5) với một phân tích kinh điển: <b>Pareto</b> — thường ~20% sản phẩm tạo ra ~80% doanh thu. Tìm xem nhóm "gà đẻ trứng vàng" của cửa hàng là gì:</p>
+  <div class="runner" data-lesson="e3">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">buoc_3_pareto.py</span></div>
+    <textarea class="code" rows="18" spellcheck="false">san_pham = {
+    "Cà phê sữa": 420, "Trà đào": 250, "Bạc xỉu": 180,
+    "Trà sữa": 95, "Nước cam": 40, "Sinh tố": 30, "Trà nóng": 15,
+}   # doanh thu triệu/năm
+
+tong = sum(san_pham.values())
+print(f"Tổng: {tong} triệu\n")
+
+# Sắp giảm dần rồi tính % cộng dồn
+cong_don = 0
+for ten, dt in sorted(san_pham.items(), key=lambda x: x[1], reverse=True):
+    cong_don += dt
+    phan_tram = cong_don / tong * 100
+    thanh = "█" * (dt // 15)
+    print(f"{ten:12} {thanh} {dt} ({phan_tram:.0f}% cộng dồn)")
+
+print("\n→ Nhìn cột % cộng dồn: 3 món đầu đã chiếm ~83% doanh thu.")
+print("  Gợi ý kinh doanh: tập trung nguyên liệu/quảng cáo cho nhóm này.")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>4. Lộ trình vào nghề BA/DA từ đây</h3>
+  <p>Bạn vừa làm bằng Python "thuần" những gì pandas làm trong 1–2 dòng (<code class="inline">df.describe()</code>, <code class="inline">df.rolling(3).mean()</code>...). Đó là chủ đích: <b>hiểu bản chất trước, dùng công cụ sau</b>. Lộ trình gợi ý cho sinh viên kinh tế muốn theo BA/Data:</p>
+  <table class="cmp">
+    <tr><th>Giai đoạn</th><th>Học gì</th><th>Ghi chú</th></tr>
+    <tr><td>1. Nền Python</td><td>Toàn bộ khóa này</td><td>✅ Bạn đang ở đây</td></tr>
+    <tr><td>2. Phân tích dữ liệu</td><td>pandas + matplotlib (cài Python thật)</td><td>Đọc Excel/CSV lớn, pivot, vẽ biểu đồ thật</td></tr>
+    <tr><td>3. Cơ sở dữ liệu</td><td>SQL cơ bản</td><td>Kỹ năng bắt buộc trong JD tuyển BA/DA</td></tr>
+    <tr><td>4. Trực quan &amp; báo cáo</td><td>Power BI hoặc Tableau</td><td>Kết hợp Excel nâng cao</td></tr>
+    <tr><td>5. Chuyên sâu (tùy chọn)</td><td>statsmodels (kinh tế lượng), scikit-learn (dự báo)</td><td>Hợp làm khóa luận định lượng</td></tr>
+  </table>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập K3 — bài phân tích hoàn chỉnh</span>
+    <p>Cho dữ liệu CSV <code class="inline">tháng,doanh thu,chi phí</code> của 6 tháng. Hãy tự viết bản phân tích in ra: (1) lợi nhuận từng tháng kèm biểu đồ █, (2) tỉ suất lợi nhuận trung bình (lợi nhuận/doanh thu × 100), (3) tháng có tỉ suất tốt nhất. Đây là bài tổng hợp CSV + tính toán + trực quan — đúng một task BA thu nhỏ.</p>
+    <div class="runner" data-lesson="e3"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_k3.py</span></div><textarea class="code" rows="11" spellcheck="false">du_lieu = """T1,120,85
+T2,135,90
+T3,110,88
+T4,160,100
+T5,150,105
+T6,180,110"""
+# Viết tiếp code của bạn ở đây (đơn vị: triệu)
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody">Khung: duyệt splitlines → tách 3 cột → lợi nhuận = dt − cp → in kèm <code class="inline">"█" * (ln // 5)</code>. Tỉ suất từng tháng cho vào list để tính TB và tìm max (kèm tên tháng — lưu tuple <code class="inline">(ti_suat, thang)</code> rồi max).</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>du_lieu = """T1,120,85
+T2,135,90
+T3,110,88
+T4,160,100
+T5,150,105
+T6,180,110"""
+
+ti_suat_ds = []
+for dong in du_lieu.splitlines():
+    thang, dt, cp = dong.split(",")
+    dt, cp = float(dt), float(cp)
+    ln = dt - cp
+    ti_suat = ln / dt * 100
+    ti_suat_ds.append((ti_suat, thang))
+    print(f"{thang}: lợi nhuận {ln:>5.0f} " + "█" * int(ln // 5) + f" ({ti_suat:.1f}%)")
+
+tb = sum(ts for ts, t in ti_suat_ds) / len(ti_suat_ds)
+tot_nhat = max(ti_suat_ds)
+print(f"\nTỉ suất LN trung bình: {tb:.1f}%")
+print(f"Tháng hiệu quả nhất: {tot_nhat[1]} ({tot_nhat[0]:.1f}%)")</pre></div></details>
+  </div>
+
+  <p>Hoàn thành cả 3 bài K1–K3, bạn không chỉ "biết Python" mà đã biết <b>dùng Python theo cách của dân kinh tế</b>. Chúc bạn học tốt! 📊🎉</p>
+</section>
+
+
+<!-- ========== KIỂM TRA PHẦN 1 ========== -->
+<section class="lesson" id="q1">
+  <div class="eyebrow">Kiểm tra ? / Phần Nền tảng (bài 1–5)</div>
+  <h2>Kiểm tra phần 1</h2>
+  <p>8 câu trắc nghiệm, không giới hạn thời gian. <b>Đừng chạy code để xem đáp án</b> — hãy "chạy trong đầu" trước, đó là kỹ năng đọc code. Chọn xong bấm Chấm điểm; đạt từ 6/8 là ổn để đi tiếp.</p>
+
+  <div class="quiz" data-lesson="q1">
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">1. <code>print("5" + "5")</code> in ra gì?</p>
+      <label><input type="radio"> 10</label>
+      <label><input type="radio"> 55</label>
+      <label><input type="radio"> Báo lỗi</label>
+      <div class="qz-why">Có dấu nháy → là chuỗi. Dấu + với chuỗi là NỐI, không phải cộng (bài 2).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">2. <code>type(3.0)</code> trả về kiểu gì?</p>
+      <label><input type="radio"> int</label>
+      <label><input type="radio"> str</label>
+      <label><input type="radio"> float</label>
+      <div class="qz-why">Có dấu chấm thập phân → float, dù phần thập phân bằng 0.</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">3. Sau <code>diem = 7</code> rồi <code>diem += 3</code>, giá trị của <code>diem</code> là?</p>
+      <label><input type="radio"> 7</label>
+      <label><input type="radio"> 10</label>
+      <label><input type="radio"> 73</label>
+      <div class="qz-why"><code>diem += 3</code> là viết tắt của <code>diem = diem + 3</code> (bài 3).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">4. <code>17 % 5</code> bằng bao nhiêu?</p>
+      <label><input type="radio"> 2</label>
+      <label><input type="radio"> 3</label>
+      <label><input type="radio"> 3.4</label>
+      <div class="qz-why">% lấy phần dư: 17 = 5 × 3 dư 2. (Chia lấy nguyên // mới ra 3.)</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">5. Tên biến nào hợp lệ?</p>
+      <label><input type="radio"> 2so_luong</label>
+      <label><input type="radio"> so luong</label>
+      <label><input type="radio"> so_luong_2</label>
+      <div class="qz-why">Không bắt đầu bằng số, không chứa khoảng trắng (bài 2).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">6. <code>"PYTHON"[1]</code> là ký tự nào?</p>
+      <label><input type="radio"> "P"</label>
+      <label><input type="radio"> "Y"</label>
+      <label><input type="radio"> "N"</label>
+      <div class="qz-why">Python đếm từ 0: vị trí 0 là "P", vị trí 1 là "Y" (bài 4).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">7. <code>input()</code> luôn trả về kiểu dữ liệu nào, kể cả khi người dùng gõ số?</p>
+      <label><input type="radio"> str (chuỗi)</label>
+      <label><input type="radio"> int (số nguyên)</label>
+      <label><input type="radio"> Tùy người dùng gõ gì</label>
+      <div class="qz-why">Bẫy lớn nhất của bài 5: muốn tính toán phải đổi bằng int() hoặc float().</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">8. <code>print(f"Kết quả: {2 + 3}")</code> in ra gì?</p>
+      <label><input type="radio"> Kết quả: {2 + 3}</label>
+      <label><input type="radio"> Kết quả: 5</label>
+      <label><input type="radio"> Báo lỗi</label>
+      <div class="qz-why">f-string tính toán biểu thức trong { } rồi chèn kết quả vào (bài 4).</div>
+    </div>
+    <div class="qz-actions">
+      <button class="btn btn-run qz-grade">✔ Chấm điểm</button>
+      <button class="btn btn-reset qz-retry" style="color:var(--muted);border-color:var(--line)">↺ Làm lại</button>
+      <span class="qz-score"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== KIỂM TRA PHẦN 2 ========== -->
+<section class="lesson" id="q2">
+  <div class="eyebrow">Kiểm tra ? / Phần Tư duy lập trình (bài 6–9)</div>
+  <h2>Kiểm tra phần 2</h2>
+  <p>8 câu về if/else, vòng lặp, list và hàm. Vẫn quy tắc cũ: chạy trong đầu trước, chấm điểm sau.</p>
+
+  <div class="quiz" data-lesson="q2">
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">1. Toán tử nào dùng để SO SÁNH hai giá trị bằng nhau?</p>
+      <label><input type="radio"> =</label>
+      <label><input type="radio"> ==</label>
+      <label><input type="radio"> !=</label>
+      <div class="qz-why">= là gán, == là so sánh — lỗi phổ biến số 1 của người mới (bài 6).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">2. <code>range(2, 8, 2)</code> sinh ra dãy số nào?</p>
+      <label><input type="radio"> 2, 4, 6</label>
+      <label><input type="radio"> 2, 4, 6, 8</label>
+      <label><input type="radio"> 2, 3, 4, 5, 6, 7</label>
+      <div class="qz-why">Bắt đầu 2, bước nhảy 2, dừng TRƯỚC 8 (bài 7).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">3. Đoạn <code>dem = 3</code> → <code>while dem &gt; 0: print(dem)</code> sẽ thế nào?</p>
+      <label><input type="radio"> In 3, 2, 1 rồi dừng</label>
+      <label><input type="radio"> Không in gì</label>
+      <label><input type="radio"> Lặp vô tận vì quên giảm dem</label>
+      <div class="qz-why">Thiếu <code>dem -= 1</code> → điều kiện mãi đúng → treo (cảnh báo bài 7).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">4. Với <code>ds = [10, 20, 30]</code>, <code>ds[-1]</code> là gì?</p>
+      <label><input type="radio"> 10</label>
+      <label><input type="radio"> Báo lỗi</label>
+      <label><input type="radio"> 30</label>
+      <div class="qz-why">Chỉ số âm đếm từ cuối: -1 là phần tử cuối cùng (bài 8).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">5. <code>ds.append(5)</code> làm gì?</p>
+      <label><input type="radio"> Thêm 5 vào cuối list</label>
+      <label><input type="radio"> Thêm 5 vào đầu list</label>
+      <label><input type="radio"> Xóa số 5 khỏi list</label>
+      <div class="qz-why">append = nối vào cuối; xóa theo giá trị là remove (bài 8).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">6. Trong vòng lặp, <code>break</code> làm gì?</p>
+      <label><input type="radio"> Bỏ qua lần lặp hiện tại, sang lần sau</label>
+      <label><input type="radio"> Thoát hẳn khỏi vòng lặp</label>
+      <label><input type="radio"> Tạm dừng 1 giây</label>
+      <div class="qz-why">Thoát hẳn là break; bỏ qua lần này là continue (bài 7).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">7. Một hàm không có dòng <code>return</code> sẽ trả về gì?</p>
+      <label><input type="radio"> 0</label>
+      <label><input type="radio"> Chuỗi rỗng ""</label>
+      <label><input type="radio"> None</label>
+      <div class="qz-why">Không return → Python tự trả về None, nghĩa là "không có gì" (bài 9).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">8. <code>sum([2, 4, 6]) / len([2, 4, 6])</code> bằng?</p>
+      <label><input type="radio"> 4</label>
+      <label><input type="radio"> 4.0</label>
+      <label><input type="radio"> 12</label>
+      <div class="qz-why">12 / 3 — phép chia / LUÔN trả về float, nên là 4.0 (bài 3 + 8).</div>
+    </div>
+    <div class="qz-actions">
+      <button class="btn btn-run qz-grade">✔ Chấm điểm</button>
+      <button class="btn btn-reset qz-retry" style="color:var(--muted);border-color:var(--line)">↺ Làm lại</button>
+      <span class="qz-score"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== KIỂM TRA PHẦN 3 ========== -->
+<section class="lesson" id="q3">
+  <div class="eyebrow">Kiểm tra ? / Phần Nâng cao (bài 11–15)</div>
+  <h2>Kiểm tra phần 3</h2>
+  <p>8 câu về try/except, file, list nâng cao, module và class.</p>
+
+  <div class="quiz" data-lesson="q3">
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">1. <code>int("abc")</code> gây ra lỗi gì?</p>
+      <label><input type="radio"> ValueError</label>
+      <label><input type="radio"> TypeError</label>
+      <label><input type="radio"> SyntaxError</label>
+      <div class="qz-why">Giá trị "abc" không đổi được thành số → ValueError (bài 11).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">2. Mở file đã tồn tại với chế độ <code>"w"</code> thì điều gì xảy ra?</p>
+      <label><input type="radio"> Ghi thêm vào cuối file</label>
+      <label><input type="radio"> Báo lỗi vì file đã tồn tại</label>
+      <label><input type="radio"> Xóa sạch nội dung cũ rồi ghi mới</label>
+      <div class="qz-why">"w" ghi đè toàn bộ! Muốn ghi thêm dùng "a" (bảng so sánh bài 12).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">3. Khác biệt giữa <code>sorted(ds)</code> và <code>ds.sort()</code>?</p>
+      <label><input type="radio"> Hoàn toàn giống nhau</label>
+      <label><input type="radio"> sorted trả về bản sao đã xếp, sort đổi trực tiếp bản gốc</label>
+      <label><input type="radio"> sorted chỉ dùng cho số, sort chỉ dùng cho chuỗi</label>
+      <div class="qz-why">sorted giữ nguyên bản gốc; .sort() sửa tại chỗ (bài 13).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">4. <code>[x * 2 for x in range(3)]</code> tạo ra list nào?</p>
+      <label><input type="radio"> [2, 4, 6]</label>
+      <label><input type="radio"> [0, 2, 4]</label>
+      <label><input type="radio"> [0, 1, 2]</label>
+      <div class="qz-why">range(3) là 0, 1, 2 — nhân đôi thành 0, 2, 4 (bài 13).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">5. <code>"a,b,c".split(",")</code> trả về gì?</p>
+      <label><input type="radio"> ["a", "b", "c"]</label>
+      <label><input type="radio"> "abc"</label>
+      <label><input type="radio"> ("a", "b", "c")</label>
+      <div class="qz-why">split tách chuỗi thành LIST các phần (bài 13).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">6. Sau <code>from math import sqrt</code>, gọi căn bậc hai của 16 thế nào?</p>
+      <label><input type="radio"> math.sqrt(16)</label>
+      <label><input type="radio"> sqrt(16)</label>
+      <label><input type="radio"> import.sqrt(16)</label>
+      <div class="qz-why">from ... import lấy thẳng tên hàm, gọi không cần tiền tố math. (bài 14).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">7. Trong class, <code>self</code> đại diện cho gì?</p>
+      <label><input type="radio"> Tên của class</label>
+      <label><input type="radio"> Python phiên bản hiện tại</label>
+      <label><input type="radio"> Chính object đang gọi method</label>
+      <div class="qz-why">self.ten là "tên của riêng object này" — nên Mun và Vàng khác nhau (bài 15).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">8. <code>FileNotFoundError</code> xảy ra khi nào?</p>
+      <label><input type="radio"> Mở file chưa tồn tại với chế độ "r"</label>
+      <label><input type="radio"> Mở file chưa tồn tại với chế độ "w"</label>
+      <label><input type="radio"> Ghi tiếng Việt vào file</label>
+      <div class="qz-why">"r" cần file có sẵn; "w" và "a" tự tạo file mới (bài 12, dùng lại ở bài 21).</div>
+    </div>
+    <div class="qz-actions">
+      <button class="btn btn-run qz-grade">✔ Chấm điểm</button>
+      <button class="btn btn-reset qz-retry" style="color:var(--muted);border-color:var(--line)">↺ Làm lại</button>
+      <span class="qz-score"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== KIỂM TRA PHẦN 4 ========== -->
+<section class="lesson" id="q4">
+  <div class="eyebrow">Kiểm tra ? / Phần Thực chiến (bài 17–21)</div>
+  <h2>Kiểm tra phần 4</h2>
+  <p>8 câu về dict, set, CSV, lambda và JSON — vượt qua bài này là bạn sẵn sàng cho dự án lớn và phần Kinh tế.</p>
+
+  <div class="quiz" data-lesson="q4">
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">1. <code>d.get("x", 0)</code> trả về gì khi dict <code>d</code> KHÔNG có key "x"?</p>
+      <label><input type="radio"> Báo lỗi KeyError</label>
+      <label><input type="radio"> 0</label>
+      <label><input type="radio"> None</label>
+      <div class="qz-why">.get với giá trị mặc định → trả 0, không sập. (Không có mặc định mới trả None) (bài 17).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">2. Mẫu <code>dem[k] = dem.get(k, 0) + 1</code> dùng để làm gì?</p>
+      <label><input type="radio"> Đếm tần suất xuất hiện của k</label>
+      <label><input type="radio"> Xóa key k khỏi dict</label>
+      <label><input type="radio"> Sắp xếp dict theo value</label>
+      <div class="qz-why">Mẫu đếm kinh điển của bài 17 — dùng lại ở bài 19, 22 và K3.</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">3. <code>set([1, 2, 2, 3, 3, 3])</code> cho kết quả gì?</p>
+      <label><input type="radio"> [1, 2, 3]</label>
+      <label><input type="radio"> {1, 2, 2, 3, 3, 3}</label>
+      <label><input type="radio"> {1, 2, 3}</label>
+      <div class="qz-why">Set tự khử trùng lặp — và kết quả là set (ngoặc nhọn), không phải list (bài 18).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">4. Với 2 set khách hàng, <code>q1 &amp; q2</code> cho ta gì?</p>
+      <label><input type="radio"> Khách chỉ mua ở q1</label>
+      <label><input type="radio"> Khách mua ở CẢ HAI quý</label>
+      <label><input type="radio"> Toàn bộ khách của cả 2 quý</label>
+      <div class="qz-why">&amp; là phép giao. Hợp là |, hiệu là − (bài 18).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">5. <code>sorted(sp, key=lambda x: x["gia"])</code> sắp xếp list dict theo gì?</p>
+      <label><input type="radio"> Theo giá, tăng dần</label>
+      <label><input type="radio"> Theo giá, giảm dần</label>
+      <label><input type="radio"> Theo tên sản phẩm</label>
+      <div class="qz-why">key nói "so sánh dựa trên gì"; mặc định tăng dần, giảm dần cần reverse=True (bài 20).</div>
+    </div>
+    <div class="qz-item" data-ans="3">
+      <p class="qz-q">6. Khác biệt giữa <code>json.dump</code> và <code>json.dumps</code>?</p>
+      <label><input type="radio"> Giống hệt nhau</label>
+      <label><input type="radio"> dump nhanh hơn dumps</label>
+      <label><input type="radio"> dump ghi thẳng vào file, dumps trả về chuỗi</label>
+      <div class="qz-why">Chữ "s" = string. dumps → chuỗi; dump → file (bài 21).</div>
+    </div>
+    <div class="qz-item" data-ans="2">
+      <p class="qz-q">7. Đọc file CSV từng dòng, vì sao cần <code>dong.strip()</code> trước khi <code>split(",")</code>?</p>
+      <label><input type="radio"> Để chuyển chữ hoa thành thường</label>
+      <label><input type="radio"> Để bỏ ký tự xuống dòng \n ở cuối mỗi dòng</label>
+      <label><input type="radio"> Để tách cột nhanh hơn</label>
+      <div class="qz-why">Mỗi dòng đọc từ file kèm \n ở cuối — quên strip là cột cuối bị dính \n (bài 19).</div>
+    </div>
+    <div class="qz-item" data-ans="1">
+      <p class="qz-q">8. <code>max(dem, key=dem.get)</code> với dict <code>dem</code> trả về gì?</p>
+      <label><input type="radio"> Key có value lớn nhất</label>
+      <label><input type="radio"> Value lớn nhất</label>
+      <label><input type="radio"> Cặp (key, value) lớn nhất</label>
+      <div class="qz-why">max duyệt các KEY, so sánh bằng value → trả về key "vô địch" (bài luyện 4.1).</div>
+    </div>
+    <div class="qz-actions">
+      <button class="btn btn-run qz-grade">✔ Chấm điểm</button>
+      <button class="btn btn-reset qz-retry" style="color:var(--muted);border-color:var(--line)">↺ Làm lại</button>
+      <span class="qz-score"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== KINH TẾ 4 ========== -->
+<section class="lesson" id="e4">
+  <div class="eyebrow">Kinh tế K4 / Python cho Kinh tế 📊</div>
+  <h2>Kinh tế lượng nhập môn: hồi quy tuyến tính</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Tự code hồi quy tuyến tính đơn (OLS) từ công thức, hiểu ý nghĩa hệ số — trước khi để Eviews/Stata/statsmodels "bấm nút hộ".</div>
+
+  <h3>1. Câu hỏi của kinh tế lượng</h3>
+  <p>Cửa hàng chi tiền quảng cáo (x) và có doanh thu (y) theo 8 tháng. Câu hỏi: <b>quảng cáo có "ăn" vào doanh thu không, và thêm 1 triệu quảng cáo thì doanh thu tăng bao nhiêu?</b> Trước tiên nhìn mức độ quan hệ bằng <b>hệ số tương quan</b> (từ −1 đến 1, càng gần 1 quan hệ thuận càng chặt):</p>
+  <div class="runner" data-lesson="e4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tuong_quan.py</span></div>
+    <textarea class="code" rows="9" spellcheck="false">import statistics
+
+quang_cao = [10, 15, 12, 20, 25, 18, 30, 28]     # triệu đồng
+doanh_thu = [120, 150, 135, 180, 210, 165, 240, 225]
+
+r = statistics.correlation(quang_cao, doanh_thu)
+print(f"Hệ số tương quan r = {r:.3f}")
+print("→ Rất gần 1: quảng cáo và doanh thu quan hệ thuận, rất chặt")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <div class="warn">⚠️ <b>Câu thần chú của dân kinh tế lượng:</b> tương quan ≠ nhân quả (correlation is not causation). Kem bán chạy tương quan với số vụ đuối nước — vì cả hai cùng do mùa hè, không phải kem gây đuối nước. Luôn tự hỏi: có biến thứ ba nào đứng sau không?</div>
+
+  <h3>2. Tự code OLS — tìm đường thẳng "khớp nhất"</h3>
+  <p>Hồi quy tuyến tính đơn tìm đường thẳng <code class="inline">ŷ = a + b·x</code> sao cho tổng bình phương sai số nhỏ nhất (OLS — Ordinary Least Squares). Công thức nghiệm mà giáo trình nào cũng có:</p>
+  <p style="text-align:center"><code class="inline">b = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²</code> &nbsp;&nbsp;và&nbsp;&nbsp; <code class="inline">a = ȳ − b·x̄</code></p>
+  <p>Nhìn đáng sợ, nhưng code lại rất "hiền" — chỉ là vòng lặp và cộng dồn:</p>
+  <div class="runner" data-lesson="e4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">ols_tu_viet.py</span></div>
+    <textarea class="code" rows="17" spellcheck="false">quang_cao = [10, 15, 12, 20, 25, 18, 30, 28]
+doanh_thu = [120, 150, 135, 180, 210, 165, 240, 225]
+
+x_tb = sum(quang_cao) / len(quang_cao)
+y_tb = sum(doanh_thu) / len(doanh_thu)
+
+tu_so = 0
+mau_so = 0
+for x, y in zip(quang_cao, doanh_thu):     # zip: duyệt 2 list song song!
+    tu_so += (x - x_tb) * (y - y_tb)
+    mau_so += (x - x_tb) ** 2
+
+b = tu_so / mau_so
+a = y_tb - b * x_tb
+
+print(f"Phương trình hồi quy: doanh_thu = {a:.1f} + {b:.2f} × quang_cao")
+print(f"\nÝ nghĩa: chi thêm 1 triệu quảng cáo → doanh thu tăng ~{b:.2f} triệu")
+print(f"Không quảng cáo (x=0) → doanh thu nền ~{a:.1f} triệu")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Kỹ thuật Python mới: <code class="inline">zip(list_1, list_2)</code> duyệt 2 list song song, mỗi vòng nhận một cặp (x, y). Cực hay dùng khi dữ liệu nằm ở 2 cột.</p>
+
+  <h3>3. Dự báo và đánh giá độ khớp (R²)</h3>
+  <p>Có phương trình rồi thì dùng được ngay để <b>dự báo</b>. Còn <b>R²</b> (R bình phương) trả lời "mô hình giải thích được bao nhiêu % biến động của y" — con số đầu tiên mọi người nhìn khi đọc kết quả hồi quy:</p>
+  <div class="runner" data-lesson="e4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">du_bao_r2.py</span></div>
+    <textarea class="code" rows="18" spellcheck="false">import statistics
+quang_cao = [10, 15, 12, 20, 25, 18, 30, 28]
+doanh_thu = [120, 150, 135, 180, 210, 165, 240, 225]
+
+# Python có sẵn hồi quy trong module statistics — dùng để kiểm tra phần tự viết:
+b, a = statistics.linear_regression(quang_cao, doanh_thu)   # trả về (slope, intercept)
+print(f"Kiểm chứng: a = {a:.1f}, b = {b:.2f} — khớp với tự viết!")
+
+def du_bao(x):
+    return a + b * x
+
+for ngan_sach in [22, 35, 50]:
+    print(f"Chi {ngan_sach} triệu quảng cáo → dự báo doanh thu {du_bao(ngan_sach):.0f} triệu")
+
+# R² = bình phương hệ số tương quan (với hồi quy đơn)
+r = statistics.correlation(quang_cao, doanh_thu)
+print(f"\nR² = {r ** 2:.3f} → mô hình giải thích {r ** 2 * 100:.1f}% biến động doanh thu")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <div class="note">💡 <b>Cẩn trọng khi dự báo:</b> x = 50 nằm NGOÀI khoảng dữ liệu quan sát (10–30) — gọi là ngoại suy (extrapolation), độ tin cậy giảm mạnh. Và mô hình 8 quan sát chỉ để học; nghiên cứu thật cần mẫu lớn hơn nhiều. Khi học môn Kinh tế lượng, bạn sẽ dùng thư viện <code class="inline">statsmodels</code> — nó cho thêm p-value, khoảng tin cậy... nhưng phần lõi chính là công thức bạn vừa tự code.</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập K4</span>
+    <p>Dữ liệu 7 sinh viên: số giờ tự học mỗi tuần và điểm thi cuối kỳ. Hãy: (1) tính hệ số tương quan, (2) chạy hồi quy bằng <code class="inline">statistics.linear_regression</code>, in phương trình và diễn giải hệ số b bằng một câu print, (3) dự báo điểm của sinh viên học 12 giờ/tuần.</p>
+    <div class="runner" data-lesson="e4"><div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_k4.py</span></div><textarea class="code" rows="8" spellcheck="false">import statistics
+gio_hoc = [2, 4, 5, 7, 8, 10, 11]
+diem_thi = [4.5, 5.5, 6.0, 7.0, 7.5, 8.5, 9.0]
+# Viết tiếp code của bạn ở đây
+</textarea><div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div><pre class="out" aria-live="polite"></pre></div>
+    <details><summary>Gợi ý</summary><div class="dbody"><code class="inline">linear_regression</code> trả về (b, a) — chú ý thứ tự: slope trước, intercept sau. Dự báo: <code class="inline">a + b * 12</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>import statistics
+gio_hoc = [2, 4, 5, 7, 8, 10, 11]
+diem_thi = [4.5, 5.5, 6.0, 7.0, 7.5, 8.5, 9.0]
+
+r = statistics.correlation(gio_hoc, diem_thi)
+print(f"Tương quan r = {r:.3f}")
+
+b, a = statistics.linear_regression(gio_hoc, diem_thi)
+print(f"diem = {a:.2f} + {b:.3f} × gio_hoc")
+print(f"→ Học thêm 1 giờ/tuần, điểm tăng ~{b:.2f} điểm")
+
+du_bao = a + b * 12
+print(f"Học 12 giờ/tuần → dự báo {du_bao:.1f} điểm")</pre></div></details>
+  </div>
+
+  <p>Với K4, bạn đã chạm vào cả 4 trụ định lượng của ngành: <b>thống kê (K1) → tài chính (K2) → phân tích kinh doanh (K3) → kinh tế lượng (K4)</b> — tất cả bằng Python bạn tự học từ con số 0. 🎓📊</p>
 </section>
 
 <div class="lesson-nav" id="lessonNav">
@@ -1126,7 +3496,7 @@ else:
 
 <script>
 /* ================= Điều hướng bài học ================= */
-const LESSONS = ["l0","l1","l2","l3","l4","l5","l6","l7","l8","l9","l10"];
+const LESSONS = ["l0","l1","l2","l3","l4","l5","p1","q1","l6","l7","l8","l9","p2","q2","l10","l11","l12","l13","l14","l15","p3","q3","l16","l17","l18","l19","l20","l21","p4","q4","l22","e1","e2","e3","e4"];
 let current = "l0";
 
 const store = (() => {           // localStorage an toàn (fallback bộ nhớ tạm)
@@ -1255,6 +3625,43 @@ document.querySelectorAll(".runner").forEach(runner => {
       ta.selectionStart = ta.selectionEnd = s + 4;
     }
     if((e.ctrlKey || e.metaKey) && e.key === "Enter"){ e.preventDefault(); runCode(runner); }
+  });
+});
+
+/* ================= Trắc nghiệm tự chấm ================= */
+document.querySelectorAll(".quiz").forEach((quiz, qi) => {
+  const items = quiz.querySelectorAll(".qz-item");
+  items.forEach((item, ii) => {
+    item.querySelectorAll("input[type=radio]").forEach(r => r.name = `qz${qi}_${ii}`);
+  });
+  const scoreEl = quiz.querySelector(".qz-score");
+  quiz.querySelector(".qz-grade").addEventListener("click", () => {
+    let dung = 0;
+    items.forEach(item => {
+      item.classList.remove("right", "wrong");
+      const labels = [...item.querySelectorAll("label")];
+      labels.forEach(l => l.classList.remove("correct-ans"));
+      const ans = parseInt(item.dataset.ans, 10);            // đáp án đúng (1-based)
+      labels[ans - 1].classList.add("correct-ans");
+      const chon = labels.findIndex(l => l.querySelector("input").checked) + 1;
+      item.classList.add(chon === ans ? "right" : "wrong");
+      if (chon === ans) dung++;
+    });
+    quiz.classList.add("graded");
+    const pct = dung / items.length;
+    scoreEl.textContent = `Kết quả: ${dung}/${items.length}` + (pct === 1 ? " 🏆" : pct >= 0.7 ? " 👍" : " — ôn lại rồi thử lần nữa nhé!");
+    scoreEl.className = "qz-score " + (pct >= 0.7 ? "good" : "bad");
+    markDone(quiz.dataset.lesson);
+  });
+  quiz.querySelector(".qz-retry").addEventListener("click", () => {
+    quiz.classList.remove("graded");
+    scoreEl.textContent = "";
+    scoreEl.className = "qz-score";
+    items.forEach(item => {
+      item.classList.remove("right", "wrong");
+      item.querySelectorAll("label").forEach(l => l.classList.remove("correct-ans"));
+      item.querySelectorAll("input").forEach(r => r.checked = false);
+    });
   });
 });
 
