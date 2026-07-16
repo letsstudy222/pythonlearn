@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyKhởiĐầu — Học Python từ con số 0, ngay trên trình duyệt</title>
+<meta name="description" content="Khóa học Python miễn phí cho người mới bắt đầu. Viết và chạy code Python ngay trên trình duyệt, không cần cài đặt gì.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF6;
+  --ink:#1E2B45;
+  --muted:#66738C;
+  --line:#E4E1D6;
+  --panel:#101B33;
+  --panel-2:#182746;
+  --panel-line:#2B3D63;
+  --blue:#2E6FA7;
+  --blue-dark:#245A88;
+  --amber:#F0B32E;
+  --green:#33A06F;
+  --red:#E06060;
+  --code-bg:#EFF3F7;
+  --radius:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'Be Vietnam Pro',system-ui,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.7;
+  font-size:16.5px;
+}
+code,pre,textarea.code{font-family:'JetBrains Mono',monospace}
+
+/* ===== Layout ===== */
+.wrap{display:flex;min-height:100vh}
+.sidebar{
+  width:280px;flex-shrink:0;
+  border-right:1px solid var(--line);
+  background:#F5F3EC;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  padding:22px 16px 40px;
+}
+main{flex:1;min-width:0;padding:0 24px 90px}
+.content{max-width:780px;margin:0 auto}
+
+/* ===== Sidebar ===== */
+.logo{font-weight:800;font-size:20px;letter-spacing:-.3px;margin:0 8px 4px;display:flex;align-items:center;gap:9px}
+.logo .py{display:inline-flex;width:30px;height:30px;border-radius:8px;background:var(--panel);color:var(--amber);align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600}
+.logo-sub{font-size:12.5px;color:var(--muted);margin:0 8px 18px}
+.navgroup{font-size:11px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);margin:18px 8px 6px;font-weight:600}
+.lesson-link{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:8px;
+  color:var(--ink);text-decoration:none;font-size:14.5px;
+  border:none;background:none;width:100%;text-align:left;cursor:pointer;
+  font-family:inherit;line-height:1.4;
+}
+.lesson-link:hover{background:#ECE9DE}
+.lesson-link.active{background:var(--panel);color:#fff}
+.lesson-link.active .lnum{background:var(--amber);color:var(--panel)}
+.lnum{
+  flex-shrink:0;width:24px;height:24px;border-radius:7px;
+  background:#E2DFD2;color:var(--ink);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;
+}
+.lesson-link .tick{margin-left:auto;color:var(--green);font-weight:800;font-size:14px;visibility:hidden}
+.lesson-link.done .tick{visibility:visible}
+
+/* ===== Mobile nav ===== */
+.menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:60;
+  background:var(--panel);color:#fff;border:none;border-radius:9px;
+  padding:9px 13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;
+}
+.scrim{display:none;position:fixed;inset:0;background:rgba(20,28,48,.45);z-index:40}
+@media (max-width:900px){
+  .menu-btn{display:block}
+  .sidebar{
+    position:fixed;left:0;top:0;z-index:50;height:100vh;
+    transform:translateX(-102%);transition:transform .25s ease;
+    box-shadow:4px 0 24px rgba(0,0,0,.15);
+  }
+  .sidebar.open{transform:translateX(0)}
+  .scrim.show{display:block}
+  main{padding:0 16px 90px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ===== Hero ===== */
+.hero{padding:64px 0 20px}
+.hero h1{font-size:clamp(30px,5vw,44px);line-height:1.15;letter-spacing:-1px;margin:0 0 14px;font-weight:800}
+.hero h1 .hl{color:var(--blue)}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:600px;margin:0 0 26px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.badge{font-size:13px;font-weight:600;padding:5px 12px;border-radius:99px;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
+.badge b{color:var(--green)}
+
+/* ===== Lesson content ===== */
+.lesson{display:none;padding-top:34px}
+.lesson.show{display:block}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--blue);font-weight:600;letter-spacing:.5px;margin:26px 0 4px}
+.lesson h2{font-size:30px;letter-spacing:-.6px;margin:0 0 10px;font-weight:800;line-height:1.2}
+.lesson h3{font-size:20px;margin:34px 0 8px;font-weight:700;letter-spacing:-.3px}
+.lesson p{margin:12px 0}
+.lesson ul,.lesson ol{margin:10px 0;padding-left:24px}
+.lesson li{margin:5px 0}
+.goal{
+  border:1.5px solid var(--line);border-left:4px solid var(--amber);
+  background:#fff;border-radius:0 var(--radius) var(--radius) 0;
+  padding:13px 17px;margin:16px 0;font-size:15px;
+}
+.goal b{display:block;margin-bottom:3px}
+.note{
+  background:#EEF4F9;border:1.5px solid #D4E2EE;border-radius:var(--radius);
+  padding:13px 17px;margin:16px 0;font-size:15px;
+}
+.warn{
+  background:#FBF1E4;border:1.5px solid #EBD9BC;border-radius:var(--radius);
+  padding:13px 17px;margin:16px 0;font-size:15px;
+}
+code.inline{
+  background:var(--code-bg);border:1px solid #DCE4EC;border-radius:5px;
+  padding:1.5px 6px;font-size:.86em;white-space:nowrap;
+}
+table.cmp{border-collapse:collapse;width:100%;margin:14px 0;font-size:14.5px;background:#fff;border-radius:var(--radius);overflow:hidden}
+table.cmp th,table.cmp td{border:1px solid var(--line);padding:8px 12px;text-align:left}
+table.cmp th{background:#F0EDE2;font-weight:600}
+table.cmp td code{background:var(--code-bg);padding:1px 5px;border-radius:4px;font-size:.9em}
+
+/* ===== Runner (code playground) ===== */
+.runner{
+  margin:20px 0;border-radius:12px;overflow:hidden;
+  background:var(--panel);box-shadow:0 6px 22px rgba(16,27,51,.18);
+}
+.runner-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 14px;background:var(--panel-2);
+  border-bottom:1px solid var(--panel-line);
+}
+.dots{display:flex;gap:6px}
+.dots span{width:10px;height:10px;border-radius:50%;display:block}
+.dots span:nth-child(1){background:#E06060}
+.dots span:nth-child(2){background:#F0B32E}
+.dots span:nth-child(3){background:#33A06F}
+.runner-title{color:#9FB0CE;font-size:12.5px;font-family:'JetBrains Mono',monospace;margin-left:4px}
+.runner-bar .grow{flex:1}
+textarea.code{
+  display:block;width:100%;border:none;resize:vertical;
+  background:var(--panel);color:#E8EDF7;
+  padding:16px 18px;font-size:14.5px;line-height:1.65;
+  min-height:60px;outline:none;tab-size:4;
+}
+textarea.code:focus-visible{box-shadow:inset 0 0 0 2px var(--blue)}
+.runner-actions{
+  display:flex;gap:10px;align-items:center;
+  padding:10px 14px;background:var(--panel-2);
+  border-top:1px solid var(--panel-line);
+}
+.btn{
+  font-family:inherit;font-weight:600;font-size:14px;
+  border:none;border-radius:8px;padding:8px 18px;cursor:pointer;
+}
+.btn:focus-visible{outline:2.5px solid var(--amber);outline-offset:2px}
+.btn-run{background:var(--green);color:#fff}
+.btn-run:hover{background:#2B8A5F}
+.btn-run:disabled{background:#3D5378;color:#9FB0CE;cursor:wait}
+.btn-reset{background:transparent;color:#9FB0CE;border:1.5px solid var(--panel-line)}
+.btn-reset:hover{color:#fff;border-color:#9FB0CE}
+.kbd-hint{margin-left:auto;color:#63749A;font-size:12px;font-family:'JetBrains Mono',monospace}
+.out{
+  margin:0;padding:14px 18px;min-height:20px;
+  background:#0B1426;color:#D7E3F4;
+  font-size:13.5px;line-height:1.65;white-space:pre-wrap;word-break:break-word;
+  border-top:1px solid var(--panel-line);
+}
+.out .err{color:var(--red)}
+.out .sysmsg{color:#63749A;font-style:italic}
+.out:empty{display:none}
+
+/* ===== Exercise ===== */
+.exercise{
+  border:1.5px solid var(--line);border-radius:12px;background:#fff;
+  padding:18px 20px;margin:26px 0;
+}
+.exercise .ex-label{
+  display:inline-block;background:var(--amber);color:var(--panel);
+  font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  border-radius:6px;padding:3px 10px;margin-bottom:8px;
+}
+.exercise .runner{margin:14px 0 6px;box-shadow:none;border:1px solid var(--panel-line)}
+details{margin:10px 0 0}
+details summary{
+  cursor:pointer;font-weight:600;font-size:14.5px;color:var(--blue);
+  list-style:none;display:inline-flex;align-items:center;gap:6px;
+}
+details summary::before{content:"▸";transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .dbody{
+  margin-top:8px;padding:12px 15px;background:#F6F4EC;
+  border-radius:8px;font-size:14.5px;
+}
+details .dbody pre{
+  background:var(--panel);color:#E8EDF7;border-radius:8px;
+  padding:12px 15px;font-size:13.5px;overflow-x:auto;margin:8px 0 0;line-height:1.6;
+}
+
+/* ===== Lesson footer nav ===== */
+.lesson-nav{display:flex;gap:12px;margin-top:44px;padding-top:22px;border-top:1.5px solid var(--line)}
+.lesson-nav .btn-nav{
+  flex:1;text-align:center;padding:13px;border-radius:10px;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink);
+  font-weight:600;font-size:15px;cursor:pointer;font-family:inherit;
+}
+.lesson-nav .btn-nav:hover{border-color:var(--blue);color:var(--blue)}
+.lesson-nav .btn-nav.primary{background:var(--panel);color:#fff;border-color:var(--panel)}
+.lesson-nav .btn-nav.primary:hover{background:var(--blue-dark);border-color:var(--blue-dark);color:#fff}
+.lesson-nav .btn-nav:disabled{opacity:.4;cursor:default}
+.lesson-nav .btn-nav:disabled:hover{border-color:var(--line);color:var(--ink)}
+
+/* ===== Pyodide status pill ===== */
+#pystatus{
+  position:fixed;bottom:16px;right:16px;z-index:70;
+  background:var(--panel);color:#D7E3F4;font-size:13px;font-weight:500;
+  border-radius:99px;padding:8px 16px;display:none;align-items:center;gap:9px;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+#pystatus.show{display:flex}
+.spinner{
+  width:13px;height:13px;border-radius:50%;
+  border:2.5px solid #3D5378;border-top-color:var(--amber);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+#pystatus.ready .spinner{display:none}
+#pystatus.ready::before{content:"✓";color:var(--green);font-weight:800}
+
+/* typing caret in hero demo */
+.caret{display:inline-block;width:9px;height:1.15em;background:var(--amber);vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+</style>
+</head>
+<body>
+<button class="menu-btn" id="menuBtn" aria-label="Mở danh sách bài học">☰ Bài học</button>
+<div class="scrim" id="scrim"></div>
+
+<div class="wrap">
+<!-- ============ SIDEBAR ============ -->
+<nav class="sidebar" id="sidebar" aria-label="Danh sách bài học">
+  <div class="logo"><span class="py">&gt;_</span> PyKhởiĐầu</div>
+  <p class="logo-sub">Học Python ngay trên trình duyệt</p>
+
+  <div class="navgroup">Bắt đầu</div>
+  <button class="lesson-link" data-goto="l0"><span class="lnum">0</span> Đọc trước khi học <span class="tick">✓</span></button>
+
+  <div class="navgroup">Nền tảng</div>
+  <button class="lesson-link" data-goto="l1"><span class="lnum">1</span> print() — chương trình đầu tiên <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l2"><span class="lnum">2</span> Biến &amp; kiểu dữ liệu <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l3"><span class="lnum">3</span> Tính toán với số <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l4"><span class="lnum">4</span> Chuỗi (string) <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l5"><span class="lnum">5</span> input() — nhận dữ liệu <span class="tick">✓</span></button>
+
+  <div class="navgroup">Tư duy lập trình</div>
+  <button class="lesson-link" data-goto="l6"><span class="lnum">6</span> Câu điều kiện if / else <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l7"><span class="lnum">7</span> Vòng lặp for &amp; while <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l8"><span class="lnum">8</span> List — danh sách <span class="tick">✓</span></button>
+  <button class="lesson-link" data-goto="l9"><span class="lnum">9</span> Hàm (function) <span class="tick">✓</span></button>
+
+  <div class="navgroup">Tổng kết</div>
+  <button class="lesson-link" data-goto="l10"><span class="lnum">10</span> Dự án nhỏ &amp; lộ trình tiếp <span class="tick">✓</span></button>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main>
+<div class="content">
+
+<!-- ========== BÀI 0 ========== -->
+<section class="lesson" id="l0">
+  <div class="hero">
+    <div class="badges">
+      <span class="badge"><b>✓</b> Miễn phí 100%</span>
+      <span class="badge"><b>✓</b> Không cần cài đặt</span>
+      <span class="badge"><b>✓</b> Chạy code ngay trên web</span>
+    </div>
+    <h1>Học <span class="hl">Python</span> từ con số 0,<br>ngay trên trình duyệt này.</h1>
+    <p class="lead">11 bài học tiếng Việt cho người chưa từng lập trình. Mỗi bài đều có ví dụ chạy được và bài tập kèm lời giải. Bạn chỉ cần bấm <b>▶ Chạy</b>.</p>
+  </div>
+
+  <div class="runner" data-lesson="l0">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">thu_ngay.py</span></div>
+    <textarea class="code" rows="2" spellcheck="false">print("Xin chào! Đây là dòng code Python đầu tiên của bạn.")
+print("Hãy thử sửa chữ trong ngoặc rồi bấm Chạy lại xem sao 😄")</textarea>
+    <div class="runner-actions">
+      <button class="btn btn-run">▶ Chạy</button>
+      <button class="btn btn-reset">↺ Làm lại</button>
+      <span class="kbd-hint">Ctrl + Enter</span>
+    </div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="note">💡 Lần chạy <b>đầu tiên</b> sẽ mất khoảng 5–15 giây vì trình duyệt cần tải Python (Pyodide) về. Các lần sau chạy ngay lập tức.</div>
+
+  <h3>Python là gì, và vì sao nên học?</h3>
+  <p>Python là một <b>ngôn ngữ lập trình</b> — tức là cách con người viết chỉ dẫn để máy tính thực hiện. Trong các ngôn ngữ phổ biến, Python nổi tiếng vì <b>dễ đọc nhất</b>: code Python trông gần giống tiếng Anh thường.</p>
+  <p>Python được dùng ở khắp nơi: phân tích dữ liệu, tự động hóa công việc văn phòng, xây website (Instagram, YouTube dùng Python), và là ngôn ngữ số 1 của trí tuệ nhân tạo (AI).</p>
+
+  <h3>Cách học trên trang này</h3>
+  <ol>
+    <li><b>Đọc lý thuyết</b> — mỗi bài chỉ vài phút đọc.</li>
+    <li><b>Chạy ví dụ</b> — bấm ▶ Chạy để xem kết quả. Đừng chỉ đọc!</li>
+    <li><b>Nghịch code</b> — sửa ví dụ, đoán kết quả trước khi chạy. Đây là cách học nhanh nhất.</li>
+    <li><b>Làm bài tập</b> cuối bài. Bí thì mở "Gợi ý", bí nữa mới mở "Lời giải".</li>
+  </ol>
+
+  <div class="goal"><b>🎯 Nguyên tắc vàng</b> Lập trình học bằng tay, không học bằng mắt. Gõ lại code còn tốt hơn copy. Sai là chuyện bình thường — thông báo lỗi là bạn, không phải kẻ thù.</div>
+
+  <h3>Trang này hoạt động thế nào?</h3>
+  <p>Trang dùng <b>Pyodide</b> — phiên bản Python chạy trực tiếp trong trình duyệt (công nghệ WebAssembly). Nghĩa là code của bạn chạy <b>trên máy bạn</b>, không gửi đi đâu cả, và không cần cài Python. Sau này khi học sâu hơn, bạn nên cài Python thật từ <code class="inline">python.org</code>, nhưng với toàn bộ nội dung khóa này thì trình duyệt là đủ.</p>
+</section>
+
+<!-- ========== BÀI 1 ========== -->
+<section class="lesson" id="l1">
+  <div class="eyebrow">Bài 1 / Nền tảng</div>
+  <h2>print() — chương trình đầu tiên</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> In được chữ và số ra màn hình, biết viết ghi chú trong code, và đọc hiểu thông báo lỗi đầu tiên.</div>
+
+  <h3>1. Lệnh print()</h3>
+  <p><code class="inline">print()</code> là lệnh cơ bản nhất của Python: nó <b>in ra màn hình</b> thứ bạn đặt trong cặp ngoặc tròn. Chữ (văn bản) phải nằm trong dấu nháy <code class="inline">"..."</code> hoặc <code class="inline">'...'</code> — hai loại nháy tương đương nhau.</p>
+
+  <div class="runner" data-lesson="l1">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">vi_du_1.py</span></div>
+    <textarea class="code" rows="4" spellcheck="false">print("Xin chào Việt Nam!")
+print('Dùng nháy đơn cũng được')
+print(2026)
+print("Năm nay là năm", 2026)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Chú ý dòng cuối: có thể in <b>nhiều thứ cùng lúc</b>, ngăn cách bằng dấu phẩy — Python tự thêm khoảng trắng ở giữa. Số thì <b>không cần</b> dấu nháy.</p>
+
+  <h3>2. Ghi chú (comment) với dấu #</h3>
+  <p>Dòng bắt đầu bằng <code class="inline">#</code> là <b>ghi chú</b> — Python bỏ qua hoàn toàn, chỉ để người đọc hiểu code. Hãy tập thói quen ghi chú ngay từ đầu.</p>
+
+  <div class="runner" data-lesson="l1">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">ghi_chu.py</span></div>
+    <textarea class="code" rows="3" spellcheck="false"># Dòng này là ghi chú, chạy sẽ không in ra gì
+print("Chỉ dòng này được in")  # ghi chú cũng đặt được cuối dòng</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. Làm quen với lỗi — đừng sợ!</h3>
+  <p>Chạy thử đoạn dưới. Nó <b>cố tình sai</b> (thiếu dấu nháy đóng). Đọc dòng cuối của thông báo lỗi: <code class="inline">SyntaxError</code> nghĩa là "lỗi cú pháp" — viết sai ngữ pháp của Python.</p>
+
+  <div class="runner" data-lesson="l1">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">loi_dau_tien.py</span></div>
+    <textarea class="code" rows="2" spellcheck="false">print("Tôi quên đóng nháy rồi</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Giờ hãy <b>tự sửa</b> nó (thêm <code class="inline">"</code> vào cuối) rồi chạy lại. Chúc mừng — bạn vừa debug lần đầu tiên trong đời! 🎉</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 1</span>
+    <p>Viết chương trình in ra <b>3 dòng</b>: tên bạn, thành phố bạn sống, và một câu bất kỳ có chứa số (dùng dấu phẩy để in chữ kèm số).</p>
+    <div class="runner" data-lesson="l1">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_1.py</span></div>
+      <textarea class="code" rows="4" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Mỗi dòng là một lệnh <code class="inline">print()</code> riêng. Dòng có số: <code class="inline">print("Tôi", 25, "tuổi")</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>print("Tên tôi là Minh")
+print("Tôi sống ở Hà Nội")
+print("Tôi", 25, "tuổi và bắt đầu học Python năm", 2026)</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 2 ========== -->
+<section class="lesson" id="l2">
+  <div class="eyebrow">Bài 2 / Nền tảng</div>
+  <h2>Biến &amp; kiểu dữ liệu</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Lưu dữ liệu vào biến, phân biệt 4 kiểu dữ liệu cơ bản, và kiểm tra kiểu bằng <code class="inline">type()</code>.</div>
+
+  <h3>1. Biến là gì?</h3>
+  <p><b>Biến</b> (variable) giống một chiếc hộp có dán nhãn: bạn đặt dữ liệu vào hộp, và sau đó gọi tên nhãn để lấy ra dùng. Tạo biến bằng dấu <code class="inline">=</code> (đọc là "gán", không phải "bằng" như toán học):</p>
+
+  <div class="runner" data-lesson="l2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bien.py</span></div>
+    <textarea class="code" rows="6" spellcheck="false">ten = "Lan"
+tuoi = 21
+print(ten)
+print(tuoi)
+print("Bạn", ten, "năm nay", tuoi, "tuổi")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Chú ý: <code class="inline">print(ten)</code> — <b>không có dấu nháy</b> — in ra nội dung của biến. Nếu viết <code class="inline">print("ten")</code> thì Python in đúng chữ "ten". Đây là lỗi kinh điển của người mới!</p>
+
+  <h3>2. Biến có thể thay đổi</h3>
+  <div class="runner" data-lesson="l2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">thay_doi.py</span></div>
+    <textarea class="code" rows="6" spellcheck="false">diem = 7
+print("Điểm ban đầu:", diem)
+
+diem = diem + 2   # lấy giá trị cũ, cộng 2, gán ngược lại
+print("Điểm sau khi cộng:", diem)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Dòng <code class="inline">diem = diem + 2</code> nhìn vô lý theo toán học, nhưng trong Python nó nghĩa là: <i>tính vế phải trước (7 + 2 = 9), rồi cất kết quả vào hộp <code class="inline">diem</code></i>.</p>
+
+  <h3>3. Bốn kiểu dữ liệu cơ bản</h3>
+  <table class="cmp">
+    <tr><th>Kiểu</th><th>Tên Python</th><th>Ví dụ</th><th>Dùng khi</th></tr>
+    <tr><td>Số nguyên</td><td><code>int</code></td><td><code>5</code>, <code>-12</code>, <code>2026</code></td><td>Đếm, tuổi, số lượng</td></tr>
+    <tr><td>Số thực</td><td><code>float</code></td><td><code>3.14</code>, <code>-0.5</code></td><td>Tiền, cân nặng, tỉ lệ</td></tr>
+    <tr><td>Chuỗi</td><td><code>str</code></td><td><code>"xin chào"</code></td><td>Văn bản, tên, địa chỉ</td></tr>
+    <tr><td>Đúng/Sai</td><td><code>bool</code></td><td><code>True</code>, <code>False</code></td><td>Điều kiện, trạng thái</td></tr>
+  </table>
+  <p>Dùng hàm <code class="inline">type()</code> để hỏi Python "cái này kiểu gì?":</p>
+
+  <div class="runner" data-lesson="l2">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">kieu_du_lieu.py</span></div>
+    <textarea class="code" rows="5" spellcheck="false">print(type(2026))
+print(type(3.14))
+print(type("2026"))   # có nháy → là chuỗi, không phải số!
+print(type(True))</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="warn">⚠️ <b>Bẫy phổ biến:</b> <code class="inline">"5" + "5"</code> ra <code class="inline">"55"</code> (nối chuỗi), còn <code class="inline">5 + 5</code> ra <code class="inline">10</code>. Chuỗi số vẫn là chuỗi! Đổi chuỗi → số bằng <code class="inline">int("5")</code> hoặc <code class="inline">float("3.14")</code>, đổi ngược bằng <code class="inline">str(5)</code>.</div>
+
+  <h3>4. Quy tắc đặt tên biến</h3>
+  <ul>
+    <li>Chỉ dùng chữ không dấu, số, gạch dưới: <code class="inline">ho_ten</code>, <code class="inline">diem_toan</code>, <code class="inline">so_luong_2</code>.</li>
+    <li>Không bắt đầu bằng số, không chứa khoảng trắng, không trùng từ khóa (<code class="inline">print</code>, <code class="inline">if</code>...).</li>
+    <li>Đặt tên <b>có nghĩa</b>: <code class="inline">gia_ban</code> tốt hơn <code class="inline">x</code>.</li>
+  </ul>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 2</span>
+    <p>Tạo 3 biến: <code class="inline">mon_hang</code> (chuỗi), <code class="inline">gia</code> (số nguyên), <code class="inline">so_luong</code> (số nguyên). Tạo biến thứ 4 <code class="inline">tong_tien = gia * so_luong</code> rồi in ra câu đầy đủ, ví dụ: <i>Mua 3 quyển vở hết 45000 đồng</i>.</p>
+    <div class="runner" data-lesson="l2">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_2.py</span></div>
+      <textarea class="code" rows="6" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Dấu nhân trong Python là <code class="inline">*</code>. In nhiều thứ: <code class="inline">print("Mua", so_luong, mon_hang, ...)</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>mon_hang = "quyển vở"
+gia = 15000
+so_luong = 3
+tong_tien = gia * so_luong
+print("Mua", so_luong, mon_hang, "hết", tong_tien, "đồng")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 3 ========== -->
+<section class="lesson" id="l3">
+  <div class="eyebrow">Bài 3 / Nền tảng</div>
+  <h2>Tính toán với số</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Dùng thành thạo 7 phép toán của Python và làm tròn số.</div>
+
+  <h3>1. Bảy phép toán cơ bản</h3>
+  <table class="cmp">
+    <tr><th>Phép toán</th><th>Ký hiệu</th><th>Ví dụ</th><th>Kết quả</th></tr>
+    <tr><td>Cộng</td><td><code>+</code></td><td><code>7 + 3</code></td><td><code>10</code></td></tr>
+    <tr><td>Trừ</td><td><code>-</code></td><td><code>7 - 3</code></td><td><code>4</code></td></tr>
+    <tr><td>Nhân</td><td><code>*</code></td><td><code>7 * 3</code></td><td><code>21</code></td></tr>
+    <tr><td>Chia (luôn ra float)</td><td><code>/</code></td><td><code>7 / 2</code></td><td><code>3.5</code></td></tr>
+    <tr><td>Chia lấy phần nguyên</td><td><code>//</code></td><td><code>7 // 2</code></td><td><code>3</code></td></tr>
+    <tr><td>Chia lấy phần dư</td><td><code>%</code></td><td><code>7 % 2</code></td><td><code>1</code></td></tr>
+    <tr><td>Lũy thừa</td><td><code>**</code></td><td><code>2 ** 10</code></td><td><code>1024</code></td></tr>
+  </table>
+
+  <div class="runner" data-lesson="l3">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">phep_toan.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">print("10 / 3  =", 10 / 3)
+print("10 // 3 =", 10 // 3)   # phần nguyên
+print("10 % 3  =", 10 % 3)    # phần dư
+print("2 ** 8  =", 2 ** 8)    # 2 mũ 8
+print("Thứ tự ưu tiên:", 2 + 3 * 4)      # nhân trước
+print("Có ngoặc:", (2 + 3) * 4)          # ngoặc trước</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="note">💡 <b>% (chia dư) hữu ích bất ngờ:</b> số chẵn khi <code class="inline">so % 2 == 0</code>; đổi 200 phút thành giờ-phút: <code class="inline">200 // 60</code> giờ và <code class="inline">200 % 60</code> phút.</div>
+
+  <h3>2. Làm tròn và các hàm tiện ích</h3>
+  <div class="runner" data-lesson="l3">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">lam_tron.py</span></div>
+    <textarea class="code" rows="5" spellcheck="false">print(round(3.14159, 2))   # làm tròn 2 chữ số thập phân
+print(round(7.5))          # làm tròn về số nguyên
+print(abs(-15))            # giá trị tuyệt đối
+print(max(3, 9, 4), min(3, 9, 4))   # lớn nhất, nhỏ nhất</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. Viết gọn phép gán</h3>
+  <p><code class="inline">diem += 2</code> là cách viết tắt của <code class="inline">diem = diem + 2</code>. Tương tự có <code class="inline">-=</code>, <code class="inline">*=</code>, <code class="inline">/=</code>.</p>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 3</span>
+    <p>Một quán cà phê bán ly cà phê giá 35.000đ. Khách mua 7 ly, được giảm 10%. Tính và in ra: tổng tiền trước giảm, số tiền được giảm, và số tiền phải trả (làm tròn về số nguyên).</p>
+    <div class="runner" data-lesson="l3">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_3.py</span></div>
+      <textarea class="code" rows="6" spellcheck="false">gia_ly = 35000
+so_ly = 7
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Giảm 10% nghĩa là <code class="inline">tong * 0.10</code>. Số phải trả = tổng − giảm. Dùng <code class="inline">round()</code> để bỏ phần thập phân.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>gia_ly = 35000
+so_ly = 7
+tong = gia_ly * so_ly
+giam = tong * 0.10
+phai_tra = round(tong - giam)
+print("Tổng trước giảm:", tong)
+print("Được giảm:", round(giam))
+print("Phải trả:", phai_tra)</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 4 ========== -->
+<section class="lesson" id="l4">
+  <div class="eyebrow">Bài 4 / Nền tảng</div>
+  <h2>Chuỗi (string)</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Nối chuỗi, dùng f-string để chèn biến vào câu, và dùng các "công cụ" có sẵn của chuỗi.</div>
+
+  <h3>1. Nối chuỗi và lặp chuỗi</h3>
+  <div class="runner" data-lesson="l4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">noi_chuoi.py</span></div>
+    <textarea class="code" rows="5" spellcheck="false">ho = "Nguyễn"
+ten = "An"
+ho_ten = ho + " " + ten     # nối bằng dấu +
+print(ho_ten)
+print("=" * 30)             # lặp chuỗi 30 lần — hay dùng để kẻ dòng</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. f-string — cách chèn biến đẹp nhất</h3>
+  <p>Thay vì nối chuỗi lằng nhằng, hãy đặt chữ <code class="inline">f</code> trước dấu nháy, rồi chèn biến vào <code class="inline">{ }</code>. Đây là cách <b>được khuyên dùng nhất</b> trong Python hiện đại:</p>
+
+  <div class="runner" data-lesson="l4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">f_string.py</span></div>
+    <textarea class="code" rows="6" spellcheck="false">ten = "Lan"
+tuoi = 21
+print(f"Bạn {ten} năm nay {tuoi} tuổi")
+print(f"Sang năm bạn ấy {tuoi + 1} tuổi")   # tính toán ngay trong { }
+gia = 1234567.891
+print(f"Giá: {gia:,.0f} đồng")   # định dạng số có dấu phẩy</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. Các "công cụ" của chuỗi</h3>
+  <div class="runner" data-lesson="l4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">cong_cu_chuoi.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false">cau = "  Học Python thật vui  "
+print(len(cau))            # độ dài (đếm cả khoảng trắng)
+print(cau.strip())         # cắt khoảng trắng 2 đầu
+print(cau.upper())         # VIẾT HOA
+print(cau.lower())         # viết thường
+print(cau.replace("vui", "dễ"))   # thay thế
+print("Python" in cau)     # kiểm tra có chứa không → True/False</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Cú pháp <code class="inline">bien.ten_cong_cu()</code> gọi là <b>method</b> — "công cụ" gắn sẵn theo mỗi kiểu dữ liệu. Chuỗi có hàng chục method; trên đây là những cái dùng nhiều nhất.</p>
+
+  <h3>4. Lấy ký tự theo vị trí (index)</h3>
+  <div class="runner" data-lesson="l4">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">index.py</span></div>
+    <textarea class="code" rows="5" spellcheck="false">s = "PYTHON"
+print(s[0])     # ký tự ĐẦU TIÊN — Python đếm từ 0!
+print(s[1])
+print(s[-1])    # số âm = đếm từ cuối
+print(s[0:3])   # cắt từ vị trí 0 đến TRƯỚC vị trí 3</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <div class="warn">⚠️ <b>Ghi nhớ suốt đời:</b> Python đếm từ <b>0</b>, không phải từ 1. Ký tự đầu tiên là <code class="inline">[0]</code>. Đây là quy ước của hầu hết ngôn ngữ lập trình.</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 4</span>
+    <p>Cho biến <code class="inline">email = "  Lan.Nguyen@Gmail.COM "</code>. Hãy: (1) chuẩn hóa email — cắt khoảng trắng thừa và đưa hết về chữ thường, (2) in email đã chuẩn hóa bằng f-string, (3) in độ dài email sau chuẩn hóa.</p>
+    <div class="runner" data-lesson="l4">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_4.py</span></div>
+      <textarea class="code" rows="5" spellcheck="false">email = "  Lan.Nguyen@Gmail.COM "
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Có thể nối liền 2 method: <code class="inline">email.strip().lower()</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>email = "  Lan.Nguyen@Gmail.COM "
+email_chuan = email.strip().lower()
+print(f"Email chuẩn hóa: {email_chuan}")
+print(f"Độ dài: {len(email_chuan)} ký tự")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 5 ========== -->
+<section class="lesson" id="l5">
+  <div class="eyebrow">Bài 5 / Nền tảng</div>
+  <h2>input() — nhận dữ liệu từ người dùng</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Viết chương trình biết "hỏi chuyện" người dùng và xử lý câu trả lời.</div>
+
+  <h3>1. Hàm input()</h3>
+  <p><code class="inline">input("câu hỏi")</code> dừng chương trình, hiện câu hỏi, chờ người dùng gõ trả lời rồi <b>trả về câu trả lời dưới dạng chuỗi</b>. Trên trang web này, câu hỏi sẽ hiện thành <b>hộp thoại popup</b> của trình duyệt.</p>
+
+  <div class="runner" data-lesson="l5">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">chao_hoi.py</span></div>
+    <textarea class="code" rows="3" spellcheck="false">ten = input("Bạn tên gì? ")
+print(f"Chào {ten}, rất vui được gặp bạn!")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. Bẫy lớn nhất: input() luôn trả về CHUỖI</h3>
+  <p>Dù người dùng gõ số, kết quả vẫn là <b>chuỗi</b>. Muốn tính toán, phải đổi sang số bằng <code class="inline">int()</code> hoặc <code class="inline">float()</code>:</p>
+
+  <div class="runner" data-lesson="l5">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tinh_tuoi.py</span></div>
+    <textarea class="code" rows="4" spellcheck="false">nam_sinh = int(input("Bạn sinh năm bao nhiêu? "))
+tuoi = 2026 - nam_sinh
+print(f"Năm 2026 bạn {tuoi} tuổi")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Thử xóa <code class="inline">int(...)</code> đi và chạy lại — bạn sẽ gặp <code class="inline">TypeError</code> vì Python không trừ được chuỗi cho số. Gặp lỗi có chủ đích như vậy giúp bạn nhận ra nó ngay khi gặp thật.</p>
+
+  <div class="note">💡 Trên trang này <code class="inline">input()</code> dùng popup của trình duyệt. Khi cài Python thật trên máy, câu hỏi sẽ hiện trong cửa sổ dòng lệnh — cách viết code thì y hệt.</div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 5</span>
+    <p>Viết "máy tính tiền taxi": hỏi người dùng số km đã đi (có thể là số lẻ như 7.5), biết giá mở cửa là 12.000đ và mỗi km giá 15.000đ. In ra tổng tiền, định dạng có dấu phẩy.</p>
+    <div class="runner" data-lesson="l5">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_5.py</span></div>
+      <textarea class="code" rows="5" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Số km lẻ → dùng <code class="inline">float()</code>. Định dạng tiền: <code class="inline">f"{tien:,.0f}"</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>so_km = float(input("Bạn đi bao nhiêu km? "))
+tien = 12000 + so_km * 15000
+print(f"Tổng tiền taxi: {tien:,.0f} đồng")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 6 ========== -->
+<section class="lesson" id="l6">
+  <div class="eyebrow">Bài 6 / Tư duy lập trình</div>
+  <h2>Câu điều kiện if / elif / else</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Cho chương trình biết "rẽ nhánh": nếu thế này thì làm A, không thì làm B.</div>
+
+  <h3>1. So sánh — nền tảng của điều kiện</h3>
+  <table class="cmp">
+    <tr><th>Ký hiệu</th><th>Nghĩa</th><th>Ví dụ</th><th>Kết quả</th></tr>
+    <tr><td><code>==</code></td><td>bằng nhau (2 dấu bằng!)</td><td><code>5 == 5</code></td><td><code>True</code></td></tr>
+    <tr><td><code>!=</code></td><td>khác nhau</td><td><code>5 != 3</code></td><td><code>True</code></td></tr>
+    <tr><td><code>&gt;</code> <code>&lt;</code></td><td>lớn hơn / nhỏ hơn</td><td><code>5 &gt; 9</code></td><td><code>False</code></td></tr>
+    <tr><td><code>&gt;=</code> <code>&lt;=</code></td><td>lớn hơn/nhỏ hơn hoặc bằng</td><td><code>5 &gt;= 5</code></td><td><code>True</code></td></tr>
+  </table>
+  <div class="warn">⚠️ <code class="inline">=</code> là <b>gán</b>, <code class="inline">==</code> là <b>so sánh</b>. Nhầm hai cái này là lỗi phổ biến số 1 của người mới.</div>
+
+  <h3>2. Cấu trúc if — và quy tắc THỤT LỀ</h3>
+  <p>Python dùng <b>thụt lề (indentation)</b> — thường là 4 khoảng trắng — để biết dòng nào "thuộc về" if. Đây là điểm đặc trưng nhất của Python:</p>
+
+  <div class="runner" data-lesson="l6">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">diem_thi.py</span></div>
+    <textarea class="code" rows="10" spellcheck="false">diem = 7.5
+
+if diem >= 8:
+    print("Xếp loại: Giỏi")      # dòng này thụt lề → thuộc về if
+elif diem >= 6.5:
+    print("Xếp loại: Khá")
+elif diem >= 5:
+    print("Xếp loại: Trung bình")
+else:
+    print("Xếp loại: Chưa đạt")
+
+print("Chấm điểm xong!")   # không thụt lề → luôn chạy</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <p>Đọc cấu trúc trên như tiếng Việt: <b>nếu</b> (if) điểm ≥ 8 thì Giỏi; <b>không thì nếu</b> (elif) ≥ 6.5 thì Khá; ... <b>còn lại</b> (else) thì Chưa đạt. Python kiểm tra <b>từ trên xuống</b>, gặp điều kiện đúng đầu tiên là chạy nhánh đó rồi bỏ qua các nhánh sau. Đừng quên <b>dấu hai chấm <code class="inline">:</code></b> cuối mỗi dòng if/elif/else!</p>
+  <p>Hãy thử đổi <code class="inline">diem = 7.5</code> thành 9, 5.5, rồi 3 và chạy lại để thấy các nhánh khác nhau.</p>
+
+  <h3>3. Ghép nhiều điều kiện: and, or, not</h3>
+  <div class="runner" data-lesson="l6">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">and_or.py</span></div>
+    <textarea class="code" rows="9" spellcheck="false">tuoi = 20
+co_gplx = True   # có giấy phép lái xe
+
+if tuoi >= 18 and co_gplx:
+    print("Được phép lái ô tô")
+else:
+    print("Chưa được lái ô tô")
+
+ngay = "Chủ nhật"
+if ngay == "Thứ bảy" or ngay == "Chủ nhật":
+    print("Cuối tuần rồi, nghỉ thôi!")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <ul>
+    <li><code class="inline">and</code>: đúng khi <b>cả hai</b> cùng đúng.</li>
+    <li><code class="inline">or</code>: đúng khi <b>ít nhất một</b> cái đúng.</li>
+    <li><code class="inline">not</code>: đảo ngược — <code class="inline">not True</code> là <code class="inline">False</code>.</li>
+  </ul>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 6</span>
+    <p>Viết chương trình hỏi năm sinh, tính tuổi (năm hiện tại 2026) rồi phân loại vé xem phim: dưới 12 tuổi → "Vé trẻ em 45k", từ 12 đến dưới 60 → "Vé thường 90k", từ 60 trở lên → "Vé người cao tuổi 60k".</p>
+    <div class="runner" data-lesson="l6">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_6.py</span></div>
+      <textarea class="code" rows="8" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">3 nhánh → dùng if / elif / else. Kiểm tra "dưới 12" trước, rồi "dưới 60", còn lại là người cao tuổi.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>nam_sinh = int(input("Bạn sinh năm bao nhiêu? "))
+tuoi = 2026 - nam_sinh
+if tuoi < 12:
+    print("Vé trẻ em 45k")
+elif tuoi < 60:
+    print("Vé thường 90k")
+else:
+    print("Vé người cao tuổi 60k")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 7 ========== -->
+<section class="lesson" id="l7">
+  <div class="eyebrow">Bài 7 / Tư duy lập trình</div>
+  <h2>Vòng lặp for &amp; while</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Bắt máy tính lặp đi lặp lại công việc — sức mạnh thật sự của lập trình.</div>
+
+  <h3>1. Vòng lặp for với range()</h3>
+  <p><code class="inline">for i in range(5)</code> nghĩa là: lặp 5 lần, mỗi lần biến <code class="inline">i</code> lần lượt nhận giá trị 0, 1, 2, 3, 4 (nhớ nhé — đếm từ 0, dừng <b>trước</b> 5):</p>
+
+  <div class="runner" data-lesson="l7">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">vong_for.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">for i in range(5):
+    print("Lần lặp thứ", i)
+
+print("---")
+# range(bắt_đầu, kết_thúc, bước_nhảy)
+for i in range(2, 11, 2):
+    print("Số chẵn:", i)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. Ứng dụng kinh điển: cộng dồn</h3>
+  <div class="runner" data-lesson="l7">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">cong_don.py</span></div>
+    <textarea class="code" rows="6" spellcheck="false">tong = 0
+for i in range(1, 101):
+    tong += i        # cộng dồn i vào tong
+
+print("Tổng 1 + 2 + ... + 100 =", tong)
+# Câu chuyện kể rằng nhà toán học Gauss tính nhẩm ra 5050 hồi 7 tuổi 😄</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Mẫu "tạo biến đếm/cộng dồn trước vòng lặp, cập nhật trong vòng lặp" xuất hiện ở khắp mọi nơi. Hãy chạy từng dòng trong đầu: tong bắt đầu = 0, sau lần lặp 1 thành 1, sau lần lặp 2 thành 3, sau lần 3 thành 6...</p>
+
+  <h3>3. Vòng lặp while — lặp khi còn đúng</h3>
+  <p><code class="inline">while điều_kiện:</code> lặp mãi cho đến khi điều kiện sai. Dùng khi <b>không biết trước</b> số lần lặp:</p>
+
+  <div class="runner" data-lesson="l7">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">dem_nguoc.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">dem = 5
+while dem > 0:
+    print("Đếm ngược:", dem)
+    dem -= 1        # QUAN TRỌNG: phải thay đổi biến điều kiện!
+
+print("🚀 Phóng!")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="warn">⚠️ <b>Vòng lặp vô tận:</b> nếu quên dòng <code class="inline">dem -= 1</code>, điều kiện mãi đúng → chương trình lặp vô tận và <b>trang web sẽ bị treo</b> (phải tải lại trang). Trước khi chạy while, luôn tự hỏi: "điều kiện này rồi sẽ sai chứ?"</div>
+
+  <h3>4. break và continue</h3>
+  <div class="runner" data-lesson="l7">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">break_continue.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false">for i in range(1, 10):
+    if i == 5:
+        break        # thoát hẳn vòng lặp
+    print("break demo:", i)
+
+for i in range(1, 6):
+    if i == 3:
+        continue     # bỏ qua lần này, nhảy sang lần sau
+    print("continue demo:", i)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 7</span>
+    <p>In bảng cửu chương của một số do người dùng nhập (từ 1 đến 10), dạng: <code class="inline">7 x 1 = 7</code>, <code class="inline">7 x 2 = 14</code>...</p>
+    <div class="runner" data-lesson="l7">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_7.py</span></div>
+      <textarea class="code" rows="5" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody"><code class="inline">range(1, 11)</code> cho các số 1 → 10. Trong vòng lặp dùng f-string: <code class="inline">f"{n} x {i} = {n * i}"</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>n = int(input("Nhập số cần in bảng cửu chương: "))
+for i in range(1, 11):
+    print(f"{n} x {i} = {n * i}")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 8 ========== -->
+<section class="lesson" id="l8">
+  <div class="eyebrow">Bài 8 / Tư duy lập trình</div>
+  <h2>List — danh sách</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Lưu nhiều giá trị trong một biến, thêm/xóa/duyệt qua chúng.</div>
+
+  <h3>1. Tạo list và truy cập phần tử</h3>
+  <p><b>List</b> là một dãy giá trị đặt trong ngoặc vuông <code class="inline">[ ]</code>, cách nhau bằng dấu phẩy. Truy cập phần tử bằng vị trí (đếm từ 0), giống chuỗi:</p>
+
+  <div class="runner" data-lesson="l8">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">tao_list.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">trai_cay = ["xoài", "ổi", "mít", "chôm chôm"]
+print(trai_cay)
+print(trai_cay[0])      # phần tử đầu
+print(trai_cay[-1])     # phần tử cuối
+print(len(trai_cay))    # số phần tử
+print("ổi" in trai_cay) # kiểm tra tồn tại</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. Thêm, sửa, xóa</h3>
+  <div class="runner" data-lesson="l8">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">them_xoa.py</span></div>
+    <textarea class="code" rows="9" spellcheck="false">viec_can_lam = ["đi chợ", "nấu cơm"]
+
+viec_can_lam.append("rửa bát")       # thêm vào cuối
+print(viec_can_lam)
+
+viec_can_lam[0] = "đi siêu thị"      # sửa phần tử đầu
+print(viec_can_lam)
+
+viec_can_lam.remove("nấu cơm")       # xóa theo giá trị
+print(viec_can_lam)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>3. Duyệt list bằng for — cặp đôi hoàn hảo</h3>
+  <div class="runner" data-lesson="l8">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">duyet_list.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false">diem_cac_mon = [8.5, 7.0, 9.0, 6.5, 8.0]
+
+for diem in diem_cac_mon:
+    print("Điểm:", diem)
+
+print("Tổng:", sum(diem_cac_mon))
+print("Trung bình:", sum(diem_cac_mon) / len(diem_cac_mon))
+print("Cao nhất:", max(diem_cac_mon))</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p><code class="inline">for diem in diem_cac_mon:</code> đọc là "với từng <i>diem</i> trong danh sách...". Kết hợp với if bên trong vòng lặp là bạn đã xử lý được dữ liệu thật sự:</p>
+
+  <div class="runner" data-lesson="l8">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">loc_du_lieu.py</span></div>
+    <textarea class="code" rows="7" spellcheck="false">diem_cac_mon = [8.5, 7.0, 9.0, 6.5, 8.0]
+dem_gioi = 0
+for diem in diem_cac_mon:
+    if diem >= 8:
+        dem_gioi += 1
+
+print(f"Có {dem_gioi} môn đạt điểm giỏi (>= 8)")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 8</span>
+    <p>Cho list giá các đơn hàng trong ngày. Hãy in: tổng doanh thu, đơn cao nhất, số đơn trên 200.000đ.</p>
+    <div class="runner" data-lesson="l8">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_8.py</span></div>
+      <textarea class="code" rows="6" spellcheck="false">don_hang = [150000, 320000, 89000, 245000, 178000, 410000]
+# Viết tiếp code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Tổng: <code class="inline">sum()</code>. Cao nhất: <code class="inline">max()</code>. Đếm đơn &gt; 200k: dùng vòng for + if + biến đếm như ví dụ trên.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>don_hang = [150000, 320000, 89000, 245000, 178000, 410000]
+print(f"Tổng doanh thu: {sum(don_hang):,.0f} đ")
+print(f"Đơn cao nhất: {max(don_hang):,.0f} đ")
+dem = 0
+for don in don_hang:
+    if don > 200000:
+        dem += 1
+print(f"Số đơn trên 200k: {dem}")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 9 ========== -->
+<section class="lesson" id="l9">
+  <div class="eyebrow">Bài 9 / Tư duy lập trình</div>
+  <h2>Hàm (function)</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Đóng gói code thành "công thức" tái sử dụng — bước ngoặt từ viết lệnh sang viết chương trình.</div>
+
+  <h3>1. Vì sao cần hàm?</h3>
+  <p>Bạn đã dùng hàm rồi đấy: <code class="inline">print()</code>, <code class="inline">len()</code>, <code class="inline">input()</code> đều là hàm có sẵn. Giờ ta tự viết hàm của mình — để một đoạn code viết <b>một lần, dùng nhiều lần</b>.</p>
+
+  <div class="runner" data-lesson="l9">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">ham_dau_tien.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false">def chao(ten):
+    print(f"Xin chào {ten}!")
+    print("Chúc một ngày tốt lành 🌞")
+
+# Định nghĩa xong, giờ GỌI hàm:
+chao("Lan")
+chao("Minh")
+chao("Hùng")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <ul>
+    <li><code class="inline">def</code> = define (định nghĩa). Sau tên hàm là cặp ngoặc chứa <b>tham số</b> (dữ liệu đầu vào), rồi dấu <code class="inline">:</code>.</li>
+    <li>Thân hàm <b>thụt lề</b>, giống if và for.</li>
+    <li>Định nghĩa hàm thì code <b>chưa chạy</b> — chỉ khi <b>gọi</b> <code class="inline">chao("Lan")</code> nó mới chạy.</li>
+  </ul>
+
+  <h3>2. return — hàm trả về kết quả</h3>
+  <p>Hàm hữu ích nhất khi nó <b>tính toán và trả kết quả về</b> để dùng tiếp, bằng từ khóa <code class="inline">return</code>:</p>
+
+  <div class="runner" data-lesson="l9">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">return.py</span></div>
+    <textarea class="code" rows="10" spellcheck="false">def tinh_tien_giam(gia_goc, phan_tram_giam):
+    tien_giam = gia_goc * phan_tram_giam / 100
+    return gia_goc - tien_giam
+
+# Kết quả trả về được gán vào biến:
+gia_ao = tinh_tien_giam(300000, 20)
+gia_quan = tinh_tien_giam(450000, 15)
+
+print(f"Áo sau giảm: {gia_ao:,.0f} đ")
+print(f"Quần sau giảm: {gia_quan:,.0f} đ")
+print(f"Tổng: {gia_ao + gia_quan:,.0f} đ")</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="note">💡 <b>Khác biệt quan trọng:</b> <code class="inline">print()</code> chỉ <i>hiển thị</i> ra màn hình; <code class="inline">return</code> <i>đưa giá trị về</i> cho nơi gọi hàm để tính tiếp. Hàm chuyên nghiệp thường dùng return, còn print để ở ngoài.</div>
+
+  <h3>3. Hàm nhiều tham số &amp; giá trị mặc định</h3>
+  <div class="runner" data-lesson="l9">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">mac_dinh.py</span></div>
+    <textarea class="code" rows="8" spellcheck="false">def pha_tra_sua(size, duong=50, da=100):
+    print(f"Trà sữa size {size}, {duong}% đường, {da}% đá")
+
+pha_tra_sua("L")               # dùng mặc định
+pha_tra_sua("M", 30)           # 30% đường
+pha_tra_sua("S", duong=0, da=50)   # gọi theo tên tham số</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">Bài tập 9</span>
+    <p>Viết hàm <code class="inline">tinh_bmi(can_nang, chieu_cao)</code> trả về chỉ số BMI (cân nặng kg chia cho bình phương chiều cao mét). Sau đó viết hàm <code class="inline">phan_loai(bmi)</code> trả về "Gầy" nếu BMI &lt; 18.5, "Bình thường" nếu &lt; 25, còn lại "Thừa cân". Dùng cả 2 hàm với số liệu của bạn.</p>
+    <div class="runner" data-lesson="l9">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">bai_tap_9.py</span></div>
+      <textarea class="code" rows="9" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Bình phương: <code class="inline">chieu_cao ** 2</code>. Hàm phân loại dùng if/elif/else, mỗi nhánh một <code class="inline">return</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>def tinh_bmi(can_nang, chieu_cao):
+    return can_nang / chieu_cao ** 2
+
+def phan_loai(bmi):
+    if bmi < 18.5:
+        return "Gầy"
+    elif bmi < 25:
+        return "Bình thường"
+    else:
+        return "Thừa cân"
+
+bmi = tinh_bmi(62, 1.68)
+print(f"BMI = {bmi:.1f} → {phan_loai(bmi)}")</pre></div></details>
+  </div>
+</section>
+
+<!-- ========== BÀI 10 ========== -->
+<section class="lesson" id="l10">
+  <div class="eyebrow">Bài 10 / Tổng kết</div>
+  <h2>Dictionary, dự án nhỏ &amp; lộ trình tiếp theo</h2>
+  <div class="goal"><b>🎯 Sau bài này bạn sẽ</b> Biết thêm kiểu dictionary, hoàn thành một dự án nhỏ tổng hợp mọi thứ đã học, và biết học gì tiếp theo.</div>
+
+  <h3>1. Dictionary — dữ liệu có nhãn</h3>
+  <p>List lưu theo <i>vị trí</i>, còn <b>dictionary</b> (dict) lưu theo <i>tên nhãn</i> (key). Cực kỳ hợp để mô tả một "đối tượng" có nhiều thuộc tính:</p>
+
+  <div class="runner" data-lesson="l10">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">dictionary.py</span></div>
+    <textarea class="code" rows="10" spellcheck="false">san_pham = {
+    "ten": "Tai nghe không dây",
+    "gia": 590000,
+    "ton_kho": 12,
+}
+
+print(san_pham["ten"])          # lấy giá trị theo key
+san_pham["ton_kho"] -= 1        # bán 1 cái
+san_pham["mau"] = "đen"         # thêm key mới
+print(san_pham)</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+
+  <h3>2. Dự án nhỏ: Máy đoán số 🎲</h3>
+  <p>Trò chơi kết hợp <b>tất cả</b> những gì bạn đã học: biến, input, int(), while, if/elif/else, f-string. Máy chọn một số ngẫu nhiên từ 1–50, bạn đoán, máy gợi ý cao/thấp:</p>
+
+  <div class="runner" data-lesson="l10">
+    <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">doan_so.py</span></div>
+    <textarea class="code" rows="16" spellcheck="false">import random               # thư viện số ngẫu nhiên có sẵn
+
+so_bi_mat = random.randint(1, 50)
+so_lan = 0
+
+print("Tôi đang nghĩ một số từ 1 đến 50. Đoán xem!")
+
+while True:
+    doan = int(input("Bạn đoán số: "))
+    so_lan += 1
+    if doan < so_bi_mat:
+        print(f"{doan} — Thấp quá, đoán cao hơn!")
+    elif doan > so_bi_mat:
+        print(f"{doan} — Cao quá, đoán thấp hơn!")
+    else:
+        print(f"🎉 Chính xác! Số {so_bi_mat}. Bạn đoán {so_lan} lần.")
+        break</textarea>
+    <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+    <pre class="out" aria-live="polite"></pre>
+  </div>
+  <p>Chú ý dòng đầu: <code class="inline">import random</code> nạp một <b>thư viện</b> — kho hàm viết sẵn. Python có hàng nghìn thư viện cho mọi việc, đó là lý do nó mạnh đến vậy.</p>
+
+  <div class="exercise">
+    <span class="ex-label">Dự án tốt nghiệp 🎓</span>
+    <p>Tự viết "Sổ chi tiêu mini": tạo một list rỗng, dùng vòng while hỏi người dùng nhập số tiền từng khoản chi (nhập <code class="inline">0</code> để dừng), append vào list. Kết thúc: in số khoản chi, tổng chi, khoản lớn nhất. Viết hoàn toàn tự do — bí mới xem lời giải.</p>
+    <div class="runner" data-lesson="l10">
+      <div class="runner-bar"><div class="dots"><span></span><span></span><span></span></div><span class="runner-title">so_chi_tieu.py</span></div>
+      <textarea class="code" rows="8" spellcheck="false"># Viết code của bạn ở đây
+</textarea>
+      <div class="runner-actions"><button class="btn btn-run">▶ Chạy</button><button class="btn btn-reset">↺ Làm lại</button><span class="kbd-hint">Ctrl + Enter</span></div>
+      <pre class="out" aria-live="polite"></pre>
+    </div>
+    <details><summary>Gợi ý</summary><div class="dbody">Khung: <code class="inline">chi_tieu = []</code> → <code class="inline">while True:</code> → nhập tiền → nếu <code class="inline">tien == 0: break</code> → ngược lại <code class="inline">chi_tieu.append(tien)</code>. Cuối cùng dùng <code class="inline">len()</code>, <code class="inline">sum()</code>, <code class="inline">max()</code>.</div></details>
+    <details><summary>Lời giải</summary><div class="dbody"><pre>chi_tieu = []
+print("Nhập từng khoản chi, nhập 0 để kết thúc")
+while True:
+    tien = float(input("Khoản chi (đ): "))
+    if tien == 0:
+        break
+    chi_tieu.append(tien)
+
+if len(chi_tieu) > 0:
+    print(f"Số khoản chi: {len(chi_tieu)}")
+    print(f"Tổng chi: {sum(chi_tieu):,.0f} đ")
+    print(f"Khoản lớn nhất: {max(chi_tieu):,.0f} đ")
+else:
+    print("Bạn chưa nhập khoản nào.")</pre></div></details>
+  </div>
+
+  <h3>3. Bạn đã đi được đến đâu — và đi tiếp thế nào?</h3>
+  <p>Hoàn thành 10 bài này, bạn đã nắm <b>cốt lõi của mọi chương trình Python</b>: dữ liệu (biến, kiểu, list, dict), điều khiển (if, vòng lặp) và tổ chức code (hàm). Lộ trình gợi ý tiếp theo:</p>
+  <ol>
+    <li><b>Cài Python thật</b> từ <code class="inline">python.org</code> + trình soạn thảo VS Code, để làm việc với file, thư mục.</li>
+    <li><b>Luyện tập mỗi ngày:</b> giải bài trên các trang luyện code (ví dụ Codewars, LeetCode mức Easy) — 20 phút/ngày quan trọng hơn 5 tiếng/tuần.</li>
+    <li><b>Học tiếp các chủ đề:</b> đọc/ghi file, xử lý lỗi (<code class="inline">try/except</code>), thư viện chuẩn, rồi rẽ nhánh theo mục tiêu: phân tích dữ liệu (pandas), web (Flask/Django), hay tự động hóa.</li>
+    <li><b>Làm dự án cá nhân nhỏ</b> giải quyết vấn đề thật của chính bạn — cách học bền nhất.</li>
+  </ol>
+  <p>Chúc mừng bạn đã hoàn thành khóa học! 🎉 Trang web này luôn ở đây khi bạn cần ôn lại.</p>
+</section>
+
+<div class="lesson-nav" id="lessonNav">
+  <button class="btn-nav" id="btnPrev">← Bài trước</button>
+  <button class="btn-nav primary" id="btnNext">Bài tiếp theo →</button>
+</div>
+
+</div><!-- /content -->
+</main>
+</div><!-- /wrap -->
+
+<div id="pystatus"><span class="spinner"></span><span id="pystatusText">Đang tải Python…</span></div>
+
+<script>
+/* ================= Điều hướng bài học ================= */
+const LESSONS = ["l0","l1","l2","l3","l4","l5","l6","l7","l8","l9","l10"];
+let current = "l0";
+
+const store = (() => {           // localStorage an toàn (fallback bộ nhớ tạm)
+  let mem = {};
+  try { localStorage.setItem("__t","1"); localStorage.removeItem("__t");
+    return { get:k=>localStorage.getItem(k), set:(k,v)=>localStorage.setItem(k,v) };
+  } catch(e){ return { get:k=>mem[k]??null, set:(k,v)=>{mem[k]=v;} }; }
+})();
+
+function showLesson(id, push=true){
+  if(!LESSONS.includes(id)) id = "l0";
+  current = id;
+  document.querySelectorAll(".lesson").forEach(s => s.classList.toggle("show", s.id===id));
+  document.querySelectorAll(".lesson-link").forEach(b => b.classList.toggle("active", b.dataset.goto===id));
+  const i = LESSONS.indexOf(id);
+  const prev = document.getElementById("btnPrev"), next = document.getElementById("btnNext");
+  prev.disabled = i===0;
+  next.disabled = i===LESSONS.length-1;
+  next.textContent = i===LESSONS.length-1 ? "🎉 Bạn đã ở bài cuối" : "Bài tiếp theo →";
+  if(push) history.replaceState(null,"","#"+id);
+  window.scrollTo({top:0, behavior:"auto"});
+  closeMenu();
+}
+document.querySelectorAll(".lesson-link").forEach(b => b.addEventListener("click", ()=>showLesson(b.dataset.goto)));
+document.getElementById("btnPrev").addEventListener("click", ()=>showLesson(LESSONS[Math.max(0,LESSONS.indexOf(current)-1)]));
+document.getElementById("btnNext").addEventListener("click", ()=>showLesson(LESSONS[Math.min(LESSONS.length-1,LESSONS.indexOf(current)+1)]));
+
+/* Đánh dấu hoàn thành */
+function markDone(lessonId){
+  if(!lessonId) return;
+  store.set("done_"+lessonId, "1");
+  refreshTicks();
+}
+function refreshTicks(){
+  document.querySelectorAll(".lesson-link").forEach(b => {
+    b.classList.toggle("done", store.get("done_"+b.dataset.goto)==="1");
+  });
+}
+refreshTicks();
+
+/* Menu mobile */
+const sidebar = document.getElementById("sidebar"), scrim = document.getElementById("scrim");
+document.getElementById("menuBtn").addEventListener("click", ()=>{ sidebar.classList.add("open"); scrim.classList.add("show"); });
+function closeMenu(){ sidebar.classList.remove("open"); scrim.classList.remove("show"); }
+scrim.addEventListener("click", closeMenu);
+
+/* ================= Pyodide (Python trong trình duyệt) ================= */
+let pyodide = null, pyodideLoading = null;
+const statusEl = document.getElementById("pystatus"), statusText = document.getElementById("pystatusText");
+
+function loadPyodideOnce(){
+  if(pyodide) return Promise.resolve(pyodide);
+  if(pyodideLoading) return pyodideLoading;
+  statusEl.classList.add("show");
+  statusText.textContent = "Đang tải Python (chỉ lần đầu)…";
+  pyodideLoading = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+    s.onload = async () => {
+      try{
+        pyodide = await loadPyodide({indexURL:"https://cdn.jsdelivr.net/pyodide/v0.26.4/full/"});
+        // Cho input() dùng popup của trình duyệt
+        pyodide.runPython(`
+import builtins
+from js import window
+def _input(prompt=""):
+    r = window.prompt(str(prompt))
+    return "" if r is None else str(r)
+builtins.input = _input
+`);
+        statusEl.classList.add("ready");
+        statusText.textContent = "Python đã sẵn sàng";
+        setTimeout(()=>statusEl.classList.remove("show"), 2500);
+        resolve(pyodide);
+      }catch(err){ statusText.textContent = "Không tải được Python — kiểm tra mạng rồi tải lại trang."; reject(err); }
+    };
+    s.onerror = () => { statusText.textContent = "Không tải được Python — kiểm tra mạng rồi tải lại trang."; reject(new Error("cdn")); };
+    document.head.appendChild(s);
+  });
+  return pyodideLoading;
+}
+
+async function runCode(runner){
+  const ta = runner.querySelector("textarea.code");
+  const out = runner.querySelector(".out");
+  const btn = runner.querySelector(".btn-run");
+  out.innerHTML = '<span class="sysmsg">Đang chạy…</span>';
+  btn.disabled = true;
+  try{
+    const py = await loadPyodideOnce();
+    out.textContent = "";
+    py.setStdout({batched: t => { out.append(t + "\n"); }});
+    py.setStderr({batched: t => {
+      const s = document.createElement("span"); s.className="err"; s.textContent = t + "\n"; out.append(s);
+    }});
+    await py.runPythonAsync(ta.value);
+    if(out.textContent.trim()==="") out.innerHTML = '<span class="sysmsg">(Chạy xong — chương trình không in gì ra)</span>';
+    markDone(runner.dataset.lesson);
+  }catch(err){
+    // Rút gọn traceback cho dễ đọc
+    let msg = String(err.message || err);
+    const ix = msg.indexOf('File "<exec>"');
+    if(ix > -1) msg = msg.slice(ix);
+    const s = document.createElement("span"); s.className="err"; s.textContent = "❌ Lỗi:\n" + msg;
+    out.textContent = ""; out.append(s);
+  }finally{
+    btn.disabled = false;
+  }
+}
+
+/* Gắn sự kiện cho mọi runner */
+document.querySelectorAll(".runner").forEach(runner => {
+  const ta = runner.querySelector("textarea.code");
+  ta.dataset.initial = ta.value;                      // lưu code gốc để "Làm lại"
+  ta.rows = Math.max(ta.rows, ta.value.split("\n").length);
+  runner.querySelector(".btn-run").addEventListener("click", ()=>runCode(runner));
+  runner.querySelector(".btn-reset").addEventListener("click", ()=>{
+    ta.value = ta.dataset.initial;
+    runner.querySelector(".out").textContent = "";
+  });
+  ta.addEventListener("keydown", e => {
+    if(e.key === "Tab"){                              // Tab = 4 khoảng trắng
+      e.preventDefault();
+      const s = ta.selectionStart, en = ta.selectionEnd;
+      ta.value = ta.value.slice(0,s) + "    " + ta.value.slice(en);
+      ta.selectionStart = ta.selectionEnd = s + 4;
+    }
+    if((e.ctrlKey || e.metaKey) && e.key === "Enter"){ e.preventDefault(); runCode(runner); }
+  });
+});
+
+/* Mở đúng bài theo #hash trên URL */
+showLesson(location.hash ? location.hash.slice(1) : "l0", false);
+</script>
+</body>
+</html>
